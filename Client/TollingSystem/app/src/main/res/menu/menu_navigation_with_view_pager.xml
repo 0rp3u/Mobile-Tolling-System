@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/i_navigation"
+        android:checked="true"
+        android:icon="@drawable/ic_navigation_black_24dp"
+        android:title="@string/navigation" />
+    <item
+        android:id="@+id/i_vheicles"
+        android:icon="@drawable/ic_directions_car_black_24dp"
+        android:title="@string/vehicle" />
+    <item
+        android:id="@+id/i_account"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/account" />
+</menu>
