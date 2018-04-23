@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="77327333-09fb-4085-8f56-266d0ac66310" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/ps1718v-ps1718v-g30.iml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/caches/build_file_checksums.ser" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/codeStyles/Project.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/gradle.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/modules.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/runConfigurations.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/build.gradle" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/proguard-rules.pro" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/androidTest/java/pt/isel/ps/g30/tollingsystem/ExampleInstrumentedTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/debug/res/values/google_maps_api.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/AndroidManifest.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/TollingSystemApp.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/api/TollingService.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/extensions/AppCompactExt.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/extensions/ContextExt.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/extensions/LatLngExt.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/geofencing/GeofenceBroadcastReceiver.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/geofencing/GeofenceErrorMessages.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/geofencing/GeofenceTransitionsJobIntentService.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/component/ApplicationComponent.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/component/MainComponent.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/ApplicationModule.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/DataModule.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/MainModule.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/base/BaseInteractor.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/main/MainInteractor.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/main/MainInteractorImpl.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/Tare.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/TollingPlaza.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/TollingTransaction.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/User.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/Vehicle.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/base/BasePresenter.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/base/BasePresenterImpl.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/main/MainPresenter.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/main/MainPresenterImp.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/BaseFragment.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/Vehicle/VehicleActivity.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/Vehicle/VehicleRegistryActivity.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/WithViewPagerActivity.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/base/BaseActivity.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/base/BaseView.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/main/MainActivity.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/main/MainView.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/map/MapActivity.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/settings/AppCompatPreferenceActivity.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/settings/SettingsActivity.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/color/selector_item_gray_color.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/color/selector_item_primary_color.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_directions_car_black_24dp.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_home_black_24dp.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_info_black_24dp.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_launcher_background.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_navigation_black_24dp.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_near_me_black_24dp.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_notifications_black_24dp.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_sc17.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_sync_black_24dp.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/launch_screen.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_main.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_map.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_vehicle.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_vehicle_registry.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_with_view_pager.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/content_vehicle.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/content_vehicle_registry.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/frag_base.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/menu/menu_base.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/menu/menu_navigation_with_view_pager.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/menu/navigation.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-hdpi/ic_launcher.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-mdpi/ic_launcher.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xhdpi/ic_launcher.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/colors.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/dimens.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/strings.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/styles.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/xml/pref_data_sync.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/xml/pref_general.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/xml/pref_headers.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/xml/pref_notification.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/release/res/values/google_maps_api.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/test/java/pt/isel/ps/g30/tollingsystem/ExampleUnitTest.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/build.gradle" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradle.properties" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradle/wrapper/gradle-wrapper.jar" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradle/wrapper/gradle-wrapper.properties" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradlew" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradlew.bat" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/settings.gradle" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="width" value="1358" />
+    <option name="height" value="732" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ps1718v-ps1718v-g30" type="1abcf292:AndroidViewProjectNode" />
+              <item name="ps1718v-ps1718v-g30" type="e9137016:NonAndroidModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="TollingSystem" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
+    <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="77327333-09fb-4085-8f56-266d0ac66310" name="Default" comment="" />
+      <created>1524501223220</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1524501223220</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-1" y="0" width="1368" height="736" extended-state="6" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+</project>
