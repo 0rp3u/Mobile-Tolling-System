@@ -7,95 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77327333-09fb-4085-8f56-266d0ac66310" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.gitignore" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/caches/build_file_checksums.ser" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/codeStyles/Project.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/gradle.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/misc.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/modules.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/runConfigurations.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/.gitignore" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/build.gradle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/proguard-rules.pro" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/androidTest/java/pt/isel/ps/g30/tollingsystem/ExampleInstrumentedTest.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/AndroidManifest.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/TollingSystemApp.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/api/TollingService.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/extensions/AppCompactExt.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/extensions/ContextExt.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/extensions/LatLngExt.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/geofencing/GeofenceBroadcastReceiver.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/geofencing/GeofenceErrorMessages.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/geofencing/GeofenceTransitionsJobIntentService.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/component/ApplicationComponent.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/ApplicationModule.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/DataModule.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/base/BaseInteractor.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/Tare.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/TollingPlaza.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/TollingTransaction.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/User.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/Vehicle.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/base/BasePresenter.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/base/BasePresenterImpl.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/base/BaseActivity.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/base/BaseView.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/settings/AppCompatPreferenceActivity.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/settings/SettingsActivity.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/color/selector_item_gray_color.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/color/selector_item_primary_color.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_directions_car_black_24dp.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_home_black_24dp.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_info_black_24dp.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_launcher_background.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_navigation_black_24dp.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_near_me_black_24dp.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_notifications_black_24dp.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_sc17.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/ic_sync_black_24dp.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/drawable/launch_screen.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_main.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_vehicle.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_vehicle_registry.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_with_view_pager.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/content_vehicle.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/content_vehicle_registry.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/frag_base.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/menu/menu_base.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/menu/menu_navigation_with_view_pager.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/menu/navigation.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-hdpi/ic_launcher.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-mdpi/ic_launcher.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xhdpi/ic_launcher.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/colors.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/dimens.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/strings.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/styles.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/xml/pref_data_sync.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/xml/pref_general.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/xml/pref_headers.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/xml/pref_notification.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/release/res/values/google_maps_api.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/test/java/pt/isel/ps/g30/tollingsystem/ExampleUnitTest.kt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/build.gradle" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradle.properties" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradle/wrapper/gradle-wrapper.jar" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradle/wrapper/gradle-wrapper.properties" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradlew" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/gradlew.bat" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/settings.gradle" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/Vehicle/VehicleActivity.kt" afterPath="" />
     </list>
@@ -140,6 +51,32 @@
             <path>
               <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
               <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="TollingSystem" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="TollingSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="TollingSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />

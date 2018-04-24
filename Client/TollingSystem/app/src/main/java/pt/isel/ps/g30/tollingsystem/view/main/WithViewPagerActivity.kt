@@ -14,8 +14,10 @@ import android.view.MenuItem
 
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.databinding.ActivityWithViewPagerBinding
+import pt.isel.ps.g30.tollingsystem.view.TextFragment
 import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
 import pt.isel.ps.g30.tollingsystem.view.map.MapViewFragment
+import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleFragment
 
 
 class WithViewPagerActivity : AppCompatActivity(){
@@ -60,15 +62,14 @@ class WithViewPagerActivity : AppCompatActivity(){
 
         val mapFragment = MapViewFragment()
 
-        // create music fragment and add it
-        // create backup fragment and add it
-        val backupFragment = BaseFragment()
+
+        val backupFragment = VehicleFragment()
         var bundle = Bundle()
         bundle.putString("title", getString(R.string.vehicle))
         backupFragment.arguments = bundle
 
         // create friends fragment and add it
-        val friendsFragment = BaseFragment()
+        val friendsFragment = TextFragment()
         bundle = Bundle()
         bundle.putString("title", getString(R.string.account))
         friendsFragment.arguments = bundle

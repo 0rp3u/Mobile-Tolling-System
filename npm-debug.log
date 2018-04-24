@@ -1,0 +1,269 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'node' ]
+2 info using npm@3.5.2
+3 info using node@v4.2.6
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData node
+8 silly fetchNamedPackageData node
+9 silly mapToRegistry name node
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry uri https://registry.npmjs.org/node
+13 verbose request uri https://registry.npmjs.org/node
+14 verbose request no auth needed
+15 info attempt registry request try #1 at 11:26:49 AM
+16 verbose request id c797ddcabecf40c3
+17 verbose etag "5ac59d83-5b320"
+18 verbose lastModified Thu, 5 Apr 2018 3:52:35 GMT
+19 http request GET https://registry.npmjs.org/node
+20 http 304 https://registry.npmjs.org/node
+21 verbose headers { date: 'Tue, 24 Apr 2018 10:26:50 GMT',
+21 verbose headers   via: '1.1 varnish',
+21 verbose headers   'cache-control': 'max-age=300',
+21 verbose headers   etag: '"5ac59d83-5b320"',
+21 verbose headers   age: '12482',
+21 verbose headers   connection: 'keep-alive',
+21 verbose headers   'x-served-by': 'cache-lcy19240-LCY',
+21 verbose headers   'x-cache': 'HIT',
+21 verbose headers   'x-cache-hits': '1',
+21 verbose headers   'x-timer': 'S1524565610.096535,VS0,VE1',
+21 verbose headers   vary: 'Accept-Encoding, Accept' }
+22 silly get cb [ 304,
+22 silly get   { date: 'Tue, 24 Apr 2018 10:26:50 GMT',
+22 silly get     via: '1.1 varnish',
+22 silly get     'cache-control': 'max-age=300',
+22 silly get     etag: '"5ac59d83-5b320"',
+22 silly get     age: '12482',
+22 silly get     connection: 'keep-alive',
+22 silly get     'x-served-by': 'cache-lcy19240-LCY',
+22 silly get     'x-cache': 'HIT',
+22 silly get     'x-cache-hits': '1',
+22 silly get     'x-timer': 'S1524565610.096535,VS0,VE1',
+22 silly get     vary: 'Accept-Encoding, Accept' } ]
+23 verbose etag https://registry.npmjs.org/node from cache
+24 verbose get saving node to /home/orpheu/.npm/registry.npmjs.org/node/.cache.json
+25 silly install normalizeTree
+26 silly loadCurrentTree Finishing
+27 silly loadIdealTree Starting
+28 silly install loadIdealTree
+29 silly cloneCurrentTree Starting
+30 silly install cloneCurrentTreeToIdealTree
+31 silly cloneCurrentTree Finishing
+32 silly loadShrinkwrap Starting
+33 silly install loadShrinkwrap
+34 silly loadShrinkwrap Finishing
+35 silly loadAllDepsIntoIdealTree Starting
+36 silly install loadAllDepsIntoIdealTree
+37 silly resolveWithNewModule node@9.11.0 checking installable status
+38 silly cache add args [ 'node', null ]
+39 verbose cache add spec node
+40 silly cache add parsed spec Result {
+40 silly cache add   raw: 'node',
+40 silly cache add   scope: null,
+40 silly cache add   name: 'node',
+40 silly cache add   rawSpec: '',
+40 silly cache add   spec: 'latest',
+40 silly cache add   type: 'tag' }
+41 silly addNamed node@latest
+42 verbose addNamed "latest" is being treated as a dist-tag for node
+43 info addNameTag [ 'node', 'latest' ]
+44 silly mapToRegistry name node
+45 silly mapToRegistry using default registry
+46 silly mapToRegistry registry https://registry.npmjs.org/
+47 silly mapToRegistry uri https://registry.npmjs.org/node
+48 verbose addNameTag registry:https://registry.npmjs.org/node not in flight; fetching
+49 verbose get https://registry.npmjs.org/node not expired, no request
+50 silly addNameTag next cb for node with tag latest
+51 silly addNamed node@9.11.0
+52 verbose addNamed "9.11.0" is a plain semver version for node
+53 silly cache afterAdd node@9.11.0
+54 verbose afterAdd /home/orpheu/.npm/node/9.11.0/package/package.json not in flight; writing
+55 verbose afterAdd /home/orpheu/.npm/node/9.11.0/package/package.json written
+56 silly fetchNamedPackageData node-bin-setup
+57 silly mapToRegistry name node-bin-setup
+58 silly mapToRegistry using default registry
+59 silly mapToRegistry registry https://registry.npmjs.org/
+60 silly mapToRegistry uri https://registry.npmjs.org/node-bin-setup
+61 verbose request uri https://registry.npmjs.org/node-bin-setup
+62 verbose request no auth needed
+63 info attempt registry request try #1 at 11:26:50 AM
+64 verbose etag "5976bbea-1511"
+65 verbose lastModified Tue, 25 Jul 2017 3:32:58 GMT
+66 http request GET https://registry.npmjs.org/node-bin-setup
+67 http 304 https://registry.npmjs.org/node-bin-setup
+68 verbose headers { date: 'Tue, 24 Apr 2018 10:26:50 GMT',
+68 verbose headers   via: '1.1 varnish',
+68 verbose headers   'cache-control': 'max-age=300',
+68 verbose headers   etag: '"5976bbea-1511"',
+68 verbose headers   age: '12482',
+68 verbose headers   connection: 'keep-alive',
+68 verbose headers   'x-served-by': 'cache-lcy19227-LCY',
+68 verbose headers   'x-cache': 'HIT',
+68 verbose headers   'x-cache-hits': '1',
+68 verbose headers   'x-timer': 'S1524565610.442952,VS0,VE0',
+68 verbose headers   vary: 'Accept-Encoding, Accept' }
+69 silly get cb [ 304,
+69 silly get   { date: 'Tue, 24 Apr 2018 10:26:50 GMT',
+69 silly get     via: '1.1 varnish',
+69 silly get     'cache-control': 'max-age=300',
+69 silly get     etag: '"5976bbea-1511"',
+69 silly get     age: '12482',
+69 silly get     connection: 'keep-alive',
+69 silly get     'x-served-by': 'cache-lcy19227-LCY',
+69 silly get     'x-cache': 'HIT',
+69 silly get     'x-cache-hits': '1',
+69 silly get     'x-timer': 'S1524565610.442952,VS0,VE0',
+69 silly get     vary: 'Accept-Encoding, Accept' } ]
+70 verbose etag https://registry.npmjs.org/node-bin-setup from cache
+71 verbose get saving node-bin-setup to /home/orpheu/.npm/registry.npmjs.org/node-bin-setup/.cache.json
+72 silly resolveWithNewModule node-bin-setup@1.0.6 checking installable status
+73 silly cache add args [ 'node-bin-setup@^1.0.0', null ]
+74 verbose cache add spec node-bin-setup@^1.0.0
+75 silly cache add parsed spec Result {
+75 silly cache add   raw: 'node-bin-setup@^1.0.0',
+75 silly cache add   scope: null,
+75 silly cache add   name: 'node-bin-setup',
+75 silly cache add   rawSpec: '^1.0.0',
+75 silly cache add   spec: '>=1.0.0 <2.0.0',
+75 silly cache add   type: 'range' }
+76 silly addNamed node-bin-setup@>=1.0.0 <2.0.0
+77 verbose addNamed ">=1.0.0 <2.0.0" is a valid semver range for node-bin-setup
+78 silly addNameRange { name: 'node-bin-setup',
+78 silly addNameRange   range: '>=1.0.0 <2.0.0',
+78 silly addNameRange   hasData: false }
+79 silly mapToRegistry name node-bin-setup
+80 silly mapToRegistry using default registry
+81 silly mapToRegistry registry https://registry.npmjs.org/
+82 silly mapToRegistry uri https://registry.npmjs.org/node-bin-setup
+83 verbose addNameRange registry:https://registry.npmjs.org/node-bin-setup not in flight; fetching
+84 verbose get https://registry.npmjs.org/node-bin-setup not expired, no request
+85 silly addNameRange number 2 { name: 'node-bin-setup',
+85 silly addNameRange   range: '>=1.0.0 <2.0.0',
+85 silly addNameRange   hasData: true }
+86 silly addNameRange versions [ 'node-bin-setup',
+86 silly addNameRange   [ '1.0.0', '1.0.1', '1.0.2', '1.0.3', '1.0.4', '1.0.6' ] ]
+87 silly addNamed node-bin-setup@1.0.6
+88 verbose addNamed "1.0.6" is a plain semver version for node-bin-setup
+89 silly cache afterAdd node-bin-setup@1.0.6
+90 verbose afterAdd /home/orpheu/.npm/node-bin-setup/1.0.6/package/package.json not in flight; writing
+91 verbose afterAdd /home/orpheu/.npm/node-bin-setup/1.0.6/package/package.json written
+92 silly loadAllDepsIntoIdealTree Finishing
+93 silly idealTree:prePrune ps1718v-ps1718v-g30
+93 silly idealTree:prePrune ├── node-bin-setup@1.0.6
+93 silly idealTree:prePrune └── node@9.11.0
+94 silly loadIdealTree Finishing
+95 silly currentTree ps1718v-ps1718v-g30
+96 silly idealTree ps1718v-ps1718v-g30
+96 silly idealTree ├── node-bin-setup@1.0.6
+96 silly idealTree └── node@9.11.0
+97 silly generateActionsToTake Starting
+98 silly install generateActionsToTake
+99 silly generateActionsToTake Finishing
+100 silly diffTrees action count 2
+101 silly diffTrees add node-bin-setup@1.0.6
+102 silly diffTrees add node@9.11.0
+103 silly decomposeActions action count 16
+104 silly decomposeActions fetch node-bin-setup@1.0.6
+105 silly decomposeActions extract node-bin-setup@1.0.6
+106 silly decomposeActions test node-bin-setup@1.0.6
+107 silly decomposeActions preinstall node-bin-setup@1.0.6
+108 silly decomposeActions build node-bin-setup@1.0.6
+109 silly decomposeActions install node-bin-setup@1.0.6
+110 silly decomposeActions postinstall node-bin-setup@1.0.6
+111 silly decomposeActions finalize node-bin-setup@1.0.6
+112 silly decomposeActions fetch node@9.11.0
+113 silly decomposeActions extract node@9.11.0
+114 silly decomposeActions test node@9.11.0
+115 silly decomposeActions preinstall node@9.11.0
+116 silly decomposeActions build node@9.11.0
+117 silly decomposeActions install node@9.11.0
+118 silly decomposeActions postinstall node@9.11.0
+119 silly decomposeActions finalize node@9.11.0
+120 silly executeActions Starting
+121 silly install executeActions
+122 silly doSerial global-install 0
+123 silly doParallel fetch 2
+124 verbose lock using /home/orpheu/.npm/_locks/staging-9c9bd14ed1bf3202.lock for /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging
+125 silly doParallel extract 2
+126 silly extract node-bin-setup@1.0.6
+127 silly extract node@9.11.0
+128 verbose unbuild node_modules/.staging/node-bin-setup-eba4cde2
+129 verbose unbuild node_modules/.staging/node-9facd21c
+130 silly gentlyRm /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-bin-setup-eba4cde2 is being purged from base /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30
+131 verbose gentlyRm don't care about contents; nuking /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-bin-setup-eba4cde2
+132 verbose tar unpack /home/orpheu/.npm/node-bin-setup/1.0.6/package.tgz
+133 verbose tar unpacking to /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-bin-setup-eba4cde2
+134 silly gentlyRm /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-bin-setup-eba4cde2 is being purged
+135 verbose gentlyRm don't care about contents; nuking /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-bin-setup-eba4cde2
+136 silly gentlyRm /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-9facd21c is being purged from base /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30
+137 verbose gentlyRm don't care about contents; nuking /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-9facd21c
+138 silly gunzTarPerm modes [ '755', '644' ]
+139 verbose tar unpack /home/orpheu/.npm/node/9.11.0/package.tgz
+140 verbose tar unpacking to /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-9facd21c
+141 silly gentlyRm /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-9facd21c is being purged
+142 verbose gentlyRm don't care about contents; nuking /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-9facd21c
+143 silly gunzTarPerm modes [ '755', '644' ]
+144 silly gunzTarPerm extractEntry package.json
+145 silly gunzTarPerm extractEntry package.json
+146 silly gunzTarPerm extractEntry index.js
+147 silly gunzTarPerm extractEntry installArchSpecificPackage.js
+148 silly gunzTarPerm extractEntry README.md
+149 silly gentlyRm /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-bin-setup-eba4cde2/node_modules is being purged
+150 verbose gentlyRm don't care about contents; nuking /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-bin-setup-eba4cde2/node_modules
+151 silly gentlyRm /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-9facd21c/node_modules is being purged
+152 verbose gentlyRm don't care about contents; nuking /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-9facd21c/node_modules
+153 silly doParallel preinstall 2
+154 silly preinstall node-bin-setup@1.0.6 /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-bin-setup-eba4cde2
+155 info lifecycle node-bin-setup@1.0.6~preinstall: node-bin-setup@1.0.6
+156 silly preinstall node@9.11.0 /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-9facd21c
+157 info lifecycle node@9.11.0~preinstall: node@9.11.0
+158 silly lifecycle node-bin-setup@1.0.6~preinstall: no script for preinstall, continuing
+159 warn lifecycle node@9.11.0~preinstall: cannot run in wd %s %s (wd=%s) node@9.11.0 node installArchSpecificPackage /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging/node-9facd21c
+160 silly doReverseSerial remove 0
+161 silly doSerial move 0
+162 silly doSerial finalize 2
+163 silly finalize /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/node-bin-setup
+164 silly finalize /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/node
+165 silly doSerial build 2
+166 silly build node-bin-setup@1.0.6
+167 info linkStuff node-bin-setup@1.0.6
+168 silly linkStuff node-bin-setup@1.0.6 has /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules as its parent node_modules
+169 verbose linkBins node-bin-setup@1.0.6
+170 verbose linkMans node-bin-setup@1.0.6
+171 silly build node@9.11.0
+172 info linkStuff node@9.11.0
+173 silly linkStuff node@9.11.0 has /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules as its parent node_modules
+174 verbose linkBins node@9.11.0
+175 verbose link bins [ { node: 'bin/node' },
+175 verbose link bins   '/home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.bin',
+175 verbose link bins   false ]
+176 verbose linkMans node@9.11.0
+177 verbose unlock done using /home/orpheu/.npm/_locks/staging-9c9bd14ed1bf3202.lock for /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/.staging
+178 silly rollbackFailedOptional Starting
+179 silly rollbackFailedOptional Finishing
+180 silly runTopLevelLifecycles Starting
+181 silly runTopLevelLifecycles Finishing
+182 silly install printInstalled
+183 warn enoent ENOENT: no such file or directory, open '/home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/package.json'
+184 warn ps1718v-ps1718v-g30 No description
+185 warn ps1718v-ps1718v-g30 No repository field.
+186 warn ps1718v-ps1718v-g30 No README data
+187 warn ps1718v-ps1718v-g30 No license field.
+188 verbose stack Error: ENOENT: no such file or directory, chmod '/home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/node/bin/node'
+188 verbose stack     at Error (native)
+189 verbose cwd /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30
+190 error Linux 4.13.0-38-generic
+191 error argv "/usr/bin/nodejs" "/usr/bin/npm" "install" "node"
+192 error node v4.2.6
+193 error npm  v3.5.2
+194 error path /home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/node/bin/node
+195 error code ENOENT
+196 error errno -2
+197 error syscall chmod
+198 error enoent ENOENT: no such file or directory, chmod '/home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/node/bin/node'
+199 error enoent ENOENT: no such file or directory, chmod '/home/orpheu/Desktop/Code/PS/ps1718v-ps1718v-g30/node_modules/node/bin/node'
+199 error enoent This is most likely not a problem with npm itself
+199 error enoent and is related to npm not being able to find a file.
+200 verbose exit [ -2, true ]
