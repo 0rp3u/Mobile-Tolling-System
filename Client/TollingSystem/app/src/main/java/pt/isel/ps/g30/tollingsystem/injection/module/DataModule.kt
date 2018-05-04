@@ -7,6 +7,7 @@ import okhttp3.Cache
 import okhttp3.OkHttpClient
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import pt.isel.ps.g30.tollingsystem.api.TollingService
+import pt.isel.ps.g30.tollingsystem.interceptor.HttpAuthInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -23,7 +24,12 @@ class DataModule(private val baseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(cache: Cache): OkHttpClient = OkHttpClient.Builder()
+    fun provideAuthInterceptor() = HttpAuthInterceptor()
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(cache: Cache, interceptor: HttpAuthInterceptor): OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
             .cache(cache)
             .build()
 

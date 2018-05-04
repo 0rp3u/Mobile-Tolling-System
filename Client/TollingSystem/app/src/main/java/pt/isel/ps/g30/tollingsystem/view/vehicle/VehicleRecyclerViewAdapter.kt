@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_vehicle.view.*
+import org.jetbrains.anko.imageResource
 import pt.isel.ps.g30.tollingsystem.R
+import pt.isel.ps.g30.tollingsystem.extensions.getIconResource
 import pt.isel.ps.g30.tollingsystem.model.Vehicle
 
 class VehicleRecyclerViewAdapter(val listener: (Vehicle) -> Unit) : RecyclerView.Adapter<VehicleRecyclerViewAdapter.ViewHolder>() {
@@ -32,6 +34,8 @@ class VehicleRecyclerViewAdapter(val listener: (Vehicle) -> Unit) : RecyclerView
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(vehicle: Vehicle, listener: (Vehicle) -> Unit) {
+
+            itemView.imageView.imageResource = vehicle.getIconResource()
             itemView.vehicle_plate_text_view.text = vehicle.licensePlate
             itemView.setOnClickListener { listener(vehicle) }
         }

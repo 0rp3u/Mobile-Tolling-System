@@ -24,11 +24,16 @@ abstract class BaseActivity<P: BasePresenter<V>, in V> : BaseView, AppCompatActi
     protected abstract fun instantiatePresenter(): P
 
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         injectDependencies()
         presenter = instantiatePresenter()
     }
 
+    override fun onStart() {
+        super.onStart()
+        presenter.onViewAttached(this as V)
+    }
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -13,7 +13,11 @@ class VehicleInteractorImpl(private val tollingService: TollingService) : Vehicl
         deferred.complete(
         listOf(
                 Vehicle(1, "14-AR-43", "david",Tare.Classe_1),
-                Vehicle(2, "44-EW-89", "david",Tare.Classe_2)
+                Vehicle(2, "44-EW-82", "david",Tare.Classe_2),
+                Vehicle(3, "17-AC-19", "david",Tare.Classe_3),
+                Vehicle(4, "76-CC-63", "david",Tare.Classe_4),
+                Vehicle(5, "05-VW-59", "david",Tare.Classe_5)
+
         ))
         //return tollingService.getVehicleList("me")
 

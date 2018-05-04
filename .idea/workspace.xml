@@ -5,10 +5,68 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="77327333-09fb-4085-8f56-266d0ac66310" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/assetWizardSettings.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/extensions/VehicleExt.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/component/LoginComponent.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/component/NotificationComponent.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/AuthModule.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/NotificationModule.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/auth/AuthInteractor.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/auth/AuthInteractorImpl.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/notification/NotificationInteractor.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/notification/NotificationInteractorImpl.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interceptor/HttpAuthInterceptor.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/model/Notification.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/login/LoginPresenter.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/login/LoginPresenterImp.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/notification/NotificationPresenter.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/presenter/notification/NotificationPresenterImp.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/TextFragment.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/login/LoginView.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/notifications/NotificationFragment.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/notifications/NotificationRecyclerViewAdapter.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/notifications/NotificationView.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/vehicle/VehicleFragment.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/vehicle/VehicleRecyclerViewAdapter.kt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_login.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/item_notification.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/item_vehicle.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/notifications_fragment.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/vehicles_fragment.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/Vehicle/VehicleActivity.kt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/Client/TollingSystem/.idea/caches/build_file_checksums.ser" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/build.gradle" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/build.gradle" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/AndroidManifest.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/api/TollingService.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/api/TollingService.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/component/ApplicationComponent.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/component/ApplicationComponent.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/component/VehicleComponent.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/component/VehicleComponent.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/DataModule.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/DataModule.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/VehicleModule.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/injection/module/VehicleModule.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/vehicle/VehicleInteractorImpl.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/interactor/vehicle/VehicleInteractorImpl.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/Vehicle/VehicleActivity.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/login/LoginActivity.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/base/BaseActivity.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/base/BaseActivity.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/base/BaseFragment.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/base/BaseFragment.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/main/WithViewPagerActivity.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/main/WithViewPagerActivity.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/map/MapViewFragment.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/map/MapViewFragment.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/vehicle/VehicleActivity.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/vehicle/VehicleActivity.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/vehicle/VehicleFragment.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/vehicle/VehicleFragment.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/vehicle/VehicleRecyclerViewAdapter.kt" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/java/pt/isel/ps/g30/tollingsystem/view/vehicle/VehicleRecyclerViewAdapter.kt" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_main.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/activity_maps.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/frag_base.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/frag_text.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/frag_text.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/frag_text.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/item_vehicle.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/item_vehicle.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/location_fragment.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/layout/location_fragment.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/menu/menu_navigation_with_view_pager.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/menu/menu_navigation_with_view_pager.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/dimens.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/strings.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/Client/TollingSystem/app/src/main/res/values/styles.xml" />
+      <change beforePath="$PROJECT_DIR$/Client/TollingSystem/build.gradle" afterPath="$PROJECT_DIR$/Client/TollingSystem/build.gradle" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,8 +75,23 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Client/TollingSystem/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Client/TollingSystem" />
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -45,6 +118,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ps1718v-ps1718v-g30" type="1abcf292:AndroidViewProjectNode" />
+              <item name="ps1718v-ps1718v-g30" type="e9137016:NonAndroidModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -63,45 +148,19 @@
               <item name="Client" type="462c0819:PsiDirectoryNode" />
               <item name="TollingSystem" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
-              <item name="Client" type="462c0819:PsiDirectoryNode" />
-              <item name="TollingSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ps1718v-ps1718v-g30" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ps1718v-ps1718v-g30" type="462c0819:PsiDirectoryNode" />
-              <item name="Client" type="462c0819:PsiDirectoryNode" />
-              <item name="TollingSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="ps1718v-ps1718v-g30" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ps1718v-ps1718v-g30" type="e9137016:NonAndroidModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
-    <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -226,27 +285,51 @@
       <option name="project" value="LOCAL" />
       <updated>1524513862967</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added drawables for vehicle and bottom menu">
+      <created>1525394224761</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1525394224762</updated>
+    </task>
+    <task id="LOCAL-00004" summary="implemented data module and application component&#10;implemented extension functions to simplify Application access on fragments and Activities">
+      <created>1525394405253</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1525394405253</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1368" height="736" extended-state="6" />
+    <frame x="0" y="0" width="1368" height="736" extended-state="6" />
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36136365" sideWeight="0.50653595" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5030303" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.4969697" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36136365" sideWeight="0.49346405" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34919474" sideWeight="0.49346405" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -258,7 +341,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -266,10 +348,22 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial implementation for the android application" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial implementation for the android application" />
+    <MESSAGE value="added drawables for vehicle and bottom menu" />
+    <MESSAGE value="implemented data module and application component&#10;implemented extension functions to simplify Application access on fragments and Activities" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented data module and application component&#10;implemented extension functions to simplify Application access on fragments and Activities" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Client/TollingSystem/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

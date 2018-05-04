@@ -17,6 +17,11 @@ import javax.inject.Inject
 class VehicleActivity : BaseActivity<VehiclePresenter, VehicleView>(), VehicleView{
 
 
+    companion object {
+        val EXTRA_VEHICLE_ID = "EXTRA_VEHICLE_ID"
+        val EXTRA_VEHICLE_LICENSE_PLATE = "EXTRA_VEHICLE_LICENSE_PLATE"
+    }
+
     @Inject
     lateinit var interactor: VehicleInteractor
 
@@ -64,14 +69,19 @@ class VehicleActivity : BaseActivity<VehiclePresenter, VehicleView>(), VehicleVi
     }
 
     override fun showVehicleList(list: List<Vehicle>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showLoadingIndicator() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun hideLoadingIndicator() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 }
+
+
+
+

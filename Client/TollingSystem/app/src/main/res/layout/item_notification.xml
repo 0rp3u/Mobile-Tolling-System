@@ -24,13 +24,13 @@
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                card_view:srcCompat="@drawable/ic_directions_car_black_24dp" />
+                card_view:srcCompat="@drawable/ic_notifications_black_24dp" />
 
             <TextView
-                android:id="@+id/vehicle_plate_text_view"
+                android:id="@+id/description_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="vehicle" />
+                tools:text="pay debts" />
 
         </LinearLayout>
 

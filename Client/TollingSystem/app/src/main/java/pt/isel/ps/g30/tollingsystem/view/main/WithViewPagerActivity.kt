@@ -11,12 +11,15 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.util.SparseIntArray
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import q.rorbin.badgeview.Badge
+import q.rorbin.badgeview.QBadgeView
 
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.databinding.ActivityWithViewPagerBinding
-import pt.isel.ps.g30.tollingsystem.view.TextFragment
-import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
 import pt.isel.ps.g30.tollingsystem.view.map.MapViewFragment
+import pt.isel.ps.g30.tollingsystem.view.notifications.NotificationFragment
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleFragment
 
 
@@ -24,6 +27,7 @@ class WithViewPagerActivity : AppCompatActivity(){
 
     private lateinit var bind: ActivityWithViewPagerBinding
     private var adapter: VpAdapter? = null
+    private lateinit var badge: Badge
 
 
     // collections
@@ -51,7 +55,7 @@ class WithViewPagerActivity : AppCompatActivity(){
     private fun initView() {
         bind.bnve.enableItemShiftingMode(true)
         bind.bnve.enableAnimation(false)
-
+        badge = addBadgeAt(2, 1)
     }
 
     /**
@@ -61,6 +65,7 @@ class WithViewPagerActivity : AppCompatActivity(){
         items = SparseIntArray(3)
 
         val mapFragment = MapViewFragment()
+        //mapFragment.retainInstance = true
 
 
         val backupFragment = VehicleFragment()
@@ -69,18 +74,18 @@ class WithViewPagerActivity : AppCompatActivity(){
         backupFragment.arguments = bundle
 
         // create friends fragment and add it
-        val friendsFragment = TextFragment()
+        val notificationsFragment = NotificationFragment()
         bundle = Bundle()
-        bundle.putString("title", getString(R.string.account))
-        friendsFragment.arguments = bundle
+        bundle.putString("title", getString(R.string.notifications))
+        notificationsFragment.arguments = bundle
 
         // add to fragments for adapter
-        fragments = listOf(mapFragment,backupFragment,friendsFragment)
+        fragments = listOf(mapFragment,backupFragment,notificationsFragment)
 
         // add to items for change ViewPager item
         items!!.put(R.id.i_navigation, 0)
         items!!.put(R.id.i_vheicles, 1)
-        items!!.put(R.id.i_account, 2)
+        items!!.put(R.id.i_notifications, 2)
 
         // set adapter
         adapter = VpAdapter(supportFragmentManager, fragments)
@@ -114,14 +119,29 @@ class WithViewPagerActivity : AppCompatActivity(){
             }
 
             override fun onPageSelected(position: Int) {
-                Log.i(TAG, "-----ViewPager-------- previous item:" + bind.bnve.getCurrentItem() + " current item:" + position + " ------------------")
-                bind.bnve.setCurrentItem(position)
+                Log.i(TAG, "-----ViewPager-------- previous item:" + bind.bnve.currentItem + " current item:" + position + " ------------------")
+                bind.bnve.currentItem = position
+                if( position != 2){
+                    badge.badgeNumber++
+                }else badge.badgeNumber = 0
             }
 
             override fun onPageScrollStateChanged(state: Int) {
 
             }
         })
+    }
+
+     fun addBadgeAt(position: Int, number: Int): Badge {
+        // add badge
+        return QBadgeView(this)
+                .setBadgeNumber(number)
+                .setGravityOffset(36f, 4f, true)
+                .bindTarget(bind.bnve.getBottomNavigationItemView(position))
+                .setOnDragStateChangedListener { dragState, badge, targetView ->
+//                    if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState)
+//                        Toast.makeText(this R.string.tips_badge_removed, Toast.LENGTH_SHORT).show()
+                }
     }
 
     /**

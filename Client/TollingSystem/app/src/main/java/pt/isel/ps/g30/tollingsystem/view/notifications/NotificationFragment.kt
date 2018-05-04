@@ -1,4 +1,4 @@
-package pt.isel.ps.g30.tollingsystem.view.vehicle
+package pt.isel.ps.g30.tollingsystem.view.notifications
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -10,63 +10,59 @@ import android.view.ViewGroup
 import org.jetbrains.anko.support.v4.startActivity
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.extensions.app
-import pt.isel.ps.g30.tollingsystem.injection.module.VehicleModule
-import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
-import pt.isel.ps.g30.tollingsystem.model.Vehicle
-import pt.isel.ps.g30.tollingsystem.presenter.vehicle.VehiclePresenterImpl
-import pt.isel.ps.g30.tollingsystem.databinding.VehiclesFragmentBinding
-import pt.isel.ps.g30.tollingsystem.presenter.vehicle.VehiclePresenter
+import pt.isel.ps.g30.tollingsystem.databinding.NotificationsFragmentBinding
+import pt.isel.ps.g30.tollingsystem.injection.module.NotificationModule
+import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
+import pt.isel.ps.g30.tollingsystem.model.Notification
+import pt.isel.ps.g30.tollingsystem.presenter.notification.NotificationPresenter
+import pt.isel.ps.g30.tollingsystem.presenter.notification.NotificationPresenterImp
 import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
 import javax.inject.Inject
 
-class VehicleFragment: BaseFragment<VehiclePresenter, VehicleView>(), VehicleView{
+class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView>(), NotificationView{
 
 
 
-    lateinit var vehicleRecyclerViewAdapter: VehicleRecyclerViewAdapter
-    private lateinit var bind: VehiclesFragmentBinding
+    lateinit var notificationRecyclerViewAdapter: NotificationRecyclerViewAdapter
+    private lateinit var bind: NotificationsFragmentBinding
 
     @Inject
-    lateinit var interactor: VehicleInteractor
+    lateinit var interactor: NotificationInteractor
 
     override fun injectDependencies() {
        app.applicationComponent
-                .plus(VehicleModule())
+                .plus(NotificationModule())
                 .injectTo(this)
     }
 
-    override fun instantiatePresenter(): VehiclePresenter
-            = VehiclePresenterImpl(interactor)
+    override fun instantiatePresenter(): NotificationPresenter
+            = NotificationPresenterImp(interactor)
 
 
 
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.vehicles_fragment, container, false)
+        val view = inflater.inflate(R.layout.notifications_fragment, container, false)
 
-        bind = DataBindingUtil.bind<ViewDataBinding>(view) as VehiclesFragmentBinding
+        bind = DataBindingUtil.bind<ViewDataBinding>(view) as NotificationsFragmentBinding
 
-        vehicleRecyclerViewAdapter = VehicleRecyclerViewAdapter { (id, licensePlate) ->
+        notificationRecyclerViewAdapter = NotificationRecyclerViewAdapter { (id, description) ->
 
-            startActivity<VehicleActivity>(
-                    VehicleActivity.EXTRA_VEHICLE_ID to id,
-                    VehicleActivity.EXTRA_VEHICLE_LICENSE_PLATE to licensePlate
-            )
         }
 
         bind.recyclerView.apply{
-            adapter = vehicleRecyclerViewAdapter
+            adapter = notificationRecyclerViewAdapter
             layoutManager = LinearLayoutManager(activity)
 
         }
-        presenter.getVehicleList()
+        presenter.getNotificationList()
 
         return view
     }
 
-    override fun showVehicleList(list: List<Vehicle>) {
-        vehicleRecyclerViewAdapter.vehicleList = list
+    override fun showNotificationList(list: List<Notification>) {
+        notificationRecyclerViewAdapter.notificationList = list
     }
 
 
