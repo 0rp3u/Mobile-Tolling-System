@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize')
 
 /* Setup DB*/
-const sequelize = new Sequelize('database', 'clearing_db', 'clearing_db', {
+const DB_NAME = process.env.NODEENV || "database"
+const sequelize = new Sequelize(DB_NAME, 'clearing_db', 'clearing_db', {
   host: 'localhost',
   dialect: 'sqlite',
   operatorsAliases: false,
@@ -14,17 +15,22 @@ const sequelize = new Sequelize('database', 'clearing_db', 'clearing_db', {
   },
 
   // SQLite only
-  storage: 'utils/db/database.sqlite'
+  storage: `utils/db/${DB_NAME}.sqlite`
 })
 
 /* Authentication */
-const setupDB = sequelize
+sequelize
   .authenticate()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    console.log('Connection has been established successfully.')
+    if(!process.env.NODEENV){
+      console.log('Populating DB.')
+      sequelize.sync()
+        .then( () => {require('./populateDB')()})
+    }
   })
   .catch(err => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Unable to connect to the database:', err)
   })
 
 /* Entities defined in utils/db/model/entities */
