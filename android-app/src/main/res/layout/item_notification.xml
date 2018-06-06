@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
@@ -20,13 +21,13 @@
             android:padding="8dp">
 
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 card_view:srcCompat="@drawable/ic_notifications_black_24dp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/description_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,8 +37,8 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

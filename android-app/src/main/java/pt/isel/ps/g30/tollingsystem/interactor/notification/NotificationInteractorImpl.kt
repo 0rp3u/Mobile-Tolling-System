@@ -1,8 +1,8 @@
 package pt.isel.ps.g30.tollingsystem.interactor.notification
 import kotlinx.coroutines.experimental.CompletableDeferred
 import kotlinx.coroutines.experimental.Deferred
-import pt.isel.ps.g30.tollingsystem.api.TollingService
-import pt.isel.ps.g30.tollingsystem.model.Notification
+import pt.isel.ps.g30.tollingsystem.data.api.TollingService
+import pt.isel.ps.g30.tollingsystem.data.api.model.Notification
 
 class NotificationInteractorImpl(private val tollingService: TollingService) : NotificationInteractor {
 

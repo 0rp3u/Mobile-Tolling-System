@@ -1,27 +1,38 @@
 package pt.isel.ps.g30.tollingsystem.interactor.vehicle
-import kotlinx.coroutines.experimental.CompletableDeferred
 import kotlinx.coroutines.experimental.Deferred
-import pt.isel.ps.g30.tollingsystem.model.Vehicle
-import pt.isel.ps.g30.tollingsystem.api.TollingService
-import pt.isel.ps.g30.tollingsystem.model.Tare
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.async
+import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
+import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
 
-class VehicleInteractorImpl(private val tollingService: TollingService) : VehicleInteractor {
+class VehicleInteractorImpl(private val tollingSystemDatabase: TollingSystemDatabase) : VehicleInteractor {
 
     override  suspend fun getVehicleList() : Deferred<List<Vehicle>>{
-        val deferred = CompletableDeferred<List<Vehicle>>()
+        return async { tollingSystemDatabase.VehicleDao().findAll() }
+    }
 
-        deferred.complete(
-        listOf(
-                Vehicle(1, "14-AR-43", "david",Tare.Classe_1),
-                Vehicle(2, "44-EW-82", "david",Tare.Classe_2),
-                Vehicle(3, "17-AC-19", "david",Tare.Classe_3),
-                Vehicle(4, "76-CC-63", "david",Tare.Classe_4),
-                Vehicle(5, "05-VW-59", "david",Tare.Classe_5)
+    override suspend fun getVehicle(id: Int): Deferred<Vehicle> {
+        return async { tollingSystemDatabase.VehicleDao().findById(id) }
+    }
 
-        ))
-        //return tollingService.getVehicleList("me")
+    override suspend fun getActiveVehicle(): Deferred<Vehicle?> {
+        return async { tollingSystemDatabase.VehicleDao().findActive() }
+    }
 
+    override suspend fun setActiveVehicle(vehicle: Vehicle): Job {
+        return async {
+            if(tollingSystemDatabase.VehicleDao().findActive() != null) throw Exception("a vehicle is already active")
+            vehicle.active = true
+            tollingSystemDatabase.VehicleDao().setActive(vehicle)
+            true
+        }
+    }
 
-        return deferred
+    override suspend fun removeActiveVehicle(vehicle: Vehicle): Deferred<Boolean>{
+       return async {
+            vehicle.active = false
+            tollingSystemDatabase.VehicleDao().removeActive(vehicle)
+            true
+        }
     }
 }

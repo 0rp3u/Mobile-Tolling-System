@@ -1,17 +1,19 @@
 package pt.isel.ps.g30.tollingsystem.view.notifications
 
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.notifications_fragment.*
+import kotlinx.android.synthetic.main.progress_bar.*
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.extensions.app
-import pt.isel.ps.g30.tollingsystem.injection.module.NotificationModule
-import pt.isel.ps.g30.tollingsystem.model.Notification
+import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
+import pt.isel.ps.g30.tollingsystem.data.api.model.Notification
+import pt.isel.ps.g30.tollingsystem.extensions.longSnackbar
+import pt.isel.ps.g30.tollingsystem.extensions.snackbar
 import pt.isel.ps.g30.tollingsystem.presenter.notification.NotificationPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
 import javax.inject.Inject
@@ -25,7 +27,7 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
 
     override fun injectDependencies() {
        app.applicationComponent
-                .plus(NotificationModule())
+                .plus(PresentersModule())
                 .injectTo(this)
     }
 
@@ -58,20 +60,30 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
 
 
     override fun showLoadingIndicator() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        progressBar.isVisible = true
     }
 
     override fun hideLoadingIndicator() {
-        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressBar.isVisible = false
     }
 
 
-    override fun showDoneMessage() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    override fun showDoneMessage(message:String?) {
+        snackbar(this.view!!, message ?: "done")
     }
 
-    override fun showErrorMessage() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showErrorMessage(error: String?, action: ((View) -> Unit)?) {
+       if(action != null)
+           longSnackbar(this.view!!, error ?: "error, something when wrong","repeat?", action)
+       else
+           snackbar(this.view!!, error ?: "error, something when wrong")
+    }
+
+    override fun onDestroyView() {
+        presenter.cancelRequest()
+        super.onDestroyView()
     }
 
 }

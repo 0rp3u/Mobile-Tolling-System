@@ -15,6 +15,7 @@ import android.preference.PreferenceFragment
 import android.preference.PreferenceManager
 import android.preference.RingtonePreference
 import android.text.TextUtils
+import android.view.Menu
 import android.view.MenuItem
 import pt.isel.ps.g30.tollingsystem.R
 
@@ -41,6 +42,7 @@ class SettingsActivity : AppCompatPreferenceActivity() {
     private fun setupActionBar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
+
 
     /**
      * {@inheritDoc}
@@ -114,6 +116,8 @@ class SettingsActivity : AppCompatPreferenceActivity() {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"))
         }
+
+
 
         override fun onOptionsItemSelected(item: MenuItem): Boolean {
             val id = item.itemId

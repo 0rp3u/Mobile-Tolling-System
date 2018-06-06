@@ -1,12 +1,12 @@
 package pt.isel.ps.g30.tollingsystem.view.notifications
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_notification.view.*
 import pt.isel.ps.g30.tollingsystem.R
-import pt.isel.ps.g30.tollingsystem.model.Notification
+import pt.isel.ps.g30.tollingsystem.data.api.model.Notification
 
 class NotificationRecyclerViewAdapter(val listener: (Notification) -> Unit) : RecyclerView.Adapter<NotificationRecyclerViewAdapter.ViewHolder>() {
 

@@ -5,6 +5,6 @@ import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleView
 
 interface VehiclePresenter : BasePresenter<VehicleView> {
 
-    fun getVehicleList()
+    fun getVehicle(id:Int)
 
 }

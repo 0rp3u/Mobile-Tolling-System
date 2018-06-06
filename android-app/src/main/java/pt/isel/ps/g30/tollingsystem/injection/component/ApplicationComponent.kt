@@ -8,16 +8,14 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     ApplicationModule::class,
-    DataModule::class,
-    RoomModule::class
+    NetworkModule::class,
+    DatabaseModule::class,
+    LocationModule::class
+
 ])
 
 interface ApplicationComponent {
 
-    fun plus(module: VehicleModule): VehicleComponent
-    fun plus(module: NotificationModule): NotificationComponent
-    fun plus(module: AuthModule): LoginComponent
-    fun plus(module: RoomModule):RoomModule
-
+    fun plus(module: PresentersModule): PresenterComponent
 
 }

@@ -1,35 +1,46 @@
 package pt.isel.ps.g30.tollingsystem.interceptor
 
 import android.util.Base64
-
 import java.io.IOException
-
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
+import android.R.id.edit
+
+
 
 class HttpAuthInterceptor : Interceptor {
 
-    private lateinit var httpUsername: String
-    private lateinit var httpPassword: String
+    private var authorizationValue = ""
+    private var sessionCookie = ""
+
 
     fun setCredentials(httpUsername: String, httpPassword: String){
-        this.httpPassword = httpPassword
-        this.httpUsername = httpUsername
+        val userAndPassword = "$httpUsername:$httpPassword"
+        authorizationValue= "Basic ${Base64.encodeToString(userAndPassword.toByteArray(), Base64.NO_WRAP)}"
     }
 
-    private val authorizationValue: String
-        get() {
-            val userAndPassword = "httpUsername:$httpPassword"
-            return "Basic ${Base64.encodeToString(userAndPassword.toByteArray(), Base64.NO_WRAP)}"
-        }
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val newRequest = chain.request().newBuilder()
-                .addHeader("Authorization", authorizationValue)
+                .addHeader("Cookie", sessionCookie)
+                .apply {
+                    if(authorizationValue.isNotEmpty()) addHeader("Authorization", authorizationValue)
+                }
                 .build()
 
-        return chain.proceed(newRequest)
+        val originalResponse = chain.proceed(newRequest)
+
+        if (originalResponse.isSuccessful && !originalResponse.headers("Set-Cookie").isEmpty()) {
+
+            for (header in originalResponse.headers("Set-Cookie")) { //TODO make sure is only the session cookie
+                sessionCookie = header
+                //authorizationValue=""
+            }
+
+            //TODO save cookie persistently
+        }
+
+        return originalResponse
     }
 }

@@ -12,7 +12,9 @@ abstract class BasePresenterImpl<V: BaseView> : BasePresenter<V> {
     }
 
     override fun onViewDetached() {
+        this.cancelRequest()
         this.view = null
+
     }
 
 }

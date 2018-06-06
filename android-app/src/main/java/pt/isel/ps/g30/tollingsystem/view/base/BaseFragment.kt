@@ -1,7 +1,7 @@
 package pt.isel.ps.g30.tollingsystem.view.base
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenter
 
 

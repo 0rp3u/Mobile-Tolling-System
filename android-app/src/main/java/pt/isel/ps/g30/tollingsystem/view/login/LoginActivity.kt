@@ -1,25 +1,21 @@
 package pt.isel.ps.g30.tollingsystem.view.login
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
-import androidx.core.content.edit
 import pt.isel.ps.g30.tollingsystem.R
 
-import org.jetbrains.anko.startActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.design.snackbar
-import org.jetbrains.anko.textColor
-import org.jetbrains.anko.vibrator
 import pt.isel.ps.g30.tollingsystem.extensions.app
-import pt.isel.ps.g30.tollingsystem.injection.module.ApplicationModule_ProvideSharedPreferencesFactory
-import pt.isel.ps.g30.tollingsystem.injection.module.AuthModule
 import pt.isel.ps.g30.tollingsystem.presenter.login.LoginPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseActivity
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
 import javax.inject.Inject
+import android.content.Intent
+import android.net.Uri
+import pt.isel.ps.g30.tollingsystem.extensions.startActivity
+import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
+
 
 class LoginActivity : BaseActivity<LoginPresenter,LoginView>(), LoginView {
 
@@ -31,7 +27,7 @@ class LoginActivity : BaseActivity<LoginPresenter,LoginView>(), LoginView {
 
     override fun injectDependencies() {
         app.applicationComponent
-                .plus(AuthModule())
+                .plus(PresentersModule())
                 .injectTo(this)
     }
 
@@ -40,8 +36,11 @@ class LoginActivity : BaseActivity<LoginPresenter,LoginView>(), LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        this.link_signup.setOnClickListener {
-            //startActivity<SignupActivity>() TODO create sign up activity?
+       link_signup.setOnClickListener {
+           startActivity(Intent(
+                   Intent.ACTION_VIEW,
+                   Uri.parse("https://www.viaverde.pt/outros/adesao?s=dados_contracto")
+           ))
         }
     }
 
@@ -79,5 +78,8 @@ class LoginActivity : BaseActivity<LoginPresenter,LoginView>(), LoginView {
         }
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.cancelRequest()
+    }
 }

@@ -1,10 +1,9 @@
 package pt.isel.ps.g30.tollingsystem.view.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenter
 
@@ -14,7 +13,7 @@ import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenter
  */
 abstract class BaseActivity<P: BasePresenter<V>, in V> : BaseView, AppCompatActivity() {
 
-    abstract fun injectDependencies()
+    abstract fun injectDependencies() //<- injects the P presenter
 
     open lateinit var presenter: P
 
@@ -25,6 +24,7 @@ abstract class BaseActivity<P: BasePresenter<V>, in V> : BaseView, AppCompatActi
 
     override fun onStart() {
         super.onStart()
+        @Suppress("UNCHECKED_CAST")
         presenter.onViewAttached(this as V)
     }
 
@@ -46,5 +46,10 @@ abstract class BaseActivity<P: BasePresenter<V>, in V> : BaseView, AppCompatActi
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onStop() {
+        presenter.onViewDetached()
+        super.onStop()
     }
 }

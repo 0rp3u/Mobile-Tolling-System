@@ -6,7 +6,4 @@ interface SplashView : BaseView {
 
     fun successfullLogin()
     fun failedLogin()
-    fun showLoadingIndicator()
-    fun hideLoadingIndicator()
-
 }

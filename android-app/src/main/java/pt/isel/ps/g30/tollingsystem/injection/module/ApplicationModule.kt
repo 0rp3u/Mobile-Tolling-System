@@ -2,9 +2,9 @@ package pt.isel.ps.g30.tollingsystem.injection.module
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import dagger.Module
 import dagger.Provides
-import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import javax.inject.Singleton
 
 @Module
