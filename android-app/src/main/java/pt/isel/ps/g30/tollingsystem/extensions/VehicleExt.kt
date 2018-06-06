@@ -1,8 +1,8 @@
 package pt.isel.ps.g30.tollingsystem.extensions
 
 import pt.isel.ps.g30.tollingsystem.R
-import pt.isel.ps.g30.tollingsystem.model.Tare
-import pt.isel.ps.g30.tollingsystem.model.Vehicle
+import pt.isel.ps.g30.tollingsystem.data.api.model.Tare
+import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 
 fun Vehicle.getIconResource() = when(tare){
     Tare.Classe_1 -> R.drawable.ic_tare_1
