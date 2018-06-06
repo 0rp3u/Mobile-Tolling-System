@@ -5,5 +5,5 @@
     <!--<item android:drawable="@drawable/launch_gradient"/>-->
     <!--<item android:drawable="@drawable/ic_sc17" />-->
     <item android:drawable="@color/pantone"/>
-    <item android:gravity="center" android:drawable="@drawable/ic_white_isel"/>
+    <item android:gravity="center" android:drawable="@drawable/ic_white_isel" />
 </layer-list>

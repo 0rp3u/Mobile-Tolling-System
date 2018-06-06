@@ -1,6 +1,5 @@
 <resources>
     <!--
-    TODO: Before you run your application, you need a Google Maps API key.
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
@@ -12,7 +11,8 @@
     0B:DC:28:ED:FC:28:07:74:5F:AE:24:13:B2:22:31:D8:99:DA:DE:49
 
     SHA-1 certificate fingerprint:
-    0B:DC:28:ED:FC:28:07:74:5F:AE:24:13:B2:22:31:D8:99:DA:DE:49
+     A7:C6:27:AE:4C:EE:87:1A:66:06:73:40:C8:EA:F6:5D:C3:07:38:C9
+
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key

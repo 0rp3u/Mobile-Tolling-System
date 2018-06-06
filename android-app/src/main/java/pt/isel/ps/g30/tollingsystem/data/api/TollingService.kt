@@ -1,21 +1,18 @@
-package pt.isel.ps.g30.tollingsystem.api
+package pt.isel.ps.g30.tollingsystem.data.api
 
 import kotlinx.coroutines.experimental.Deferred
-import pt.isel.ps.g30.tollingsystem.model.TollingPlaza
-import pt.isel.ps.g30.tollingsystem.model.TollingTransaction
-import pt.isel.ps.g30.tollingsystem.model.User
-import pt.isel.ps.g30.tollingsystem.model.Vehicle
+import pt.isel.ps.g30.tollingsystem.data.api.model.*
+
+import retrofit2.Response
 import retrofit2.http.*
 
 interface TollingService {
 
-    //TODO use interceptor for authorization header, https://github.com/square/okhttp/wiki/Interceptors
+    @GET("/users/authentication")
+    fun authenticate(): Deferred<Response<Void>>
 
     @GET("plazas/{position}")
     fun getNearPlazas(position : String): Deferred<List<TollingPlaza>>
-
-    @POST("user/new")
-    fun createUser(@Body user: User): Deferred<User>
 
     @GET("vehicle")
     fun getVehicleList(): Deferred<List<Vehicle>>
@@ -42,7 +39,7 @@ interface TollingService {
     fun getClosedTransactionList(@Query("owner") owner: String): Deferred<List<TollingTransaction>>
 
     @GET("transaction/open")
-    fun getOpenTransactionList(@Header("Authorization") authorization: String): Deferred<List<TollingTransaction>>
+    fun getOpenTransactionList(): Deferred<List<TollingTransaction>>
 
     @GET("transaction/{id}")
     fun getTransactionDetails( @Path("id") id: Int): Deferred<TollingTransaction>
