@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pt.isel.ps.g30.tollingsystem.geofencing
+package pt.isel.ps.g30.tollingsystem.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -34,10 +34,11 @@ import androidx.core.app.TaskStackBuilder
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
-import pt.isel.ps.g30.tollingsystem.extensions.app
+import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
+import pt.isel.ps.g30.tollingsystem.extension.getIconResource
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTripInteractor
@@ -101,15 +102,22 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
             val geofenceTransitionDetails = getGeofenceTransitionDetails(geofenceTransition,
                     triggeringGeofences)
 
+            launch{
+                val plaza = tollingPlazaInteractor.getTollPlaza(triggeringGeofences.first().requestId.toInt()).await()
+                val currentTrip = tollingTripInteractor.getActiveTollingTrip().await()
 
-            runBlocking {
-                val plaza = tollingPlazaInteractor.getTollPlaza(triggeringGeofences.first().requestId.toInt())
-                tollingTripInteractor.startTollingTrip(plaza.await())
+                // Send notification and log the transition details.
 
+                if(currentTrip.origin!=null){
+                    val trip = tollingTripInteractor.finishTollingTrip(plaza).await().also { it.origin = currentTrip.origin } //<- hack, needed for now
+                    sendNotification(trip)
+                    Log.e(TAG, "finished trip @ ${trip.destination}")
+                } else{
+                    val trip = tollingTripInteractor.startTollingTrip(plaza).await()
+                    sendNotification(trip)
+                    Log.e(TAG, "started trip @ ${trip.origin}")
+                }
             }
-
-            // Send notification and log the transition details.
-            sendNotification(geofenceTransitionDetails)
             Log.i(TAG, geofenceTransitionDetails)
         } else {
             // Log the error.
@@ -144,7 +152,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
      * Posts a notification in the notification bar when a transition is detected.
      * If the user clicks the notification, control goes to the MainActivity.
      */
-    private fun sendNotification(notificationDetails: String) {
+    private fun sendNotification(trip: ActiveTrip) {
         // Get an instance of the Notification manager
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -159,7 +167,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
         }
 
         // Create an explicit content Intent that starts the main Activity.
-        val notificationIntent = Intent(getApplicationContext(), MainActivity::class.java)
+        val notificationIntent = Intent(applicationContext, MainActivity::class.java)
 
         // Construct a task stack.
         val stackBuilder = TaskStackBuilder.create(this)
@@ -177,15 +185,19 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
         val builder = NotificationCompat.Builder(this)
 
         // Define the notification settings.
-        builder.setSmallIcon(R.drawable.ic_directions_car_black_24dp)
-                // In a real app, you may want to use a library like Volley
-                // to decode the Bitmap.
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),
-                        R.drawable.ic_directions_car_black_24dp))
+        val carIcon = trip.vehicle?.getIconResource() ?: R.drawable.ic_directions_car_black_24dp
+        builder.setSmallIcon(carIcon)
+                .setLargeIcon(BitmapFactory.decodeResource(resources, carIcon))
                 .setColor(Color.RED)
-                .setContentTitle(notificationDetails)
-                .setContentText("trigger")
                 .setContentIntent(notificationPendingIntent)
+
+        if(trip.destination!=null){
+            builder.setContentTitle("finished trip")
+                    .setContentText("finished trip from ${trip.origin?.name}  to ${trip.destination?.name}")
+        } else{
+            builder.setContentTitle("started trip")
+                    .setContentText("started trip on ${trip.origin?.name}")
+        }
 
         // Set the Channel ID for Android O.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -1,4 +1,4 @@
-package pt.isel.ps.g30.tollingsystem.extensions
+package pt.isel.ps.g30.tollingsystem.extension
 
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.data.api.model.Tare

@@ -1,9 +1,7 @@
 package pt.isel.ps.g30.tollingsystem.view.base
 
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.MapsInitializer
@@ -12,9 +10,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.LayoutInflater
-import kotlinx.android.synthetic.main.location_fragment.*
+import kotlinx.android.synthetic.main.fragment_location.*
 import pt.isel.ps.g30.tollingsystem.R
-import pt.isel.ps.g30.tollingsystem.extensions.askPermission
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenter
 
 
@@ -27,7 +24,7 @@ abstract class BaseMapViewFragment<P: BasePresenter<V>, in V> : BaseView, BaseFr
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         Log.d(TAG, "onCreate")
-        return inflater.inflate(R.layout.location_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_location, container, false)
     }
 
 
@@ -108,4 +105,5 @@ abstract class BaseMapViewFragment<P: BasePresenter<V>, in V> : BaseView, BaseFr
         Log.d(TAG, "on low memory")
         mapView?.onLowMemory()
     }
+
 }

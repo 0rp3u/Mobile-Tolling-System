@@ -10,7 +10,7 @@ import pt.isel.ps.g30.tollingsystem.view.login.LoginView
 import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 
-class LoginPresenterImpl(private val interactor: AuthInteractor, private val sharedPreferences: SharedPreferences) :
+class LoginPresenterImpl(private val interactor: AuthInteractor) :
         BasePresenterImpl<LoginView>(), LoginPresenter{
 
     private val jobs = Job()

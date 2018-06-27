@@ -4,10 +4,10 @@ import androidx.room.PrimaryKey
 import androidx.room.Entity
 import androidx.room.TypeConverters
 
-import pt.isel.ps.g30.tollingsystem.data.database.model.converter.TareConverter
+import pt.isel.ps.g30.tollingsystem.data.database.model.converter.Converters
 import pt.isel.ps.g30.tollingsystem.data.api.model.Tare
 
-@TypeConverters(TareConverter::class)
+@TypeConverters(Converters::class)
 @Entity
 data class Vehicle(
 
@@ -16,8 +16,6 @@ data class Vehicle(
         val ownerId: Int,
 
         val tare: Tare,
-
-        var active: Boolean = false,
 
         @PrimaryKey(autoGenerate = true)
         var id : Int = 0

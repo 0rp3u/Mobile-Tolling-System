@@ -1,4 +1,4 @@
- package pt.isel.ps.g30.tollingsystem.extensions
+ package pt.isel.ps.g30.tollingsystem.extension
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -35,7 +35,7 @@ import org.jetbrains.anko.toast
   *
   * @param message the message text resource.
   */
- inline fun Fragment.toast(message: Int) = requireActivity().toast(message)
+ inline fun Fragment.toast(message: Int) = context?.toast(message)
 
  /**
   * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.
@@ -60,7 +60,7 @@ import org.jetbrains.anko.toast
   *
   * @param message the message text.
   */
- inline fun Fragment.toast(message: CharSequence) = requireActivity().toast(message)
+ inline fun Fragment.toast(message: CharSequence) = context?.toast(message)
 
  /**
   * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.

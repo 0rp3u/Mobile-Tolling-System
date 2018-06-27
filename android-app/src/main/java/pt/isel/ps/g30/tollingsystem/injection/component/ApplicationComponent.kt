@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 ])
 
-interface ApplicationComponent {
+interface ApplicationComponent : BaseComponent{
 
     fun plus(module: PresentersModule): PresenterComponent
 

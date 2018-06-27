@@ -1,4 +1,4 @@
-package pt.isel.ps.g30.tollingsystem.extensions
+package pt.isel.ps.g30.tollingsystem.extension
 
 import androidx.appcompat.app.AppCompatActivity
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp

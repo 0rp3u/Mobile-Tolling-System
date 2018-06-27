@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import pt.isel.ps.g30.tollingsystem.R
-import kotlinx.android.synthetic.main.frag_text.*
+import kotlinx.android.synthetic.main.fragment_text.*
 class TextFragment: Fragment() {
 
     private var title: String? = null
@@ -19,7 +19,7 @@ class TextFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = View.inflate(context, R.layout.frag_text, null)
+        val view = View.inflate(context, R.layout.fragment_text, null)
         return view
     }
 

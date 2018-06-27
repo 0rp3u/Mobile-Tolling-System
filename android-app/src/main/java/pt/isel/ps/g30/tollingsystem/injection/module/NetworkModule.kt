@@ -7,7 +7,7 @@ import okhttp3.Cache
 import okhttp3.OkHttpClient
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import pt.isel.ps.g30.tollingsystem.data.api.TollingService
-import pt.isel.ps.g30.tollingsystem.interceptor.HttpAuthInterceptor
+import pt.isel.ps.g30.tollingsystem.data.api.interceptor.HttpAuthInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton

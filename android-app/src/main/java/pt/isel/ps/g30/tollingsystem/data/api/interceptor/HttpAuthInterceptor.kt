@@ -1,11 +1,9 @@
-package pt.isel.ps.g30.tollingsystem.interceptor
+package pt.isel.ps.g30.tollingsystem.data.api.interceptor
 
 import android.util.Base64
 import java.io.IOException
 import okhttp3.Interceptor
 import okhttp3.Response
-import android.R.id.edit
-
 
 
 class HttpAuthInterceptor : Interceptor {

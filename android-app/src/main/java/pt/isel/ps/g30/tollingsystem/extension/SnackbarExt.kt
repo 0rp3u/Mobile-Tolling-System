@@ -1,4 +1,4 @@
-package pt.isel.ps.g30.tollingsystem.extensions
+package pt.isel.ps.g30.tollingsystem.extension
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar

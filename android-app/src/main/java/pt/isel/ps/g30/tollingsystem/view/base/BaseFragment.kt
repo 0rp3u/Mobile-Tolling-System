@@ -13,8 +13,8 @@ abstract class BaseFragment<P: BasePresenter<V>, in V> : BaseView, Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
+        injectDependencies()
     }
 
     override fun onStart() {
@@ -23,7 +23,7 @@ abstract class BaseFragment<P: BasePresenter<V>, in V> : BaseView, Fragment() {
     }
 
     override fun onStop() {
-        presenter.onViewDetached()
         super.onStop()
+        presenter.onViewDetached()
     }
 }

@@ -6,14 +6,14 @@ import android.view.animation.AnimationUtils
 import pt.isel.ps.g30.tollingsystem.R
 
 import kotlinx.android.synthetic.main.activity_login.*
-import pt.isel.ps.g30.tollingsystem.extensions.app
+import pt.isel.ps.g30.tollingsystem.extension.app
 import pt.isel.ps.g30.tollingsystem.presenter.login.LoginPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseActivity
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
 import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
-import pt.isel.ps.g30.tollingsystem.extensions.startActivity
+import pt.isel.ps.g30.tollingsystem.extension.startActivity
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 
 

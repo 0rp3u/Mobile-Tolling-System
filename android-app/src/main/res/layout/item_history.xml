@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
+    android:id="@+id/history_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentEnd="false"
-    android:layout_alignParentLeft="false"
-    android:layout_alignParentStart="false"
-    android:layout_alignParentTop="false"
-    android:layout_alignWithParentIfMissing="false"
-    android:layout_centerInParent="false"
     android:layout_marginBottom="8dp"
     card_view:cardCornerRadius="2dp"
     card_view:cardElevation="2dp">
@@ -36,56 +29,88 @@
             android:orientation="horizontal"
             android:padding="8dp">
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/date_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="clip_vertical"
-                android:padding="8dp"
-                android:text="date" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="8dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/from"
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="from" />
+                    android:gravity="start"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/from"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="from" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/date_origin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:textSize="12sp"
+                        android:text="date" />
+
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" ~> " />
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="  to " />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/destination"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="destination" />
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/destination"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="destination"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/date_destination"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="date"
+                        android:textSize="12sp"/>
+
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|fill_vertical"
+                    card_view:srcCompat="@drawable/ic_chevron_right_black_24dp" />
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|fill_vertical"
-                card_view:srcCompat="@drawable/ic_chevron_right_black_24dp" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </RelativeLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-    </androidx.cardview.widget.CardView>
 
 </androidx.cardview.widget.CardView>

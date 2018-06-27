@@ -1,5 +1,7 @@
 package pt.isel.ps.g30.tollingsystem.presenter.base
 
+import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import pt.isel.ps.g30.tollingsystem.view.base.BaseView
 
 
@@ -13,8 +15,5 @@ abstract class BasePresenterImpl<V: BaseView> : BasePresenter<V> {
 
     override fun onViewDetached() {
         this.cancelRequest()
-        this.view = null
-
     }
-
 }

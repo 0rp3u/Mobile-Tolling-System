@@ -1,3 +1,9 @@
 package pt.isel.ps.g30.tollingsystem.view.base
 
-interface BaseView
+import androidx.lifecycle.LifecycleOwner
+
+interface BaseView : LifecycleOwner{
+
+
+
+}

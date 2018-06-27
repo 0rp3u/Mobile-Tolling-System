@@ -6,24 +6,27 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
 import kotlinx.coroutines.experimental.delay
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
+import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTripInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
-import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleView
+import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleDetailsView
 
 class
-VehiclePresenterImpl(private val interactor: VehicleInteractor) :
-        BasePresenterImpl<VehicleView>(), VehiclePresenter{
+VehiclePresenterImpl(private val vehicleInteractor: VehicleInteractor, private val tripInteractor: TollingTripInteractor) :
+        BasePresenterImpl<VehicleDetailsView>(), VehiclePresenter{
 
-    private lateinit var vehicle: Vehicle
     private val jobs = Job()
 
-    override fun getVehicle(id: Int) {
+    override fun getVehicleDetails(id: Int) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                vehicle = interactor.getVehicle(id).await()
-                delay(1000)
-                view?.showVehicle(vehicle)
+                val vehicle = vehicleInteractor.getVehicle(id)
+                val trips = tripInteractor.getVehicleTripList(id).await()
+                view?.showVehicleBasicInfo(vehicle.await())
+                view?.showVehiclePaidAmount(100.0) // temporary
+                view?.showVehicleTripNumber(trips.size)
+
                 view?.hideLoadingIndicator()
 
             }catch (e: Throwable){

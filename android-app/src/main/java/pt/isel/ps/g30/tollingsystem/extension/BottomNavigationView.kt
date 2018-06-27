@@ -1,12 +1,8 @@
-package pt.isel.ps.g30.tollingsystem.extensions
+package pt.isel.ps.g30.tollingsystem.extension
 
 import androidx.core.view.get
 import androidx.core.view.size
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.jetbrains.anko.itemsSequence
-import android.R.attr.onClick
-
-
 
 
 /**

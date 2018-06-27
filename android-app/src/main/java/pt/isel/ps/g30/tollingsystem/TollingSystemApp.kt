@@ -6,8 +6,8 @@ import pt.isel.ps.g30.tollingsystem.injection.component.ApplicationComponent
 import pt.isel.ps.g30.tollingsystem.injection.module.ApplicationModule
 import pt.isel.ps.g30.tollingsystem.injection.module.NetworkModule
 import android.os.StrictMode
-import android.util.Log
 import com.squareup.leakcanary.LeakCanary
+import pt.isel.ps.g30.tollingsystem.injection.component.BaseComponent
 
 
 open class TollingSystemApp : Application() {
@@ -17,6 +17,11 @@ open class TollingSystemApp : Application() {
                 .applicationModule(ApplicationModule(this))
                 .networkModule(NetworkModule("http://10.10.3.213:8081"))
                 .build()
+    }
+
+
+    open fun component(): BaseComponent {
+        return applicationComponent
     }
 
     override fun onCreate() {

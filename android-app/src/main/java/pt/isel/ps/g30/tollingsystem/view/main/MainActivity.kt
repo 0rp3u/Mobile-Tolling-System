@@ -1,24 +1,18 @@
 package pt.isel.ps.g30.tollingsystem.view.main
 
-import android.app.Activity
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.SparseIntArray
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.bnve_notifications_layout.*
-import kotlinx.android.synthetic.main.bnve_notifications_layout.view.*
 import pt.isel.ps.g30.tollingsystem.R
-import pt.isel.ps.g30.tollingsystem.R.id
 import pt.isel.ps.g30.tollingsystem.view.common.CustomFragmentPagerAdapter
 import pt.isel.ps.g30.tollingsystem.view.navigation.NavigationViewFragment
 import pt.isel.ps.g30.tollingsystem.view.notifications.NotificationFragment
-import pt.isel.ps.g30.tollingsystem.view.vehicle.VehiclesFragmentFragment
+import pt.isel.ps.g30.tollingsystem.view.vehicle.VehiclesFragment
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
 
@@ -37,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
     // collections
     private val items: SparseIntArray = SparseIntArray(3)// used for change ViewPager selected item
-    private lateinit var fragments: List<Fragment>// used for ViewPager adapterCustom
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -79,31 +72,17 @@ class MainActivity : AppCompatActivity() {
     private fun initData() {
         //items = SparseIntArray()
 
-        val mapFragment = NavigationViewFragment()
-        mapFragment.retainInstance = true
+        adapterCustom.fragments = listOf(
+                NavigationViewFragment(),
+                VehiclesFragment().also{ it.arguments = Bundle().apply {putString("title", getString(R.string.vehicle)) } },
+                NotificationFragment().also { it.arguments = Bundle().apply {putString("title", getString(R.string.notifications)) } }
 
-
-        val backupFragment = VehiclesFragmentFragment()
-        var bundle = Bundle()
-        bundle.putString("title", getString(R.string.vehicle))
-        backupFragment.arguments = bundle
-
-        // create friends fragment and add it
-        val notificationsFragment = NotificationFragment()
-        bundle = Bundle()
-        bundle.putString("title", getString(R.string.notifications))
-        notificationsFragment.arguments = bundle
-
-        // add to fragments for adapterCustom
-        fragments = listOf(mapFragment, backupFragment, notificationsFragment)
-
-        // add to items for change ViewPager item
-        items.put(R.id.i_navigation, 0)
-        items.put(R.id.i_vheicles, 1)
-        items.put(R.id.i_notifications, 2)
-
-        // set adapterCustom
-        adapterCustom.fragments = fragments
+        )
+        items.apply {
+            put(R.id.i_navigation, 0)
+            put(R.id.i_vheicles, 1)
+            put(R.id.i_notifications, 2)
+        }
     }
 
     /**

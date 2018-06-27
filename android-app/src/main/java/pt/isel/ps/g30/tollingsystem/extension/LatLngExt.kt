@@ -1,8 +1,7 @@
-package pt.isel.ps.g30.tollingsystem.extensions
+package pt.isel.ps.g30.tollingsystem.extension
 
 import android.location.Location
 import com.google.android.gms.maps.model.LatLng
-import java.lang.Math.*
 
 fun LatLng.haversineDistance(otherPoint: LatLng): Float {
 

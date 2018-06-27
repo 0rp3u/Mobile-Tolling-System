@@ -72,12 +72,12 @@
         </activity>
 
         <receiver
-            android:name=".geofencing.GeofenceBroadcastReceiver"
+            android:name=".services.GeofenceBroadcastReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
         <service
-            android:name=".geofencing.GeofenceTransitionsJobIntentService"
+            android:name=".services.GeofenceTransitionsJobIntentService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>

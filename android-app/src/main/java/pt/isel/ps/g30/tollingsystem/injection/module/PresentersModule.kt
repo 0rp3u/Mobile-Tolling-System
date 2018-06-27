@@ -17,8 +17,6 @@ import pt.isel.ps.g30.tollingsystem.presenter.notification.NotificationPresenter
 import pt.isel.ps.g30.tollingsystem.presenter.notification.NotificationPresenterImpl
 import pt.isel.ps.g30.tollingsystem.presenter.splash.SplashPresenter
 import pt.isel.ps.g30.tollingsystem.presenter.splash.SplashPresenterImpl
-import pt.isel.ps.g30.tollingsystem.presenter.tollingTripInfo.TollingTripInfoPresenter
-import pt.isel.ps.g30.tollingsystem.presenter.tollingTripInfo.TollingTripInfoPresenterImpl
 import pt.isel.ps.g30.tollingsystem.presenter.tollingtrip.TollingTripFragPresenter
 import pt.isel.ps.g30.tollingsystem.presenter.tollingtrip.TollingTripFragPresenterImpl
 import pt.isel.ps.g30.tollingsystem.presenter.vehicle.*
@@ -27,12 +25,12 @@ import pt.isel.ps.g30.tollingsystem.presenter.vehicle.*
 class PresentersModule {
 
     @Provides
-    fun provideLoginPresenter(interactor: AuthInteractor, sharedPreferences: SharedPreferences): LoginPresenter
-            = LoginPresenterImpl(interactor, sharedPreferences)
+    fun provideLoginPresenter(interactor: AuthInteractor): LoginPresenter
+            = LoginPresenterImpl(interactor)
 
     @Provides
-    fun provideSplashPresenter(interactor: AuthInteractor, sharedPreferences: SharedPreferences): SplashPresenter
-            = SplashPresenterImpl(interactor, sharedPreferences)
+    fun provideSplashPresenter(interactor: AuthInteractor): SplashPresenter
+            = SplashPresenterImpl(interactor)
 
     @Provides
     fun provideTollingTripFragPresenter(interactor: TollingTripInteractor): TollingTripFragPresenter
@@ -47,17 +45,12 @@ class PresentersModule {
             = VehiclesFragPresenterImpl(interactor)
 
     @Provides
-    fun provideVehiclePresenter(interactor: VehicleInteractor): VehiclePresenter
-            = VehiclePresenterImpl(interactor)
+    fun provideVehiclePresenter(interactor: VehicleInteractor, tripInteractor: TollingTripInteractor): VehiclePresenter
+            = VehiclePresenterImpl(interactor, tripInteractor)
 
     @Provides
     fun provideNotificationPresenter(interactor: NotificationInteractor): NotificationPresenter {
         return NotificationPresenterImpl(interactor)
-    }
-
-    @Provides
-    fun provideTollingTripInfoPresenter(interactor: TollingTripInteractor): TollingTripInfoPresenter {
-        return TollingTripInfoPresenterImpl(interactor)
     }
 
 }

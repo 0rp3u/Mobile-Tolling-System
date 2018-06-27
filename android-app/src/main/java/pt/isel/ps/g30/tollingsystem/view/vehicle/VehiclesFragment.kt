@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.progress_bar.*
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
-import kotlinx.android.synthetic.main.vehicles_fragment.*
-import pt.isel.ps.g30.tollingsystem.extensions.*
+import kotlinx.android.synthetic.main.fragment_vehicles.*
+import pt.isel.ps.g30.tollingsystem.extension.*
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.presenter.vehicle.VehiclesFragPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
 import javax.inject.Inject
 
-class VehiclesFragmentFragment: BaseFragment<VehiclesFragPresenter, VehiclesFragmentView>(), VehiclesFragmentView{
+class VehiclesFragment: BaseFragment<VehiclesFragPresenter, VehiclesFragmentView>(), VehiclesFragmentView{
 
 
 
@@ -36,21 +36,19 @@ class VehiclesFragmentFragment: BaseFragment<VehiclesFragPresenter, VehiclesFrag
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         try {
-            val view = inflater.inflate(R.layout.vehicles_fragment, container, false)
-            vehicleRecyclerViewAdapter = VehicleRecyclerViewAdapter { (id, licensePlate) ->
+            val view = inflater.inflate(R.layout.fragment_vehicles, container, false)
+            vehicleRecyclerViewAdapter = VehicleRecyclerViewAdapter {
                 startActivity<VehicleActivity>(
-                        VehicleActivity.EXTRA_VEHICLE_ID to id,
-                        VehicleActivity.EXTRA_VEHICLE_LICENSE_PLATE to licensePlate
+                        VehicleActivity.EXTRA_VEHICLE_ID to it.id,
+                        VehicleActivity.EXTRA_VEHICLE_LICENSE_PLATE to it.licensePlate
                 )
             }
 
             return view
         } catch (e: Exception) {
-            Log.e("frag vehicles!!!", "onCreateView", e)
+            Log.e("frag vehicles", "onCreateView", e)
             throw e
         }
-
-        return null
     }
 
 

@@ -6,12 +6,13 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import pt.isel.ps.g30.tollingsystem.presenter.vehicle.VehiclesFragPresenterImpl
-import pt.isel.ps.g30.tollingsystem.view.vehicle.TollingTripsFragmentView
+import pt.isel.ps.g30.tollingsystem.view.tollingtrip.TollingTripsFragmentView
+import pt.isel.ps.g30.tollingsystem.view.vehicle.VehiclesFragmentView
 
 class VehiclesFragPresenterTest : BasePresenterTest() {
 
     @Mock
-    lateinit var view: TollingTripsFragmentView
+    lateinit var view: VehiclesFragmentView
 
     @InjectMocks
     lateinit var presenter: VehiclesFragPresenterImpl

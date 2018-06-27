@@ -7,7 +7,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.Drawable
+import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import android.view.LayoutInflater
 import android.view.View
@@ -23,9 +23,8 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.places.GeoDataClient
 import com.google.maps.android.ui.IconGenerator
 import com.google.android.gms.maps.model.LatLng
-import kotlinx.android.synthetic.main.location_fragment.*
+import kotlinx.android.synthetic.main.fragment_location.*
 import kotlinx.android.synthetic.main.dialog_vehicles.view.*
-import com.google.android.gms.location.places.Places
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.dialog_cancel_trip.view.*
 import kotlinx.android.synthetic.main.dialog_toll_plaza_options.view.*
@@ -34,13 +33,14 @@ import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.imageView
 import org.jetbrains.anko.textView
 import pt.isel.ps.g30.tollingsystem.R
+import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.presenter.navigation.NavigationFragPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseMapViewFragment
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
-import pt.isel.ps.g30.tollingsystem.extensions.*
+import pt.isel.ps.g30.tollingsystem.extension.*
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleActivity
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleRecyclerViewAdapter
 
@@ -59,7 +59,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     private var tollMarkers: List<Marker> = listOf()
     private var vehicleMarker: Marker? = null
-    private var currentTrip: TollingTrip? = null
+    private var currentTrip: ActiveTrip? = null
 
     private val locationUpdatesCallback by lazy {
         object : LocationCallback() {
@@ -85,9 +85,11 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     override fun onStop() {
         super.onStop()
-        mFusedLocationClient.removeLocationUpdates(locationUpdatesCallback)
+        try{mFusedLocationClient.removeLocationUpdates(locationUpdatesCallback)}catch (e: Exception){}
     }
 
+
+    @SuppressLint("MissingPermission")
     override fun mapReady() {
         askPermission(Manifest.permission.ACCESS_FINE_LOCATION) {
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NavigationViewFragment.requireContext())
@@ -107,9 +109,8 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     }
 
-
     private fun onMarkerInfoClick(tollingPlaza: TollingPlaza) {
-        if (vehicleMarker == null) return toast("no active vehicle")
+        if (vehicleMarker == null){ toast("no active vehicle"); return }
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_toll_plaza_options, null).apply {
             toll.text = tollingPlaza.name
@@ -120,8 +121,13 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                 .setTitle("${tollingPlaza.name} toll options")
                 .setView(dialogView)
                 .setPositiveButton("yes", { dialogInterface, i ->
-                    currentTrip?.let { presenter.finishTrip(tollingPlaza) }
-                            ?: presenter.startTrip(tollingPlaza); dialogInterface.dismiss()
+
+                    if(currentTrip?.origin != null)
+                        presenter.finishTrip(tollingPlaza)
+                    else
+                        presenter.startTrip(tollingPlaza)
+
+                    dialogInterface.dismiss()
                 })
                 .setNegativeButton("no", { dialogInterface, i -> dialogInterface.cancel() })
                 .create()
@@ -144,6 +150,8 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         }
     }
 
+
+    /** Vehicles **/
 
     override fun showActiveVehicle(vehicle: Vehicle?) {
         vehicle?.let {
@@ -173,39 +181,6 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     }
 
 
-    override fun showActiveTrip(trip: TollingTrip?) {
-        currentTrip = trip?.apply {
-            tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == trip.origin.id else false }?.setIcon(bitmapDescriptorFromVector(this@NavigationViewFragment.requireContext(), R.drawable.ic_toll_green))
-            fab.setOnClickListener { showCancelActiveTripDialog(trip) }
-        }
-    }
-
-    override fun removeActiveTrip() {
-        tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == currentTrip?.origin?.id else false }?.setIcon(bitmapDescriptorFromVector(this@NavigationViewFragment.requireContext(), R.drawable.ic_sc17))
-        currentTrip = null
-
-    }
-
-    override fun showCancelActiveTripDialog(trip: TollingTrip) {
-
-        val dialogView = layoutInflater.inflate(R.layout.dialog_cancel_trip, null).apply {
-            timestamp.text = "20/5/2018 12:45"
-            plate.text = trip.vehicle.licensePlate
-            tare.imageResource = trip.vehicle.getIconResource()
-            toll_name.text = trip.origin.name
-            toll_concecion.text = trip.origin.concession
-        }
-
-        AlertDialog.Builder(this.requireContext())
-                .setTitle("${trip.origin.name} toll options")
-                .setView(dialogView)
-                .setPositiveButton("yes, cancel!", { dialogInterface, i -> presenter.cancelActiveTrip(trip); dialogInterface.dismiss() })
-                .setNegativeButton("no", { dialogInterface, i -> dialogInterface.cancel() })
-                .create()
-                .show()
-    }
-
-
     @SuppressLint("MissingPermission")
     private fun showVehicleLocation(vehicle: Vehicle) {
 
@@ -218,28 +193,27 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
         mFusedLocationClient.let {
 
-            it.lastLocation.addOnSuccessListener(this.requireActivity()) { location ->
+            it.lastLocation.addOnSuccessListener(requireActivity()) { location ->
                 // Got last known location. In some rare situations this can be null.
-                location?.apply {
-                    LatLng(latitude, longitude).let {
-                        mMap.apply {
-                            moveCamera(CameraUpdateFactory.newLatLng(it))
-                            animateCamera(CameraUpdateFactory.zoomTo(10.0f), 1000, null)
-                            addMarker(MarkerOptions()
-                                    .icon(BitmapDescriptorFactory.fromBitmap(createVehicleMarkerIcon(vehicle)))
-                                    .position(it)
-                            ).also { vehicleMarker = it }
+                location?.apply { LatLng(latitude, longitude).let {
+                    mMap.apply {
+                        moveCamera(CameraUpdateFactory.newLatLng(it))
+                        animateCamera(CameraUpdateFactory.zoomTo(10.0f), 1000, null)
+                        addMarker(MarkerOptions()
+                                .icon(BitmapDescriptorFactory.fromBitmap(createVehicleMarkerIcon(vehicle)))
+                                .position(it)
+                        ).also { vehicleMarker = it }
 
-                            setOnMarkerClickListener {
-                                if (it == vehicleMarker) {
-                                    this@NavigationViewFragment.startActivity<VehicleActivity>(
-                                            VehicleActivity.EXTRA_VEHICLE_ID to vehicle.id,
-                                            VehicleActivity.EXTRA_VEHICLE_LICENSE_PLATE to vehicle.licensePlate)
-                                }
-                                false
+                        setOnMarkerClickListener {
+                            if (it == vehicleMarker) {
+                                this@NavigationViewFragment.startActivity<VehicleActivity>(
+                                        VehicleActivity.EXTRA_VEHICLE_ID to vehicle.id,
+                                        VehicleActivity.EXTRA_VEHICLE_LICENSE_PLATE to vehicle.licensePlate)
                             }
+                            false
                         }
                     }
+                }
                 }
             }
             it.requestLocationUpdates(mLocationRequest, locationUpdatesCallback, null)
@@ -247,25 +221,28 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     }
 
     private fun addActiveVehicleToMapTop(vehicle: Vehicle) {
-        upper_vehicle_info.visibility = View.VISIBLE
-        upper_vehicle_info.textView().text = vehicle.licensePlate
-        upper_vehicle_info.imageView().image = requireContext().getDrawable(vehicle.getIconResource())
-        upper_vehicle_info.background.alpha = 130
-        upper_vehicle_info.setOnClickListener {
-            vehicleMarker?.let {
+        upper_vehicle_info.apply {
+            removeAllViewsInLayout()
+            visibility = View.VISIBLE
+            textView().text = vehicle.licensePlate
+            imageView().image = requireContext().getDrawable(vehicle.getIconResource())
+            background.alpha = 130
+            setOnClickListener {
+                vehicleMarker?.let {
 
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(5f), 3000, null)
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(5f), 3000, null)
 
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
-                        CameraPosition.Builder()
-                                .target(vehicleMarker?.position)
-                                .zoom(18f)
-                                .tilt(90f)
-                                .bearing(10f)
-                                .build()
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+                            CameraPosition.Builder()
+                                    .target(vehicleMarker?.position)
+                                    .zoom(18f)
+                                    .tilt(90f)
+                                    .bearing(10f)
+                                    .build()
 
-                ))
+                    ))
 
+                }
             }
         }
     }
@@ -292,6 +269,52 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
         alertDialog.show()
 
+    }
+
+
+    /** Trips **/
+
+    override fun showActiveTrip(trip: ActiveTrip) {
+        Log.d(TAG, "show trip view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+        currentTrip = trip.also {
+            tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == trip.origin?.id else false }?.setIcon(bitmapDescriptorFromVector(this@NavigationViewFragment.requireContext(), R.drawable.ic_toll_green))
+            fab.setOnClickListener { showCancelActiveTripDialog(trip) }
+        }
+    }
+
+    override fun removeActiveTrip(trip: ActiveTrip) {
+        Log.d(TAG, "remove trip view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+        tollMarkers.forEach{
+            if (it.tag is TollingPlaza){
+                it.setIcon(bitmapDescriptorFromVector(this@NavigationViewFragment.requireContext(), R.drawable.ic_toll_blue))
+                Log.d(TAG, "Cleaned ${(it.tag as TollingPlaza).name} icon")
+            }
+        }
+
+        fab.setOnClickListener { view ->
+            trip.vehicle?.let { presenter.removeActiveVehicle(it)}
+            fab.setImageResource(R.drawable.ic_navigation_black_24dp)
+        }
+        currentTrip = trip
+    }
+
+    override fun showCancelActiveTripDialog(trip: ActiveTrip) {
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_cancel_trip, null).apply {
+            timestamp.text = trip.destTimestamp?.dateTimeParsed()
+            plate.text = trip.vehicle?.licensePlate
+            tare.imageResource = trip.vehicle!!.getIconResource() //<- !! fine because the trip is active in here
+            toll_name.text = trip.origin?.name
+            toll_concecion.text = trip.origin?.concession
+        }
+
+        AlertDialog.Builder(this.requireContext())
+                .setTitle("${trip.origin?.name} toll options")
+                .setView(dialogView)
+                .setPositiveButton("yes, cancel!", { dialogInterface, i -> presenter.cancelActiveTrip(trip); dialogInterface.dismiss() })
+                .setNegativeButton("no", { dialogInterface, i -> dialogInterface.cancel() })
+                .create()
+                .show()
     }
 
     private fun test() {

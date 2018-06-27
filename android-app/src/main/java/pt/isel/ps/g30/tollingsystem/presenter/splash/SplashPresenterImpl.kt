@@ -1,6 +1,5 @@
 package pt.isel.ps.g30.tollingsystem.presenter.splash
 
-import android.content.SharedPreferences
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
@@ -9,7 +8,7 @@ import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.splash.SplashView
 
-class SplashPresenterImpl(private val interactor: AuthInteractor, private val sharedPreferences: SharedPreferences) :
+class SplashPresenterImpl(private val interactor: AuthInteractor) :
         BasePresenterImpl<SplashView>(), SplashPresenter{
 
     private val jobs = Job()

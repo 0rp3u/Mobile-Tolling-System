@@ -1,6 +1,8 @@
 package pt.isel.ps.g30.tollingsystem.data.database
 
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
 
@@ -12,16 +14,21 @@ interface TollingTripDao {
     fun findAll(): List<TollingTrip>
 
     @Query("SELECT * FROM TollingTrip WHERE id = :id")
-    fun findById(id: Int): TollingTrip
+    fun findById(id: Int): TollingTrip?
 
     @Query("SELECT * FROM TollingTrip WHERE paid = 1")
     fun findPaid(): List<TollingTrip>
 
-    @Query("SELECT * FROM TollingTrip WHERE vehicle_id = :vehicleId")
+    @Query("SELECT * FROM TollingTrip WHERE TollingTrip.vehicle_id = :vehicleId")
     fun findByVehicle(vehicleId: Int): List<TollingTrip>
 
     @Query("SELECT * FROM TollingTrip WHERE TollingTrip.destination_id is null")
+    fun findByActiveTripLiveData(): LiveData<TollingTrip?>
+
+
+    @Query("SELECT * FROM TollingTrip WHERE TollingTrip.destination_id is null")
     fun findByActiveTrip(): TollingTrip?
+
 
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

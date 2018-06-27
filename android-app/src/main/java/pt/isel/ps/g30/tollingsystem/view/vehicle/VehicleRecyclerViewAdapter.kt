@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.item_vehicle.view.*
 import org.jetbrains.anko.imageResource
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
-import pt.isel.ps.g30.tollingsystem.extensions.getIconResource
+import pt.isel.ps.g30.tollingsystem.extension.getIconResource
 
 class VehicleRecyclerViewAdapter(val listener: (Vehicle) -> Unit) : RecyclerView.Adapter<VehicleRecyclerViewAdapter.ViewHolder>() {
 

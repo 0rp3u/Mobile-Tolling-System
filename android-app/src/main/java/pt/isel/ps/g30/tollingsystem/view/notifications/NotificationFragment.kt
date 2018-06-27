@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.notifications_fragment.*
+import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.progress_bar.*
 import pt.isel.ps.g30.tollingsystem.R
-import pt.isel.ps.g30.tollingsystem.extensions.app
+import pt.isel.ps.g30.tollingsystem.extension.app
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.data.api.model.Notification
-import pt.isel.ps.g30.tollingsystem.extensions.longSnackbar
-import pt.isel.ps.g30.tollingsystem.extensions.snackbar
+import pt.isel.ps.g30.tollingsystem.extension.longSnackbar
+import pt.isel.ps.g30.tollingsystem.extension.snackbar
 import pt.isel.ps.g30.tollingsystem.presenter.notification.NotificationPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
 import javax.inject.Inject
@@ -34,7 +34,7 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.notifications_fragment, container, false)
+        val view = inflater.inflate(R.layout.fragment_notifications, container, false)
 
         notificationRecyclerViewAdapter = NotificationRecyclerViewAdapter { (id, description) ->
 

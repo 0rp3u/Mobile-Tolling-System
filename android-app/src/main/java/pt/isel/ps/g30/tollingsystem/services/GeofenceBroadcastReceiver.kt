@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pt.isel.ps.g30.tollingsystem.geofencing
+package pt.isel.ps.g30.tollingsystem.services
 
 import android.content.BroadcastReceiver
 import android.content.Context

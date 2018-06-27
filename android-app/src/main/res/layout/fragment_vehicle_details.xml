@@ -7,17 +7,25 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <LinearLayout
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-        <LinearLayout
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="tare:"
+                android:textSize="24sp"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/tare"
@@ -25,43 +33,31 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_directions_car_black_24dp" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="license place:"
+                android:textSize="24sp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/license_plate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="license plate"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textSize="24sp"/>
 
-        </LinearLayout>
-
-        <LinearLayout
+        </TableRow>
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Owner:"
-                android:textSize="24sp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/owner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="--" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Trip number:"
                 android:textSize="24sp" />
@@ -70,16 +66,16 @@
                 android:id="@+id/trip_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="--" />
-        </LinearLayout>
+                android:textSize="24sp"/>
 
-        <LinearLayout
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Paid amount:"
                 android:textSize="24sp" />
@@ -88,12 +84,12 @@
                 android:id="@+id/poid_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="--" />
+                android:textSize="24sp"/>
 
-        </LinearLayout>
 
-    </LinearLayout>
+        </TableRow>
 
+    </TableLayout>
 
     <include layout="@layout/progress_bar" />
 

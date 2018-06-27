@@ -16,14 +16,11 @@ interface VehicleDao {
     @Query("SELECT * FROM Vehicle WHERE ownerId = :ownerId")
     fun findByOwner(ownerId: Int): List<Vehicle>
 
-    @Query("SELECT * FROM Vehicle WHERE active = 1")
+    @Query("SELECT Vehicle.* FROM Vehicle, ActiveTrip WHERE ActiveTrip.vehicle_id = Vehicle.id")
     fun findActive(): Vehicle?
 
     @Update()
-    fun setActive(vehicle: Vehicle): Int
-
-    @Update()
-    fun removeActive(vehicle: Vehicle): Int
+    fun update(vehicle: Vehicle): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg vehicles:Vehicle): List<Long>
