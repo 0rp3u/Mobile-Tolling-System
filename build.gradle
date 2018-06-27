@@ -2,13 +2,13 @@
 buildscript {
     ext.kotlin_version = '1.2.41'
     ext.anko_version = '0.10.5'
-    ext.roomVersion = '1.1.0'
+    ext.room_version = '2.0.0-alpha1'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha16'
+        classpath 'com.android.tools.build:gradle:3.2.0-beta01'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
 
