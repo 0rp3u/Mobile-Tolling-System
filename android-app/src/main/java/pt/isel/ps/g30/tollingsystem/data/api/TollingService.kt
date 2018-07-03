@@ -41,14 +41,14 @@ interface TollingService {
     @GET("transaction/open")
     fun getOpenTransactionList(): Deferred<List<TollingTransaction>>
 
-    @GET("transaction/{id}")
-    fun getTransactionDetails( @Path("id") id: Int): Deferred<TollingTransaction>
-
     @POST("transaction/new")
     fun initiateTollingTransaction(@Body transaction: TollingTransaction): Deferred<TollingTransaction>
 
-    @PUT("transaction/{id}/close")
-    fun closeTollingTransaction( @Path("id") id: Int, @Body transaction: TollingTransaction): Deferred<TollingTransaction>
+    @POST("transaction/close")
+    fun closeTollingTransaction( @Body transaction: TollingTransaction): Deferred<TollingTransaction>
+
+    @POST("transaction/cancel")
+    fun cancelTollingTransaction( @Body transaction: TollingTransaction): Deferred<TollingTransaction>
 
 
 

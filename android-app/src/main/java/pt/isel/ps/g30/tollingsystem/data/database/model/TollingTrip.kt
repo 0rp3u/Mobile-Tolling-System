@@ -25,7 +25,7 @@ data class TollingTrip(
 
         val destTimestamp: Date =  Date(),
 
-        var paid: Boolean = false,
+        var paid: Double? = null,
 
         @PrimaryKey(autoGenerate = true)
         var id: Int=0
