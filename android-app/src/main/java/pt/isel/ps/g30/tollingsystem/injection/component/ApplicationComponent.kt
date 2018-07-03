@@ -17,5 +17,6 @@ import javax.inject.Singleton
 interface ApplicationComponent : BaseComponent{
 
     fun plus(module: PresentersModule): PresenterComponent
+    fun plus(): InteractorComponent
 
 }

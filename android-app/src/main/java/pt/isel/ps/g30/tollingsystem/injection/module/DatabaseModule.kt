@@ -15,9 +15,6 @@ import javax.inject.Named
 @Module
 class DatabaseModule {
 
-
-
-
     @Provides
     @Singleton
     @Named("disk")
@@ -36,9 +33,5 @@ class DatabaseModule {
     fun providesRoomDatabaseWithData(@Named("memory") database: TollingSystemDatabase): TollingSystemDatabase
             =database.apply { insertTestdata(this) }
 
-
-    @Provides
-    @Singleton
-    fun providesTollingDao(tollingSystemDatabase: TollingSystemDatabase): TollingPlazaDao = tollingSystemDatabase.TollingDao()
 
 }

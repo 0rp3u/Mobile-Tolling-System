@@ -12,6 +12,11 @@ import pt.isel.ps.g30.tollingsystem.injection.component.BaseComponent
 
 open class TollingSystemApp : Application() {
 
+    companion object {
+        lateinit var instance: TollingSystemApp
+            private set
+    }
+
     open val applicationComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))
@@ -20,13 +25,10 @@ open class TollingSystemApp : Application() {
     }
 
 
-    open fun component(): BaseComponent {
-        return applicationComponent
-    }
-
     override fun onCreate() {
         super.onCreate()
         setupLeakCanary()
+        instance = this
     }
 
     private fun setupLeakCanary() {
@@ -42,7 +44,7 @@ open class TollingSystemApp : Application() {
     private fun enabledStrictMode() {
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder() //
                 .detectAll() //
-                .permitDiskReads()
+                .permitDiskReads() //for dagger dependency injection
                 .penaltyLog() //
                 .penaltyDeath() //
                 .build())

@@ -6,23 +6,82 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
 import kotlinx.coroutines.experimental.delay
 import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
-import pt.isel.ps.g30.tollingsystem.data.api.model.Notification
+import pt.isel.ps.g30.tollingsystem.data.database.model.Notification
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.notifications.NotificationView
 
 class NotificationPresenterImpl(private val interactor: NotificationInteractor) :
         BasePresenterImpl<NotificationView>(), NotificationPresenter{
 
-    private var notificationList = listOf<Notification>()
     private val jobs = Job()
 
     override fun getNotificationList() {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                notificationList = interactor.getNotificationList().await()
+                val notificationList = interactor.getNotificationListLiveData().await()
                 delay(1000)
                 view?.showNotificationList(notificationList)
+                view?.hideLoadingIndicator()
+
+            }catch (e: Throwable){
+                view?.hideLoadingIndicator()
+                view?.showErrorMessage()
+            }
+        }
+    }
+
+    override fun cancelTrip(notification: Notification) {
+        launch (UI, parent = jobs) {
+            view?.showLoadingIndicator()
+            try {
+                interactor.cancelTrip(notification)
+
+                view?.hideLoadingIndicator()
+
+            }catch (e: Throwable){
+                view?.hideLoadingIndicator()
+                view?.showErrorMessage()
+            }
+        }
+    }
+
+    override fun confirmTrip(notification: Notification) {
+        launch (UI, parent = jobs) {
+            view?.showLoadingIndicator()
+            try {
+                interactor.confirmTrip(notification)
+
+                view?.hideLoadingIndicator()
+
+            }catch (e: Throwable){
+                view?.hideLoadingIndicator()
+                view?.showErrorMessage()
+            }
+        }
+    }
+
+    override fun dismissNotification(notification: Notification) {
+        launch (UI, parent = jobs) {
+            view?.showLoadingIndicator()
+            try {
+                interactor.dismissNotification(notification)
+
+                view?.hideLoadingIndicator()
+
+            }catch (e: Throwable){
+                view?.hideLoadingIndicator()
+                view?.showErrorMessage()
+            }
+        }
+    }
+
+    override fun disputePaidTrip(notification: Notification) {
+        launch (UI, parent = jobs) {
+            view?.showLoadingIndicator()
+            try {
+                interactor.dismissNotification(notification)
+
                 view?.hideLoadingIndicator()
 
             }catch (e: Throwable){

@@ -19,6 +19,7 @@ import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.presenter.vehicle.VehiclePresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
 import javax.inject.Inject
+import kotlin.math.roundToLong
 
 class VehicleDetailsDetailFragment: BaseFragment<VehiclePresenter, VehicleDetailsView>(), VehicleDetailsView{
 
@@ -62,7 +63,7 @@ class VehicleDetailsDetailFragment: BaseFragment<VehiclePresenter, VehicleDetail
     }
 
     override fun showVehiclePaidAmount(amount: Double) {
-        poid_amount.text = "$amount $"
+        poid_amount.text = "${String.format("%.2f",amount)} $"
     }
 
     override fun showLoadingIndicator() {

@@ -120,7 +120,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         AlertDialog.Builder(this.requireContext())
                 .setTitle("${tollingPlaza.name} toll options")
                 .setView(dialogView)
-                .setPositiveButton("yes", { dialogInterface, i ->
+                .setPositiveButton("yes") { dialogInterface, i ->
 
                     if(currentTrip?.origin != null)
                         presenter.finishTrip(tollingPlaza)
@@ -128,8 +128,8 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                         presenter.startTrip(tollingPlaza)
 
                     dialogInterface.dismiss()
-                })
-                .setNegativeButton("no", { dialogInterface, i -> dialogInterface.cancel() })
+                }
+                .setNegativeButton("no") { dialogInterface, i -> dialogInterface.cancel() }
                 .create()
                 .show()
     }

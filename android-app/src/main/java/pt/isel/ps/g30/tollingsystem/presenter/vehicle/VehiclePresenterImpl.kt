@@ -10,6 +10,7 @@ import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTripInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleDetailsView
+import kotlin.math.roundToLong
 
 class
 VehiclePresenterImpl(private val vehicleInteractor: VehicleInteractor, private val tripInteractor: TollingTripInteractor) :
@@ -24,7 +25,7 @@ VehiclePresenterImpl(private val vehicleInteractor: VehicleInteractor, private v
                 val vehicle = vehicleInteractor.getVehicle(id)
                 val trips = tripInteractor.getVehicleTripList(id).await()
                 view?.showVehicleBasicInfo(vehicle.await())
-                view?.showVehiclePaidAmount(100.0) // temporary
+                view?.showVehiclePaidAmount(trips.fold(0.0) { curr, trip -> curr+(trip.paid ?: 0.0)})
                 view?.showVehicleTripNumber(trips.size)
 
                 view?.hideLoadingIndicator()

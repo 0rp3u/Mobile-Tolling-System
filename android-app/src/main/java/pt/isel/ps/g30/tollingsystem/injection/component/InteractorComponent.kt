@@ -13,16 +13,8 @@ import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleDetailsDetailFragment
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehiclesFragment
 
 
-@Subcomponent(modules = [PresentersModule::class, AuthModule::class, TollingModule::class, VehicleModule::class, NotificationModule::class])
-interface PresenterComponent {
+@Subcomponent(modules = [AuthModule::class, TollingModule::class, VehicleModule::class, NotificationModule::class])
+interface InteractorComponent {
 
-    fun injectTo(Activity: LoginActivity)
-    fun injectTo(Activity: SplashActivity)
-    fun injectTo(fragment: TollingTripsFragment)
-    fun injectTo(fragment: VehicleDetailsDetailFragment)
-    fun injectTo(fragment: VehiclesFragment)
-    fun injectTo(Fragment: NotificationFragment)
-    fun injectTo(Fragment: NavigationViewFragment)
-    fun injectTo(service: GeofenceTransitionsJobIntentService ) //TODO separate this from here, since service does not need a presenter
-    fun injectTo(Activity: MainActivity)
+    fun injectTo(service: GeofenceTransitionsJobIntentService)
 }

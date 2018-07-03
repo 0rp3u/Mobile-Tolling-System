@@ -1,6 +1,5 @@
 package pt.isel.ps.g30.tollingsystem.injection.module
 
-import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
@@ -11,6 +10,8 @@ import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTripInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.login.LoginPresenter
 import pt.isel.ps.g30.tollingsystem.presenter.login.LoginPresenterImpl
+import pt.isel.ps.g30.tollingsystem.presenter.main.MainPresenter
+import pt.isel.ps.g30.tollingsystem.presenter.main.MainPresenterImpl
 import pt.isel.ps.g30.tollingsystem.presenter.navigation.NavigationFragPresenter
 import pt.isel.ps.g30.tollingsystem.presenter.navigation.NavigationFragPresenterImpl
 import pt.isel.ps.g30.tollingsystem.presenter.notification.NotificationPresenter
@@ -49,8 +50,11 @@ class PresentersModule {
             = VehiclePresenterImpl(interactor, tripInteractor)
 
     @Provides
-    fun provideNotificationPresenter(interactor: NotificationInteractor): NotificationPresenter {
-        return NotificationPresenterImpl(interactor)
-    }
+    fun provideNotificationPresenter(interactor: NotificationInteractor): NotificationPresenter
+            = NotificationPresenterImpl(interactor)
+
+    @Provides
+    fun provideMainPresenter(interactor: NotificationInteractor): MainPresenter
+            = MainPresenterImpl(interactor)
 
 }

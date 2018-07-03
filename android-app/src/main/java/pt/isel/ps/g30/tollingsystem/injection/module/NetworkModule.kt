@@ -8,12 +8,18 @@ import okhttp3.OkHttpClient
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import pt.isel.ps.g30.tollingsystem.data.api.TollingService
 import pt.isel.ps.g30.tollingsystem.data.api.interceptor.HttpAuthInterceptor
+import pt.isel.ps.g30.tollingsystem.utils.NetworkUtils
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
 class NetworkModule(private val baseUrl: String) {
+
+    @Provides
+    @Singleton
+    fun provideConnectivityUtils(app: TollingSystemApp) = NetworkUtils(app)
+
 
     @Provides
     @Singleton
