@@ -7,6 +7,6 @@ data class TollingTransaction(
         val timestamp: Date,
         val vehicleId: Int,
         val openPlaza: Int,
-        val closePlaza: Int,
-        val paid: Boolean
+        val closePlaza: Int? = null,
+        val paid: Boolean = false
 )

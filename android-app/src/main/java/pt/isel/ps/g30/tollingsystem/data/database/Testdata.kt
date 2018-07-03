@@ -27,15 +27,20 @@ fun insertTestdata(database: TollingSystemDatabase){
 
 
         database.TollingTripDao().insert(
-                TollingTrip(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
-                TollingTrip( database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(1)),
-                TollingTrip(  database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2), Date(), true),
+                TollingTrip(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3),Date(),69.23),
+                TollingTrip( database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(1),Date(),9.23),
+                TollingTrip(  database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2), Date(), 2.56),
                 TollingTrip(  database.VehicleDao().findById(4), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
                 TollingTrip( database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(2)),
                 TollingTrip( database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1)),
-                TollingTrip(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(1),  Date(),true)
+                TollingTrip(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(1),  Date(),29.23)
         )
 
         database.ActiveTripDao().insert(ActiveTrip())
+
+        database.NotificationDao().insert(Notification(NotificationType.TripNotification, trip =database.TollingTripDao().findById(5)))
+
+        database.NotificationDao().insert(Notification(NotificationType.VehicleAddedNotification, vehicle = database.VehicleDao().findById(4)))
+
     }
 }

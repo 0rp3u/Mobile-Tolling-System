@@ -16,7 +16,7 @@ interface TollingTripDao {
     @Query("SELECT * FROM TollingTrip WHERE id = :id")
     fun findById(id: Int): TollingTrip?
 
-    @Query("SELECT * FROM TollingTrip WHERE paid = 1")
+    @Query("SELECT * FROM TollingTrip WHERE paid is not null")
     fun findPaid(): List<TollingTrip>
 
     @Query("SELECT * FROM TollingTrip WHERE TollingTrip.vehicle_id = :vehicleId")

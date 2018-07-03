@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
-import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.*
 import pt.isel.ps.g30.tollingsystem.extension.toTollingTrip
 import java.util.*
 
@@ -61,6 +59,7 @@ class TollingTripInteractorImpl(private val tollingSystemDatabase: TollingSystem
 
             if(tollingSystemDatabase.ActiveTripDao().update(activeTrip) ==  0)  throw Exception("Could not finish trip")
 
+            tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TripNotification, trip = insertedTollingTrip))
 
             return@async activeTrip
         }
