@@ -83,7 +83,7 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", { removeActiveVehicle(vehicle) })
+                view?.showErrorMessage("something went wrong, ${e.message}") { removeActiveVehicle(vehicle) }
             }
         }
     }
@@ -104,7 +104,7 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", { setActiveVehicle(vehicle) })
+                view?.showErrorMessage("something went wrong, ${e.message}") { setActiveVehicle(vehicle) }
             }
         }
     }
@@ -157,7 +157,7 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", {startTrip(tollingPlaza)})
+                view?.showErrorMessage("something went wrong, ${e.message}") {startTrip(tollingPlaza)}
             }
         }
     }
@@ -178,7 +178,7 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", {startTrip(tollingPlaza)})
+                view?.showErrorMessage("something went wrong, ${e.message}") {startTrip(tollingPlaza)}
             }
         }
     }

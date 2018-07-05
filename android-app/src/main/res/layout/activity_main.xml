@@ -24,4 +24,6 @@
         app:itemTextColor="@color/selector_item_gray_color"
         app:menu="@menu/menu_navigation_with_view_pager" />
 
+    <include layout="@layout/progress_bar" />
+
 </RelativeLayout>

@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="portagem:"
+                    android:text="toll:"
                     android:textStyle="bold" />
 
                 <TextView
@@ -101,7 +101,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="concecion:"
+                    android:text="concession:"
                     android:textStyle="bold" />
 
                 <TextView

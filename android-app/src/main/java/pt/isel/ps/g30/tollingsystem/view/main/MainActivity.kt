@@ -57,7 +57,6 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        savedInstanceState?.putInt(SELECTED_ITEM_KEY,intent.extras.getInt(SELECTED_ITEM_KEY,0))
         initView()
 
     }
@@ -89,6 +88,8 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
         presenter.setNotificationNumber()
         adapterCustom = CustomFragmentPagerAdapter(supportFragmentManager)
         vp.adapter = adapterCustom
+        val position = intent?.extras?.getInt(SELECTED_ITEM_KEY,0) ?: 0
+        bnve.selectedItemId = position
     }
 
     private fun initData() {
@@ -156,10 +157,10 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
     }
 
     override fun showLoadingIndicator() {
-        progressBar.isVisible = true
+        progressBar?.isVisible = true
     }
 
     override fun hideLoadingIndicator() {
-        progressBar.isVisible = false
+        progressBar?.isVisible = false
     }
 }

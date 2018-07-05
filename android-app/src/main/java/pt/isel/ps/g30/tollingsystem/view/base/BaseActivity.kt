@@ -6,14 +6,15 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenter
+import javax.inject.Inject
 
 
 /**
- * @param P the type of the presenter the Activity is based on
+ * @param P the type of the detailsPresenter the Activity is based on
  */
 abstract class BaseActivity<P: BasePresenter<V>, in V> : BaseView, AppCompatActivity() {
 
-    abstract fun injectDependencies() //<- injects the P presenter
+    abstract fun injectDependencies() //<- injects the P detailsPresenter
 
     open lateinit var presenter: P
 
@@ -35,16 +36,16 @@ abstract class BaseActivity<P: BasePresenter<V>, in V> : BaseView, AppCompatActi
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
-                return true
+                true
             }
             R.id.settings-> {
                 //TODO open settings Activity
-                return true
+                true
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

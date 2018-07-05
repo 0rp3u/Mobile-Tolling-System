@@ -15,6 +15,7 @@ import pt.isel.ps.g30.tollingsystem.extension.app
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
 import pt.isel.ps.g30.tollingsystem.extension.longSnackbar
 import pt.isel.ps.g30.tollingsystem.extension.snackbar
+import pt.isel.ps.g30.tollingsystem.extension.startActivity
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.presenter.tollingtrip.TollingTripFragPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
@@ -24,7 +25,7 @@ import javax.inject.Inject
 class TollingTripsFragment: BaseFragment<TollingTripFragPresenter, TollingTripsFragmentView>(), TollingTripsFragmentView{
 
     companion object {
-        private val TAG = this::class.java.simpleName
+        private val TAG = TollingTripsFragment::class.java.simpleName
     }
 
     lateinit var tollingTripsRecyclerViewAdapter: TollingTripsRecyclerViewAdapter
@@ -42,20 +43,10 @@ class TollingTripsFragment: BaseFragment<TollingTripFragPresenter, TollingTripsF
         Log.d(TAG, "VIEW ON CREATE")
         val view = inflater.inflate(R.layout.fragment_vehicle_trips, container, false)
         tollingTripsRecyclerViewAdapter = TollingTripsRecyclerViewAdapter {
-            val position = tollingTripsRecyclerViewAdapter.historyList.indexOf(it)
-
-//
-//            this.recycler_view[position].card_view.apply {
-//                val map = NavigationViewFragment().view
-//                addView(map )
-//                setOnClickListener {
-//                    removeView(map)
-//                }
-//            }
-        //this.recycler_view.scrollToPosition(position)
-
+            startActivity<TollingTripDetails>(
+                    TollingTripDetails.EXTRA_TRIP_ID to it.id
+            )
         }
-
         return view
     }
 

@@ -1,5 +1,6 @@
 package pt.isel.ps.g30.tollingsystem.data.database
 
+import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 import pt.isel.ps.g30.tollingsystem.data.api.model.Tare
 import pt.isel.ps.g30.tollingsystem.data.database.model.*
@@ -42,5 +43,9 @@ fun insertTestdata(database: TollingSystemDatabase){
 
         database.NotificationDao().insert(Notification(NotificationType.VehicleAddedNotification, vehicle = database.VehicleDao().findById(4)))
 
+        launch {
+            delay(5000)
+            database.NotificationDao().insert(Notification(NotificationType.TripNotification, trip =database.TollingTripDao().findById(6)))
+        }
     }
 }

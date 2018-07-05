@@ -19,6 +19,7 @@ abstract class BaseFragment<P: BasePresenter<V>, in V> : BaseView, Fragment() {
 
     override fun onStart() {
         super.onStart()
+        @Suppress("UNCHECKED_CAST")
         presenter.onViewAttached(this as V)
     }
 

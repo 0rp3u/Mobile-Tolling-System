@@ -16,17 +16,16 @@ import pt.isel.ps.g30.tollingsystem.extension.getIconResource
 import pt.isel.ps.g30.tollingsystem.extension.longSnackbar
 import pt.isel.ps.g30.tollingsystem.extension.snackbar
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
-import pt.isel.ps.g30.tollingsystem.presenter.vehicle.VehiclePresenter
+import pt.isel.ps.g30.tollingsystem.presenter.vehicle.VehicleDetailsPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
 import javax.inject.Inject
-import kotlin.math.roundToLong
 
-class VehicleDetailsDetailFragment: BaseFragment<VehiclePresenter, VehicleDetailsView>(), VehicleDetailsView{
+class VehicleDetailsDetailFragment: BaseFragment<VehicleDetailsPresenter, VehicleDetailsView>(), VehicleDetailsView{
 
     private val TAG = VehicleDetailsDetailFragment::class.java.simpleName
 
     @Inject
-    override lateinit var presenter: VehiclePresenter
+    override lateinit var presenter: VehicleDetailsPresenter
 
     override fun injectDependencies() {
         app.applicationComponent

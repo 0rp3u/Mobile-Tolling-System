@@ -2,6 +2,7 @@ package pt.isel.ps.g30.tollingsystem.interactor.vehicle
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
 
@@ -19,16 +20,12 @@ class VehicleInteractorImpl(private val tollingSystemDatabase: TollingSystemData
         return async { tollingSystemDatabase.VehicleDao().findActive() }
     }
 
-    override suspend fun setActiveVehicle(vehicle: Vehicle): Job {
-        return async {
+    override suspend fun setActiveVehicle(vehicle: Vehicle) = launch {
             val act = tollingSystemDatabase.ActiveTripDao().find()
             if(act.vehicle != null) throw Exception("a vehicle is already active")
             act.vehicle = vehicle
 
             tollingSystemDatabase.ActiveTripDao().update(act)
-
-            true
-        }
     }
 
     override suspend fun removeActiveVehicle(vehicle: Vehicle): Deferred<Boolean>{
