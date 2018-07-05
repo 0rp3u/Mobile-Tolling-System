@@ -3,6 +3,7 @@ package pt.isel.ps.g30.tollingsystem.injection.component
 import dagger.Subcomponent
 import pt.isel.ps.g30.tollingsystem.services.GeofenceTransitionsJobIntentService
 import pt.isel.ps.g30.tollingsystem.injection.module.*
+import pt.isel.ps.g30.tollingsystem.services.work.PostFinishTripToApiWork
 import pt.isel.ps.g30.tollingsystem.view.login.LoginActivity
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
 import pt.isel.ps.g30.tollingsystem.view.navigation.NavigationViewFragment
@@ -17,4 +18,5 @@ import pt.isel.ps.g30.tollingsystem.view.vehicle.VehiclesFragment
 interface InteractorComponent {
 
     fun injectTo(service: GeofenceTransitionsJobIntentService)
+    fun injectTo(worker: PostFinishTripToApiWork)
 }

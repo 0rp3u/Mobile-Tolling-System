@@ -8,7 +8,9 @@ import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
 import pt.isel.ps.g30.tollingsystem.view.navigation.NavigationViewFragment
 import pt.isel.ps.g30.tollingsystem.view.notifications.NotificationFragment
 import pt.isel.ps.g30.tollingsystem.view.splash.SplashActivity
+import pt.isel.ps.g30.tollingsystem.view.tollingtrip.TollingTripDetails
 import pt.isel.ps.g30.tollingsystem.view.tollingtrip.TollingTripsFragment
+import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleActivity
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleDetailsDetailFragment
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehiclesFragment
 
@@ -23,6 +25,7 @@ interface PresenterComponent {
     fun injectTo(fragment: VehiclesFragment)
     fun injectTo(Fragment: NotificationFragment)
     fun injectTo(Fragment: NavigationViewFragment)
-    fun injectTo(service: GeofenceTransitionsJobIntentService ) //TODO separate this from here, since service does not need a presenter
     fun injectTo(Activity: MainActivity)
+    fun injectTo(Activity: VehicleActivity)
+    fun injectTo(Activity: TollingTripDetails)
 }

@@ -40,6 +40,7 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
 import pt.isel.ps.g30.tollingsystem.extension.getIconResource
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
+import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTripInteractor
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
@@ -62,6 +63,9 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
     @Inject
     lateinit var tollingPlazaInteractor: TollingPlazaInteractor
 
+    @Inject
+    lateinit var notificationInteractor: NotificationInteractor
+
     override fun onCreate() {
         super.onCreate()
         injectDependencies()
@@ -69,7 +73,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
 
     fun injectDependencies() {
         (this.application as TollingSystemApp).applicationComponent
-                .plus(PresentersModule())
+                .interactors()
                 .injectTo(this)
     }
 
@@ -109,12 +113,14 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
                 // Send notification and log the transition details.
 
                 if(currentTrip.origin!=null){
-                    val trip = tollingTripInteractor.finishTollingTrip(plaza).await().also { it.origin = currentTrip.origin } //<- hack, needed for now
-                    sendNotification(trip)
+                    val trip = tollingTripInteractor.finishTollingTrip(plaza).await()
+
+                    notificationInteractor.sendFinishTripNotification(trip)
+
                     Log.e(TAG, "finished trip @ ${trip.destination}")
                 } else{
                     val trip = tollingTripInteractor.startTollingTrip(plaza).await()
-                    sendNotification(trip)
+                    notificationInteractor.sendStartTripNotification(trip)
                     Log.e(TAG, "started trip @ ${trip.origin}")
                 }
             }
