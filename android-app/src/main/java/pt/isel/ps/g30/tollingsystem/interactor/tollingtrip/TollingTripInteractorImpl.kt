@@ -41,7 +41,7 @@ class TollingTripInteractorImpl(private val tollingSystemDatabase: TollingSystem
         }
     }
 
-    override suspend fun finishTollingTrip(dest: TollingPlaza): Deferred<ActiveTrip> {
+    override suspend fun finishTollingTrip(dest: TollingPlaza): Deferred<TollingTrip> {
         return async {
             val activeTrip = tollingSystemDatabase.ActiveTripDao().find()
 
@@ -61,7 +61,7 @@ class TollingTripInteractorImpl(private val tollingSystemDatabase: TollingSystem
 
             tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TripNotification, trip = insertedTollingTrip))
 
-            return@async activeTrip
+            return@async insertedTollingTrip
         }
     }
 

@@ -18,6 +18,8 @@ import pt.isel.ps.g30.tollingsystem.presenter.notification.NotificationPresenter
 import pt.isel.ps.g30.tollingsystem.presenter.notification.NotificationPresenterImpl
 import pt.isel.ps.g30.tollingsystem.presenter.splash.SplashPresenter
 import pt.isel.ps.g30.tollingsystem.presenter.splash.SplashPresenterImpl
+import pt.isel.ps.g30.tollingsystem.presenter.tollingtrip.TollingTripDetailsPresenter
+import pt.isel.ps.g30.tollingsystem.presenter.tollingtrip.TollingTripDetailsPresenterImpl
 import pt.isel.ps.g30.tollingsystem.presenter.tollingtrip.TollingTripFragPresenter
 import pt.isel.ps.g30.tollingsystem.presenter.tollingtrip.TollingTripFragPresenterImpl
 import pt.isel.ps.g30.tollingsystem.presenter.vehicle.*
@@ -46,8 +48,8 @@ class PresentersModule {
             = VehiclesFragPresenterImpl(interactor)
 
     @Provides
-    fun provideVehiclePresenter(interactor: VehicleInteractor, tripInteractor: TollingTripInteractor): VehiclePresenter
-            = VehiclePresenterImpl(interactor, tripInteractor)
+    fun provideVehiclePresenter(interactor: VehicleInteractor, tripInteractor: TollingTripInteractor): VehicleDetailsPresenter
+            = VehicleDetailsPresenterImpl(interactor, tripInteractor)
 
     @Provides
     fun provideNotificationPresenter(interactor: NotificationInteractor): NotificationPresenter
@@ -56,5 +58,13 @@ class PresentersModule {
     @Provides
     fun provideMainPresenter(interactor: NotificationInteractor): MainPresenter
             = MainPresenterImpl(interactor)
+
+    @Provides
+    fun provideollingTripDetailsPresenter(interactor: TollingTripInteractor): TollingTripDetailsPresenter
+            = TollingTripDetailsPresenterImpl(interactor)
+
+    @Provides
+    fun provideVehicleActivityPresenter(): VehicleActivityPresenter
+            = VehicleActivityPresenterImpl()
 
 }

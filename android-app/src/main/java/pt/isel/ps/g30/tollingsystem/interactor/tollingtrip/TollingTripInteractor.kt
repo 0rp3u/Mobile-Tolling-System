@@ -22,7 +22,7 @@ interface TollingTripInteractor : BaseInteractor {
 
     suspend fun startTollingTrip(origin: TollingPlaza): Deferred<ActiveTrip>
 
-    suspend fun finishTollingTrip(dest: TollingPlaza): Deferred<ActiveTrip>
+    suspend fun finishTollingTrip(dest: TollingPlaza): Deferred<TollingTrip>
 
     suspend fun cancelActiveTrip(trip: ActiveTrip): Deferred<Int>
 
