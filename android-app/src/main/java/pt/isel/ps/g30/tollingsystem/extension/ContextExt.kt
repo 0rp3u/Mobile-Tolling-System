@@ -12,16 +12,21 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.toast
 
- fun Context.bitmapDescriptorFromVector(context: Context, @DrawableRes vectorDrawableResourceId: Int): BitmapDescriptor {
-    ContextCompat.getDrawable(context, vectorDrawableResourceId)?.apply {
-        setBounds(0, 0, intrinsicWidth, intrinsicHeight)
-        return Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888).let{
-            draw(Canvas(it))
-            BitmapDescriptorFactory.fromBitmap(it)
-        }
-    }
-    throw Exception()
-}
+ fun Context.BitmapDescriptorFactoryfromVector(@DrawableRes vectorDrawableResourceId: Int): BitmapDescriptor {
+
+     ContextCompat.getDrawable(this, vectorDrawableResourceId)?.apply {
+         setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+         //val vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId)
+         //vectorDrawable.setBounds(40, 20, vectorDrawable.intrinsicWidth + 40, vectorDrawable.intrinsicHeight + 20)
+         val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+         val canvas = Canvas(bitmap)
+         draw(canvas)
+         //vectorDrawable.draw(canvas)
+         return BitmapDescriptorFactory.fromBitmap(bitmap).also { bitmap.recycle() }
+     }
+     throw Exception()
+ }
+
 
  /**
   * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.

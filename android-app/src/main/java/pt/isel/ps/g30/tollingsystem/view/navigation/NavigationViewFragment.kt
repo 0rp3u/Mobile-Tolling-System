@@ -55,21 +55,11 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     @Inject
     override lateinit var presenter: NavigationFragPresenter
 
-    private lateinit var mGeoDataClient: GeoDataClient
 
     private var tollMarkers: List<Marker> = listOf()
     private var vehicleMarker: Marker? = null
     private var currentTrip: ActiveTrip? = null
-
-    private val locationUpdatesCallback by lazy {
-        object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                for (location in locationResult.locations) {
-                    vehicleMarker?.position = LatLng(location.latitude, location.longitude)
-                }
-            }
-        }
-    }
+    private var trackMode: Boolean = false
 
 
     override fun injectDependencies() {
@@ -77,17 +67,6 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                 .plus(PresentersModule())
                 .injectTo(this)
     }
-
-    override fun onStart() {
-        super.onStart()
-        // mGeoDataClient = Places.getGeoDataClient(this.requireContext())
-    }
-
-    override fun onStop() {
-        super.onStop()
-        try{mFusedLocationClient.removeLocationUpdates(locationUpdatesCallback)}catch (e: Exception){}
-    }
-
 
     @SuppressLint("MissingPermission")
     override fun mapReady() {
@@ -101,8 +80,8 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         }.onDeclined { e ->
             AlertDialog.Builder(activity)
                     .setMessage("We need location permission to provide our services!") //TODO use @String
-                    .setPositiveButton("yes", { _, _ -> e.askAgain() })
-                    .setNegativeButton("no", { dialog, _ -> dialog.dismiss() })
+                    .setPositiveButton("yes") { _, _ -> e.askAgain() }
+                    .setNegativeButton("no") { dialog, _ -> dialog.dismiss() }
                     .show()
 
         }
@@ -142,7 +121,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                 addMarker(MarkerOptions()
                         .snippet(it.concession)
                         .title(it.name)
-                        .icon(bitmapDescriptorFromVector(this@NavigationViewFragment.requireContext(), R.drawable.ic_toll_blue))
+                        .icon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_blue))
                         .position(LatLng(it.lat, it.Lng))).apply { tag = it }
 
             }
@@ -184,13 +163,6 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     @SuppressLint("MissingPermission")
     private fun showVehicleLocation(vehicle: Vehicle) {
 
-        val mLocationRequest = LocationRequest().apply {
-            interval = 5000 //5 seconds
-            fastestInterval = 3000 //3 seconds
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            //setSmallestDisplacement(0.1F); //1/10 meter
-        }
-
         mFusedLocationClient.let {
 
             it.lastLocation.addOnSuccessListener(requireActivity()) { location ->
@@ -216,7 +188,23 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                 }
                 }
             }
-            it.requestLocationUpdates(mLocationRequest, locationUpdatesCallback, null)
+
+            mMap.setOnMyLocationChangeListener { //deprecated, but it's fine since we only want the vehicle icon to follow the maps blue dot
+                    vehicleMarker?.position = LatLng(it.latitude, it.longitude)
+                    if(trackMode){
+                        mMap.animateCamera(CameraUpdateFactory.zoomTo(5f), 3000, null)
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+                                CameraPosition.Builder()
+                                        .target(vehicleMarker?.position)
+                                        .zoom(18f)
+                                        .tilt(90f)
+                                        .bearing(10f)
+                                        .build()
+
+                        ))
+
+                    }
+                }
         }
     }
 
@@ -226,23 +214,11 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
             visibility = View.VISIBLE
             textView().text = vehicle.licensePlate
             imageView().image = requireContext().getDrawable(vehicle.getIconResource())
-            background.alpha = 130
+            if(trackMode)  background.alpha = 130 else background.alpha = 30
+
             setOnClickListener {
-                vehicleMarker?.let {
-
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(5f), 3000, null)
-
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
-                            CameraPosition.Builder()
-                                    .target(vehicleMarker?.position)
-                                    .zoom(18f)
-                                    .tilt(90f)
-                                    .bearing(10f)
-                                    .build()
-
-                    ))
-
-                }
+                trackMode = !trackMode
+                if(trackMode){  background.alpha = 130; toast("following vehicle")} else background.alpha = 30
             }
         }
     }
@@ -252,7 +228,6 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this.requireContext())
                 .setTitle("Choose vehicle")
 
-        //TODO REUSE ADAPTER AND DIALOG!!
         val inflater: LayoutInflater = this.layoutInflater
         val dialogView: View = inflater.inflate(R.layout.dialog_vehicles, null)
 
@@ -277,7 +252,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     override fun showActiveTrip(trip: ActiveTrip) {
         Log.d(TAG, "show trip view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
         currentTrip = trip.also {
-            tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == trip.origin?.id else false }?.setIcon(bitmapDescriptorFromVector(this@NavigationViewFragment.requireContext(), R.drawable.ic_toll_green))
+            tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == trip.origin?.id else false }?.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
             fab.setOnClickListener { showCancelActiveTripDialog(trip) }
         }
     }
@@ -286,7 +261,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         Log.d(TAG, "remove trip view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
         tollMarkers.forEach{
             if (it.tag is TollingPlaza){
-                it.setIcon(bitmapDescriptorFromVector(this@NavigationViewFragment.requireContext(), R.drawable.ic_toll_blue))
+                it.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_blue))
                 Log.d(TAG, "Cleaned ${(it.tag as TollingPlaza).name} icon")
             }
         }
@@ -311,8 +286,8 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         AlertDialog.Builder(this.requireContext())
                 .setTitle("${trip.origin?.name} toll options")
                 .setView(dialogView)
-                .setPositiveButton("yes, cancel!", { dialogInterface, i -> presenter.cancelActiveTrip(trip); dialogInterface.dismiss() })
-                .setNegativeButton("no", { dialogInterface, i -> dialogInterface.cancel() })
+                .setPositiveButton("yes, cancel!") { dialogInterface, i -> presenter.cancelActiveTrip(trip); dialogInterface.dismiss() }
+                .setNegativeButton("no") { dialogInterface, i -> dialogInterface.cancel() }
                 .create()
                 .show()
     }
@@ -381,20 +356,4 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         generator.setContentView(lay)
         return generator.makeIcon()
     }
-
-    private fun bitmapDescriptorFromVector(context: Context, @DrawableRes vectorDrawableResourceId: Int): BitmapDescriptor {
-        ContextCompat.getDrawable(context, vectorDrawableResourceId)?.apply {
-            setBounds(0, 0, intrinsicWidth, intrinsicHeight)
-            //val vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId)
-            //vectorDrawable.setBounds(40, 20, vectorDrawable.intrinsicWidth + 40, vectorDrawable.intrinsicHeight + 20)
-            val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            draw(canvas)
-            //ectorDrawable.draw(canvas)
-            return BitmapDescriptorFactory.fromBitmap(bitmap).also { bitmap.recycle() }
-        }
-        throw Exception()
-    }
-
-
 }
