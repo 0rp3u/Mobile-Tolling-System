@@ -47,12 +47,13 @@ class TollController(
 //    }
 
     @Transactional(readOnly = true)
-    @RequestMapping(method = [RequestMethod.POST], value="/nearest")
+    @RequestMapping(method = [RequestMethod.GET], value="/nearest")
     fun findNearestTolls(
-            @RequestBody inputModel: GeoLocation,
+            @RequestParam("lat") latitude: Double,
+            @RequestParam("lon") longitude: Double,
             @RequestParam("number") nTolls: Optional<Int>
     ): ResponseEntity<List<Long>>{
-        return ResponseEntity.ok( tollService.getNearestTolls(inputModel, nTolls))
+        return ResponseEntity.ok( tollService.getNearestTolls(GeoLocation(latitude, longitude), nTolls))
     }
 
 

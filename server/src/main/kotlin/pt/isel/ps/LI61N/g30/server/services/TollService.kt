@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClientException
+import pt.isel.ps.LI61N.g30.server.logic.GetNClosestTolls
 import pt.isel.ps.LI61N.g30.server.model.domain.Toll
 import pt.isel.ps.LI61N.g30.server.model.domain.repositories.TollRepository
 import pt.isel.ps.LI61N.g30.server.services.clearing.ClearingService
@@ -21,19 +22,6 @@ class TollService(
     val tollRepository: TollRepository,
     val entityManager: EntityManager
 ){
-    private val MAX_TOLLS: Int = 90
-    val getNearestQuery =
-                "select mts_toll.id\n" +
-                "FROM mts_toll\n" +
-                "order by st_distance(\n" +
-                "ST_Transform(ST_SetSRID(ST_MakePoint(:lon, :lat), 4326), 2100),\n" +
-                "ST_Transform(geolocation, 2100)\n" +
-                ") asc limit :n"
-
-//    fun getNearestTolls(location: Point, n: Int): List<Toll>{
-//        val p = geometryFactory.createPoint(Coordinate(10.0, 5.0))
-//        return listOf()
-//    }
 
     fun getNearestTolls(location: GeoLocation, nTolls: Optional<Int>): List<Long> {
         return if(nTolls.isPresent){
@@ -43,8 +31,8 @@ class TollService(
         }
     }
 
-    private fun getNearestTolls(location: GeoLocation, nTolls: Int = MAX_TOLLS): List<Long> =
-        entityManager.createNativeQuery(getNearestQuery)
+    private fun getNearestTolls(location: GeoLocation, nTolls: Int = GetNClosestTolls.MAX_TOLLS): List<Long> =
+        entityManager.createNativeQuery(GetNClosestTolls.query)
             .setParameter("n", nTolls)
             .setParameter("lon", location.longitude)
             .setParameter("lat", location.latitude)

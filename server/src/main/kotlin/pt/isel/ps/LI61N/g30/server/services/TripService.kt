@@ -16,7 +16,7 @@ class TripService(
     fun amendTrip(trip_id: Long, new_begin_toll_id: Long, new_end_toll_id: Long, user: User){
         //Get Trip
         val trip = tripRepository.findById(trip_id).orElseThrow { Exception("Invalid trip.") }
-        if(trip.state == "incomplete") throw Exception("Invalid trip.")
+        if(trip.state == TripState.AWAITING_CONFIRMATION) throw Exception("Invalid trip.")
         if(trip.vehicle.owner.id != user.id) throw Exception("Invalid trip.")
 
         val tolls = tollRepository.findAllById(listOf(new_begin_toll_id, new_end_toll_id)).toList()

@@ -1,4 +1,4 @@
-package pt.isel.ps.LI61N.g30.server.api.controllers.input
+package pt.isel.ps.LI61N.g30.server.api.input
 
 import pt.isel.ps.LI61N.g30.server.utils.GeoLocation
 

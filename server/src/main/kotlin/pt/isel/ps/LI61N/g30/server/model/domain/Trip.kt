@@ -12,9 +12,8 @@ data class Trip(
         @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = -1,
 
-        //string for now, implemenent with enum later
-        @Column(name="state")
-        var state: String = "incomplete",
+        @Enumerated(EnumType.STRING)
+        var state: TripState = TripState.INCOMPLETE,
 
         @ManyToOne
         @JoinColumn(name = "vehicle", foreignKey = ForeignKey(name = "VEHICLE_FK"))
@@ -28,7 +27,6 @@ data class Trip(
         val transaction: MutableList<Transaction> = mutableListOf(),
 
         @OneToMany(
-
                 cascade = [CascadeType.ALL],
                 orphanRemoval = true
         )
@@ -39,3 +37,10 @@ data class Trip(
         val created: Date? = Date()
 
 )
+
+enum class TripState{
+    INCOMPLETE,
+    CANCELED,
+    AWAITING_CONFIRMATION,
+    CONFIRMED
+}

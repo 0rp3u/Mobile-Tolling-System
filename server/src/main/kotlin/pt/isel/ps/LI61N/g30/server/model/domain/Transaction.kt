@@ -36,10 +36,23 @@ data class Transaction(
         @Column(name = "issuer")
         val issuer: String? = null,
 
+        @Column(name = "enforcement_percentage")
+        val enforcement_percentage: Float?,
+
         @Column
         @CreationTimestamp
         val created: Date = Date()
 )
+
+fun createTransaction(trip: Trip, toll: Toll, timestamp: Date, type: TransactionType, enforcement_percentage: Float?): Transaction{
+        return Transaction(
+                tolltripId = pt.isel.ps.LI61N.g30.server.model.domain.TollTripId(trip_id = trip.id, toll_id = toll.id, type = type),
+                toll = toll,
+                trip = trip,
+                timestamp = timestamp,
+                enforcement_percentage = enforcement_percentage
+        )
+}
 
 @Entity
 data class Transaction_uid (

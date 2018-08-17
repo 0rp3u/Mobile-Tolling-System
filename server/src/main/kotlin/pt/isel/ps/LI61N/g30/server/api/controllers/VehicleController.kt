@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.async.DeferredResult
 import pt.isel.ps.LI61N.g30.server.model.domain.Vehicle
-import pt.isel.ps.LI61N.g30.server.model.domain.VehicleType
 import pt.isel.ps.LI61N.g30.server.model.domain.repositories.VehicleRepository
 import pt.isel.ps.LI61N.g30.server.services.AuthService
 import pt.isel.ps.LI61N.g30.server.services.clearing.ClearingUserService

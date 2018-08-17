@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import pt.isel.ps.LI61N.g30.server.model.domain.Trip
-import pt.isel.ps.LI61N.g30.server.api.controllers.input.InputAmendTrip
+import pt.isel.ps.LI61N.g30.server.api.input.InputAmendTrip
 import pt.isel.ps.LI61N.g30.server.services.AuthService
 import pt.isel.ps.LI61N.g30.server.services.TransactionService
 import pt.isel.ps.LI61N.g30.server.services.TripService

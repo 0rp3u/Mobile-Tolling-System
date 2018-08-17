@@ -2,30 +2,75 @@ package pt.isel.ps.LI61N.g30.server.api.controllers
 
 import org.slf4j.LoggerFactory
 import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
-import pt.isel.ps.LI61N.g30.server.api.controllers.input.Login
+import pt.isel.ps.LI61N.g30.server.api.input.InputTicket
+import pt.isel.ps.LI61N.g30.server.api.input.Login
+import pt.isel.ps.LI61N.g30.server.model.domain.Ticket
 import pt.isel.ps.LI61N.g30.server.model.domain.User
 import pt.isel.ps.LI61N.g30.server.model.domain.repositories.UserRepository
 import pt.isel.ps.LI61N.g30.server.services.AuthService
-import pt.isel.ps.LI61N.g30.server.services.clearing.ClearingUserService
+import pt.isel.ps.LI61N.g30.server.services.UserService
+import java.net.URI
 
 @RequestMapping("/users", produces = [MediaType.APPLICATION_JSON_VALUE])
 @RestController
 class UserController(
-        val userService : ClearingUserService,
         val authService: AuthService,
-        val userRepository: UserRepository,
+        val userService: UserService,
         restTemplateBuilder: RestTemplateBuilder
 ) {
 
     val log = LoggerFactory.getLogger(UserController::class.java)
-    val restTemplate: RestTemplate = restTemplateBuilder.build()
-    val usersURI = "/users"
 
+    //TODO ADMIN
+    @Transactional
+    @RequestMapping(method = [RequestMethod.POST], value = "/ticket")
+    fun createTicket(
+            @RequestBody input: InputTicket
+    ): ResponseEntity<Ticket> {
+        with(input){
+            val ticket = userService.createTicket(user_id, amount, reason, timestamp)
+            return ResponseEntity
+                    .created(URI.create("users/ticket/{ticket_id}"))
+                    .body(ticket)
+        }
+    }
+
+    @Transactional
+    @RequestMapping(method = [RequestMethod.GET], value = "/ticket/{ticket_id}")
+    fun getTickets(
+        @PathVariable ticket_id: Long,
+        page: Pageable
+    ): ResponseEntity<Page<Ticket>>{
+        val userId = authService.authenticatedUser().id
+        val user = userService.getUserByid(userId)
+        log.info("Fetched user: ${user.login}")
+
+        return ResponseEntity.ok(userService.getTickets(user, page))
+    }
+
+    @Transactional
+    @RequestMapping(method = [RequestMethod.GET], value = "/ticket/{ticket_id}")
+    fun getOneTicket(
+            @PathVariable ticket_id: Long
+    ): ResponseEntity<Ticket>{
+        val userId = authService.authenticatedUser().id
+        val user = userService.getUserByid(userId)
+        log.info("Fetched user: ${user.login}")
+
+        return ResponseEntity.ok(userService.getTicket(ticket_id, user))
+    }
+
+
+//    val restTemplate: RestTemplate = restTemplateBuilder.build()
+//    val usersURI = "/users"
+//
 //    @Transactional(readOnly = true)
 ////    @RequestMapping(method = [RequestMethod.GET], value="/{id}")
 ////    fun findOne(page: Pageable): ResponseEntity<JSONPObject> {
@@ -65,31 +110,5 @@ class UserController(
 //            return ResponseEntity.ok(user.get())
 //        }
 //    }
-
-    @GetMapping(value = "/self")
-    fun test(): ResponseEntity<User> {
-        log.info("routing: /test")
-        val userId = authService.authenticatedUser().id
-        val user = userService.getUserByid(userId)
-        log.info("Authenticated User: $userId")
-        log.info("Username: ${user.login}")
-        return ResponseEntity.ok(user)
-    }
-
-    @GetMapping(value = "/admin")
-    fun getAllUsers(): ResponseEntity<List<User>> {
-        val users = userService.getAll()
-        return ResponseEntity.ok(users)
-    }
-
-
-    @Transactional
-    @RequestMapping(method = [RequestMethod.POST], value = "/ticket")
-    fun createTicket(
-            @RequestBody input: Login
-    ): ResponseEntity<Void> {
-
-        return ResponseEntity.noContent().build()
-    }
 
 }
