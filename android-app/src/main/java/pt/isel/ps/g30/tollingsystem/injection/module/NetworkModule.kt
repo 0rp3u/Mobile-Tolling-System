@@ -18,7 +18,7 @@ class NetworkModule(private val baseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideConnectivityUtils(app: TollingSystemApp) = NetworkUtils(app)
+    fun provideConnectivityUtils(app: TollingSystemApp) = NetworkUtils
 
 
     @Provides

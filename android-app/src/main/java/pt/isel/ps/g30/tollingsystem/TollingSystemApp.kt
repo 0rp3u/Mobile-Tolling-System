@@ -12,7 +12,7 @@ import pt.isel.ps.g30.tollingsystem.injection.component.BaseComponent
 
 open class TollingSystemApp : Application() {
 
-    companion object {
+    companion object{
         lateinit var instance: TollingSystemApp
             private set
     }
@@ -23,7 +23,6 @@ open class TollingSystemApp : Application() {
                 .networkModule(NetworkModule("http://10.10.3.213:8081"))
                 .build()
     }
-
 
     override fun onCreate() {
         super.onCreate()

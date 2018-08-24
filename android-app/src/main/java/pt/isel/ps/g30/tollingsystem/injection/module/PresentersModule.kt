@@ -6,7 +6,7 @@ import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.geofencing.GeofencingInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
-import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTripInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.login.LoginPresenter
 import pt.isel.ps.g30.tollingsystem.presenter.login.LoginPresenterImpl
@@ -26,7 +26,7 @@ import pt.isel.ps.g30.tollingsystem.presenter.vehicle.*
 
 @Module
 class PresentersModule {
-
+    
     @Provides
     fun provideLoginPresenter(interactor: AuthInteractor): LoginPresenter
             = LoginPresenterImpl(interactor)
@@ -36,20 +36,20 @@ class PresentersModule {
             = SplashPresenterImpl(interactor)
 
     @Provides
-    fun provideTollingTripFragPresenter(interactor: TollingTripInteractor): TollingTripFragPresenter
+    fun provideTollingTripFragPresenter(interactor: TollingTransactionInteractor): TollingTripFragPresenter
             = TollingTripFragPresenterImpl(interactor)
 
     @Provides
-    fun provideNavigationPresenter(tollingTripInteractor: TollingTripInteractor, tollingPlazaInteractor: TollingPlazaInteractor, vehicleInteractor: VehicleInteractor, geofencingInteractor: GeofencingInteractor): NavigationFragPresenter
-            = NavigationFragPresenterImpl(tollingTripInteractor, tollingPlazaInteractor, vehicleInteractor, geofencingInteractor)
+    fun provideNavigationPresenter(tollingTransactionInteractor: TollingTransactionInteractor, tollingPlazaInteractor: TollingPlazaInteractor, vehicleInteractor: VehicleInteractor, geofencingInteractor: GeofencingInteractor): NavigationFragPresenter
+            = NavigationFragPresenterImpl(tollingTransactionInteractor, tollingPlazaInteractor, vehicleInteractor, geofencingInteractor)
 
     @Provides
     fun provideVehicleFragPresenter(interactor: VehicleInteractor): VehiclesFragPresenter
             = VehiclesFragPresenterImpl(interactor)
 
     @Provides
-    fun provideVehiclePresenter(interactor: VehicleInteractor, tripInteractor: TollingTripInteractor): VehicleDetailsPresenter
-            = VehicleDetailsPresenterImpl(interactor, tripInteractor)
+    fun provideVehiclePresenter(interactor: VehicleInteractor, transactionInteractor: TollingTransactionInteractor): VehicleDetailsPresenter
+            = VehicleDetailsPresenterImpl(interactor, transactionInteractor)
 
     @Provides
     fun provideNotificationPresenter(interactor: NotificationInteractor): NotificationPresenter
@@ -60,7 +60,7 @@ class PresentersModule {
             = MainPresenterImpl(interactor)
 
     @Provides
-    fun provideollingTripDetailsPresenter(interactor: TollingTripInteractor): TollingTripDetailsPresenter
+    fun provideollingTripDetailsPresenter(interactor: TollingTransactionInteractor): TollingTripDetailsPresenter
             = TollingTripDetailsPresenterImpl(interactor)
 
     @Provides

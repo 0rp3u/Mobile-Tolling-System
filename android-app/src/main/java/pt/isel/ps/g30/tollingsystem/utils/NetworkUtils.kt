@@ -7,13 +7,14 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Build
+import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 
 
-class NetworkUtils(val context: Context) {
+object NetworkUtils {
 
 
     fun isConnected():Boolean {
-        val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connMgr = TollingSystemApp.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connMgr.activeNetworkInfo
         return (networkInfo != null && networkInfo.isConnected)
     }
@@ -25,7 +26,7 @@ class NetworkUtils(val context: Context) {
     }
     @SuppressLint("ObsoleteSdkInt")
     private fun isConnected(type:Int):Boolean {
-        val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connMgr = TollingSystemApp.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
         {
             val networkInfo = connMgr.getNetworkInfo(type)
@@ -43,7 +44,7 @@ class NetworkUtils(val context: Context) {
         for (mNetwork in networks)
         {
             networkInfo = connMgr.getNetworkInfo(mNetwork)
-            if (!(networkInfo == null || networkInfo.type !== type || !networkInfo.isConnected))
+            if (networkInfo != null && networkInfo.type === type && networkInfo.isConnected)
             {
                 return true
             }
