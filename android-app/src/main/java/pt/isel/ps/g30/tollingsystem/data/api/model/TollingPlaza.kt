@@ -1,7 +1,14 @@
 package pt.isel.ps.g30.tollingsystem.data.api.model
 
 data class TollingPlaza(
-        val id: Int,
+
         val name: String,
-        val latLng: String //TODO create latlong model
+
+        val concession: String,
+
+        val latLong: LatLong,
+
+        val openToll: Boolean = false,
+
+        var id: Int = 0
 )

@@ -12,7 +12,10 @@ interface TollingService {
     fun authenticate(): Deferred<Response<Void>>
 
     @GET("plazas/{position}")
-    fun getNearPlazas(position : String): Deferred<List<TollingPlaza>>
+    fun getNearPlazas(position : LatLong): Deferred<List<TollingPlaza>>
+
+    @GET("plazas")
+    fun getAllPlazas(): Deferred<List<TollingPlaza>>
 
     @GET("vehicle")
     fun getVehicleList(): Deferred<List<Vehicle>>
@@ -41,6 +44,9 @@ interface TollingService {
     @GET("transaction/open")
     fun getOpenTransactionList(): Deferred<List<TollingTransaction>>
 
+    @POST("transaction/verify")
+    fun verifyTollingTransaction(@Body passageInfo: TollPassageInfo): Deferred<Boolean>
+
     @POST("transaction/new")
     fun initiateTollingTransaction(@Body transaction: TollingTransaction): Deferred<TollingTransaction>
 
@@ -51,9 +57,5 @@ interface TollingService {
     fun cancelTollingTransaction( @Body transaction: TollingTransaction): Deferred<TollingTransaction>
 
 
-
-//    @POST("plaza/{id}/verify")
-//    fun verifyPassage( @Path("id") id: Int,@Body vector: positionsVector): Deferred<Int> TODO this should gives us a percentage of certainty that person passed a certain plaza
-//
 
 }

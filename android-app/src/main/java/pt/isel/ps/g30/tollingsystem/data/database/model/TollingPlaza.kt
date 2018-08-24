@@ -17,6 +17,8 @@ data class TollingPlaza(
 
         val Lng:Double,
 
+        val openToll: Boolean = false,
+
         @PrimaryKey(autoGenerate = true)
         var id: Int = 0
 )

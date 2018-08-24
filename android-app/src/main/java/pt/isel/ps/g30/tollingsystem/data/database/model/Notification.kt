@@ -17,7 +17,7 @@ data class Notification(
         var vehicle: Vehicle? = null,
 
         @Embedded(prefix = "trip_")
-        var trip: TollingTrip? = null,
+        var transaction: TollingTransaction? = null,
 
         var Timestamp: Date = Date(),
 

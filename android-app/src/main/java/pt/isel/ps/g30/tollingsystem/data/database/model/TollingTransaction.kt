@@ -1,8 +1,8 @@
 package pt.isel.ps.g30.tollingsystem.data.database.model
 
 import androidx.room.Embedded
-import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Entity
 import androidx.room.TypeConverters
 import pt.isel.ps.g30.tollingsystem.data.database.model.converter.Converters
 import java.util.*
@@ -10,21 +10,23 @@ import java.util.*
 
 @TypeConverters(Converters::class)
 @Entity
-data class ActiveTrip(
+data class TollingTransaction(
 
         @Embedded(prefix = "vehicle_")
-        var vehicle: Vehicle? = null,
+        val vehicle: Vehicle,
 
         @Embedded(prefix = "origin_")
-        var origin: TollingPlaza? = null,
+        val origin: TollingPlaza,
 
-        var originTimestamp: Date? = null,
+        val originTimestamp: Date =  Date(),
 
         @Embedded(prefix = "destination_")
-        var destination: TollingPlaza? = null,
+        val destination: TollingPlaza,
 
-        var destTimestamp: Date? = null,
+        val destTimestamp: Date =  Date(),
 
-        @PrimaryKey
-        var id: Int=1
+        var paid: Double? = null,
+
+        @PrimaryKey(autoGenerate = true)
+        var id: Int=0
 )

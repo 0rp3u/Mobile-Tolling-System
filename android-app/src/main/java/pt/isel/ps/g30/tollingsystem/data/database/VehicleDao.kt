@@ -16,7 +16,7 @@ interface VehicleDao {
     @Query("SELECT * FROM Vehicle WHERE ownerId = :ownerId")
     fun findByOwner(ownerId: Int): List<Vehicle>
 
-    @Query("SELECT Vehicle.* FROM Vehicle, ActiveTrip WHERE ActiveTrip.vehicle_id = Vehicle.id")
+    @Query("SELECT Vehicle.* FROM Vehicle, CurrentTransaction WHERE CurrentTransaction.vehicle_id = Vehicle.id")
     fun findActive(): Vehicle?
 
     @Update()

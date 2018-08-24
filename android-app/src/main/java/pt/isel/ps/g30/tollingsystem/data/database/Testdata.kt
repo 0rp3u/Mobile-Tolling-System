@@ -20,7 +20,7 @@ fun insertTestdata(database: TollingSystemDatabase){
 
         database.TollingDao().insert(
                 TollingPlaza( "palmela", "brisa", true, 38.584453, -8.888651),
-                TollingPlaza( "Ponte 25 de abril", "lusoponte", true, 38.675975, -9.173930),
+                TollingPlaza( "Ponte 25 de abril", "lusoponte", true, 38.675975, -9.173930, true),
                 TollingPlaza( "coina", "brisa", true, 38.579182, -9.013340),
                 TollingPlaza( "dança", "ESD", true, 38.7564632,-9.1156641),
                 TollingPlaza( "química", "ISEL", true, 38.7568957,-9.1168083)
@@ -28,24 +28,24 @@ fun insertTestdata(database: TollingSystemDatabase){
 
 
         database.TollingTripDao().insert(
-                TollingTrip(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3),Date(),69.23),
-                TollingTrip( database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(1),Date(),9.23),
-                TollingTrip(  database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2), Date(), 2.56),
-                TollingTrip(  database.VehicleDao().findById(4), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
-                TollingTrip( database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(2)),
-                TollingTrip( database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1)),
-                TollingTrip(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(1),  Date(),29.23)
+                TollingTransaction(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3),Date(),69.23),
+                TollingTransaction( database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1),Date(),9.23),
+                TollingTransaction(  database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2), Date(), 2.56),
+                TollingTransaction(  database.VehicleDao().findById(4), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
+                TollingTransaction( database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
+                TollingTransaction( database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1)),
+                TollingTransaction(  database.VehicleDao().findById(1), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2),  Date(),29.23)
         )
 
-        database.ActiveTripDao().insert(ActiveTrip())
+        database.ActiveTripDao().insert(CurrentTransaction())
 
-        database.NotificationDao().insert(Notification(NotificationType.TripNotification, trip =database.TollingTripDao().findById(5)))
+        database.NotificationDao().insert(Notification(NotificationType.TripNotification, transaction =database.TollingTripDao().findById(5)))
 
         database.NotificationDao().insert(Notification(NotificationType.VehicleAddedNotification, vehicle = database.VehicleDao().findById(4)))
 
         launch {
             delay(5000)
-            database.NotificationDao().insert(Notification(NotificationType.TripNotification, trip =database.TollingTripDao().findById(6)))
+            database.NotificationDao().insert(Notification(NotificationType.TripNotification, transaction =database.TollingTripDao().findById(6)))
         }
     }
 }
