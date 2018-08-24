@@ -3,10 +3,10 @@ package pt.isel.ps.g30.tollingsystem.interactor.notification
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.Job
-import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.interactor.BaseInteractor
 import pt.isel.ps.g30.tollingsystem.data.database.model.Notification
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 
 interface NotificationInteractor : BaseInteractor {
 
@@ -20,7 +20,7 @@ interface NotificationInteractor : BaseInteractor {
 
     suspend fun dismissNotification(notification: Notification): Job
 
-    fun sendStartTripNotification(trip: ActiveTrip)
+    fun sendStartTripNotification(trip: CurrentTransaction)
 
-    fun sendFinishTripNotification(trip: TollingTrip)
+    fun sendFinishTripNotification(transaction: TollingTransaction)
 }

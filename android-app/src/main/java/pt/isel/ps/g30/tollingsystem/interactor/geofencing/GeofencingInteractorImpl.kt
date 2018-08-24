@@ -31,10 +31,10 @@ class GeofencingInteractorImpl(
                     .setCircularRegion(
                             it.lat,
                             it.Lng,
-                            50f //TODO
+                            150f //TODO
                     )
                     .setExpirationDuration(24* 60 * 60 * 1000) //TODO
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
                     .build() }
 
         val request = GeofencingRequest.Builder()
@@ -44,9 +44,8 @@ class GeofencingInteractorImpl(
 
         suspendCancellableCoroutine { continuation ->
             mGeofencingClient.addGeofences(request, geofenceBroadcastReeiver)?.run {
-                addOnSuccessListener { ret ->
+                addOnSuccessListener { _ ->
                     launch {
-
                                 tollingSystemDatabase.TollingDao().update(*(activeTollplazas.map { it.active = true; it }.toTypedArray()))
                         continuation.resume(Unit)
                     }

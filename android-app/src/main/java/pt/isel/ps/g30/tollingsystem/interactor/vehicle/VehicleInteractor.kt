@@ -2,7 +2,6 @@ package pt.isel.ps.g30.tollingsystem.interactor.vehicle
 
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.Job
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
 import pt.isel.ps.g30.tollingsystem.interactor.BaseInteractor
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 

@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LiveData
 import androidx.work.*
@@ -14,14 +13,13 @@ import kotlinx.coroutines.experimental.*
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
-import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.data.database.model.Notification
 import pt.isel.ps.g30.tollingsystem.data.database.model.NotificationType
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 import pt.isel.ps.g30.tollingsystem.extension.getIconResource
-import pt.isel.ps.g30.tollingsystem.services.work.PostFinishTripToApiWork
+import pt.isel.ps.g30.tollingsystem.services.work.verifyTollingPassageWork
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
-import kotlin.reflect.KClass
 
 class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSystemDatabase) : NotificationInteractor {
 
@@ -37,8 +35,8 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
 
     override suspend fun confirmTrip(notification: Notification) = launch {
         //TODO Work manager schedule to comunicate with backend that is confirmed
-        if(notification.trip?.id == 6) {
-            tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TripPaidNotification, trip =tollingSystemDatabase.TollingTripDao().findById(6).also { it?.paid = 15.7 }))
+        if(notification.transaction?.id == 6) {
+            tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TripPaidNotification, transaction =tollingSystemDatabase.TollingTripDao().findById(6).also { it?.paid = 15.7 }))
         }
 
 
@@ -47,7 +45,7 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-        val request = OneTimeWorkRequestBuilder<PostFinishTripToApiWork>()
+        val request = OneTimeWorkRequestBuilder<verifyTollingPassageWork>()
                 .setConstraints(constraints)
                 .build()
 
@@ -66,7 +64,7 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
     }
 
 
-    override fun sendStartTripNotification(trip: ActiveTrip){
+    override fun sendStartTripNotification(trip: CurrentTransaction){
         val builder = NotificationCompat.Builder(TollingSystemApp.instance)
 
         val carIcon = trip.vehicle?.getIconResource() ?: R.drawable.ic_notifications_black_24dp
@@ -74,8 +72,8 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
         builder.setSmallIcon(carIcon)
                 .setLargeIcon(BitmapFactory.decodeResource(TollingSystemApp.instance.resources, carIcon))
                 .setColor(Color.RED)
-                .setContentTitle("started trip")
-                .setContentText("started trip on ${trip.origin?.name}")
+                .setContentTitle("started transaction")
+                .setContentText("started transaction on ${trip.origin?.name}")
 
         val extras = Bundle().also { it.putInt(MainActivity.SELECTED_ITEM_KEY, 2) }
 
@@ -88,16 +86,16 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
         sendNotification(builder)
     }
 
-    override fun sendFinishTripNotification(trip: TollingTrip){
+    override fun sendFinishTripNotification(transaction: TollingTransaction){
         val builder = NotificationCompat.Builder(TollingSystemApp.instance)
 
-        val carIcon = trip.vehicle.getIconResource() ?: R.drawable.ic_notifications_black_24dp
+        val carIcon = transaction.vehicle.getIconResource()
 
         builder.setSmallIcon(carIcon)
                 .setLargeIcon(BitmapFactory.decodeResource(TollingSystemApp.instance.resources, carIcon))
                 .setColor(Color.RED)
-                .setContentTitle("finished trip")
-                .setContentText("finished trip started on ${trip.origin.name} that ended on ${trip.destination.name}")
+                .setContentTitle("finished transaction")
+                .setContentText("finished transaction started on ${transaction.origin.name} that ended on ${transaction.destination.name}")
 
         val extras = Bundle().also { it.putInt(MainActivity.SELECTED_ITEM_KEY, 2) }
 
