@@ -8,13 +8,8 @@ import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import pt.isel.ps.g30.tollingsystem.data.api.TollingService
 import pt.isel.ps.g30.tollingsystem.data.api.model.Tare
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
-import pt.isel.ps.g30.tollingsystem.data.database.model.User
-import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
+import pt.isel.ps.g30.tollingsystem.data.database.model.*
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
@@ -94,9 +89,9 @@ class DatabaseTest {
 
         val vehicles = arrayOf(
                 Vehicle("10-aa-10", user0.id, Tare.Classe_1),
-                Vehicle("10-aa-10", user0.id, Tare.Classe_2, true),
+                Vehicle("10-aa-10", user0.id, Tare.Classe_2),
                 Vehicle("10-aa-10", user0.id, Tare.Classe_3),
-                Vehicle("10-aa-10", user2.id, Tare.Classe_1, true),
+                Vehicle("10-aa-10", user2.id, Tare.Classe_1),
                 Vehicle("10-aa-10", user2.id, Tare.Classe_5))
 
         val inserted = database.VehicleDao().insert(*vehicles)
@@ -104,22 +99,6 @@ class DatabaseTest {
         assert(inserted.size == 5)
 
         assert(database.VehicleDao().findActive() == vehicles[1])
-
-        val mod = database.VehicleDao().removeActive(vehicles[1])
-
-        assert(mod == 1)
-        assert(database.VehicleDao().findActive() != vehicles[1])
-
-        var vehicle0 = database.VehicleDao().findById(1)
-        assert(vehicle0.active.not())
-
-        val mod1 = database.VehicleDao().setActive(vehicle0)
-
-
-        assert(mod1 == 1)
-        vehicle0 = database.VehicleDao().findById(1)
-
-        assert(vehicle0.active)
 
         database.close()
 
@@ -134,7 +113,7 @@ class DatabaseTest {
 
         val plazas = arrayOf(
                 TollingPlaza( "palmela", "brisa", true, 38.584453, -8.888651),
-                TollingPlaza( "Ponte 25 de abril", "lusoponte", true, 38.675975, -9.173930),
+                TollingPlaza( "Ponte 25 de abril", "lusoponte", true, 38.675975, -9.173930, true),
                 TollingPlaza( "coina", "brisa", true, 38.579182, -9.013340),
                 TollingPlaza( "fofinhas da dança", "ESD", true, 38.7564632,-9.1156641),
                 TollingPlaza( "fofinhas de química", "ISEL", true, 38.7568957,-9.1168083)
@@ -174,7 +153,7 @@ class DatabaseTest {
 
         val plazas = arrayOf(
                 TollingPlaza( "palmela", "brisa", true, 38.584453, -8.888651),
-                TollingPlaza( "Ponte 25 de abril", "lusoponte", true, 38.675975, -9.173930),
+                TollingPlaza( "Ponte 25 de abril", "lusoponte", true, 38.675975, -9.173930,true),
                 TollingPlaza( "coina", "brisa", true, 38.579182, -9.013340),
                 TollingPlaza( "fofinhas da dança", "ESD", true, 38.7564632,-9.1156641),
                 TollingPlaza( "fofinhas de química", "ISEL", true, 38.7568957,-9.1168083)
@@ -203,7 +182,7 @@ class DatabaseTest {
 
         val vehicles = arrayOf(
                 Vehicle("10-aa-10", user0.id, Tare.Classe_1),
-                Vehicle("20-aa-20", user0.id, Tare.Classe_2, true),
+                Vehicle("20-aa-20", user0.id, Tare.Classe_2),
                 Vehicle("30-aa-30", user0.id, Tare.Classe_3),
                 Vehicle("40-ba-40", user2.id, Tare.Classe_1),
                 Vehicle("50-ba-50", user2.id, Tare.Classe_5))
@@ -214,22 +193,46 @@ class DatabaseTest {
 
 
         val trips = arrayOf(
-                TollingTrip(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
-                TollingTrip( database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(1)),
-                TollingTrip(  database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2), Date(), true),
-                TollingTrip(  database.VehicleDao().findById(4), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
-                TollingTrip( database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(2)),
-                TollingTrip( database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1)),
-                TollingTrip(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(1), Date(),true)
+                TollingTransaction(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
+                TollingTransaction( database.VehicleDao().findById(2), database.TollingDao().findById(1), Date(), database.TollingDao().findById(4)),
+                TollingTransaction(  database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2), Date(), true),
+                TollingTransaction(  database.VehicleDao().findById(4), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
+                TollingTransaction( database.VehicleDao().findById(1), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2)),
+                TollingTransaction( database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1)),
+                TollingTransaction(  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(1), Date(),true)
         )
 
         val insertedTrips = database.TollingTripDao().insert(*trips)
 
         assert(insertedTrips.size == 7)
 
-        val active =  database.TollingTripDao().findByActiveTripLiveData()
+        val active =  database.ActiveTripDao().findLiveData()
 
-        assert(active == null)
+        var iter = 0
+        active.observeForever {
+            when(iter){
+                0-> assert(it?.vehicle != null && it.origin == null)
+                1-> assert(it?.origin != null)
+                2-> assert(it?.origin == null)
+            }
+            iter++
+        }
+
+        //add vehicle
+        database.ActiveTripDao().insert(CurrentTransaction(database.VehicleDao().findById(1)))
+
+        val activeVehicle = database.ActiveTripDao().findActiveVehicle()
+
+        assert(activeVehicle?.id == 1)
+
+
+        val currentTrip = database.ActiveTripDao().find()
+
+        currentTrip.origin = database.TollingDao().findById(3)
+        currentTrip.destTimestamp = Date()
+
+        database.ActiveTripDao().update(currentTrip)
+
 
         val paid = database.TollingTripDao().findPaid()
 
@@ -237,14 +240,16 @@ class DatabaseTest {
         assert(paid[0].id == 2)
         assert(paid[1].id == 6)
 
-        val initiateTrip = TollingTrip( database.VehicleDao().findById(1), database.TollingDao().findById(1), Date())
+
+
+
+        val initiateTrip = TollingTransaction( database.VehicleDao().findById(1), database.TollingDao().findById(1), Date())
 
 
         val initiated = database.TollingTripDao().insert(initiateTrip)
 
         assert(initiated.size == 1)
 
-        val newActiveLive = database.TollingTripDao().findByActiveTripLiveData()!!
         val all = database.TollingTripDao().findAll()
 
         val newActive = database.TollingTripDao().findByActiveTrip()!!
