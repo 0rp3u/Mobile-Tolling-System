@@ -16,6 +16,7 @@
 
 package pt.isel.ps.g30.tollingsystem.services
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -23,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.location.Location
 import android.os.Build
 
 import android.text.TextUtils
@@ -30,22 +32,22 @@ import android.util.Log
 import androidx.core.app.JobIntentService
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
+import com.google.android.gms.location.*
+import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.maps.model.LatLng
 
-import com.google.android.gms.location.Geofence
-import com.google.android.gms.location.GeofencingEvent
 import kotlinx.coroutines.experimental.launch
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
-import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
+import pt.isel.ps.g30.tollingsystem.data.api.model.Point
+import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.extension.getIconResource
-import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
-import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTripInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
+import java.util.*
 
-import java.util.ArrayList
 import javax.inject.Inject
 
 /**
@@ -55,10 +57,9 @@ import javax.inject.Inject
  * the transition type and geofence id(s) that triggered the transition. Creates a notification
  * as the output.
  */
-class GeofenceTransitionsJobIntentService : JobIntentService() {
-
+class GeofenceTransitionsJobIntentService : JobIntentService(){
     @Inject
-    lateinit var tollingTripInteractor: TollingTripInteractor
+    lateinit var tollingTransactionInteractor: TollingTransactionInteractor
 
     @Inject
     lateinit var tollingPlazaInteractor: TollingPlazaInteractor
@@ -66,9 +67,24 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
     @Inject
     lateinit var notificationInteractor: NotificationInteractor
 
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
+
+    private val locationCallback = object: LocationCallback(){
+        override fun onLocationResult(lr: LocationResult){
+            lr.locations.map {
+                locations.add(Point(LatLng(it.latitude, it.longitude), it.time ))
+            }
+        }
+
+    }
+
+    val locations: MutableList<Point> = mutableListOf()
+
     override fun onCreate() {
         super.onCreate()
         injectDependencies()
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(TollingSystemApp.instance)
     }
 
     fun injectDependencies() {
@@ -97,39 +113,18 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
         val geofenceTransition = geofencingEvent.geofenceTransition
 
         // Test that the reported transition was of interest.
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
 
+
+
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) handleGeofenceEntering()
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT){
             // Get the geofences that were triggered. A single event can trigger multiple geofences.
             val triggeringGeofences = geofencingEvent.triggeringGeofences
 
-            // Get the transition details as a String.
-            val geofenceTransitionDetails = getGeofenceTransitionDetails(geofenceTransition,
-                    triggeringGeofences)
-
-            launch{
-                val plaza = tollingPlazaInteractor.getTollPlaza(triggeringGeofences.first().requestId.toInt()).await()
-                val currentTrip = tollingTripInteractor.getActiveTollingTrip().await()
-
-                // Send notification and log the transition details.
-
-                if(currentTrip.origin!=null){
-                    val trip = tollingTripInteractor.finishTollingTrip(plaza).await()
-
-                    notificationInteractor.sendFinishTripNotification(trip)
-
-                    Log.e(TAG, "finished trip @ ${trip.destination}")
-                } else{
-                    val trip = tollingTripInteractor.startTollingTrip(plaza).await()
-                    notificationInteractor.sendStartTripNotification(trip)
-                    Log.e(TAG, "started trip @ ${trip.origin}")
-                }
-            }
-            Log.i(TAG, geofenceTransitionDetails)
-        } else {
-            // Log the error.
-            //Log.e(TAG, getString(R.string.geofence_transition_invalid_type, geofenceTransition))
+            handleGeofenceExiting(triggeringGeofences.first().requestId.toInt())
         }
     }
+
 
     /**
      * Gets transition details and returns them as a formatted string.
@@ -154,11 +149,58 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
         return "$geofenceTransitionString: $triggeringGeofencesIdsString"
     }
 
+    @SuppressLint("MissingPermission")
+    private fun handleGeofenceEntering(){
+        val locationRequest = LocationRequest()
+                .setPriority(PRIORITY_HIGH_ACCURACY)
+                .setInterval(200)
+                .setMaxWaitTime(500)
+                .setExpirationTime(1000 * 60 * 10)
+                .setFastestInterval(100)
+                .setExpirationDuration(1000*20)
+
+
+        mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, mainLooper)
+
+    }
+
+    private fun handleGeofenceExiting(plazaId: Int){
+        mFusedLocationClient.removeLocationUpdates(locationCallback)
+
+        launch {
+            //val passed = tollingPlazaInteractor.verifyPassage(plazaId, locations).await()
+
+            val passed = true
+
+            if (passed) {
+                val plaza = tollingPlazaInteractor.getTollPlaza(plazaId).await()
+                val currentTrip = tollingTransactionInteractor.getCurrentTransactionTrip().await()
+
+                // Send notification and log the transition details.
+                sendNotification(currentTrip)
+
+                if (currentTrip.origin != null) {
+                    val trip = tollingTransactionInteractor.finishTransaction(plaza).await()
+
+                    notificationInteractor.sendFinishTripNotification(trip)
+
+                    Log.e(TAG, "finished transaction @ ${trip.destination}")
+                } else {
+                    val trip = tollingTransactionInteractor.startTollingTransaction(plaza).await()
+                    notificationInteractor.sendStartTripNotification(trip)
+                    Log.e(TAG, "started transaction @ ${trip.origin}")
+                }
+
+            }
+        }
+    }
+
+
     /**
      * Posts a notification in the notification bar when a transition is detected.
      * If the user clicks the notification, control goes to the MainActivity.
      */
-    private fun sendNotification(trip: ActiveTrip) {
+    private fun sendNotification(trip: CurrentTransaction) {
         // Get an instance of the Notification manager
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -198,11 +240,11 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
                 .setContentIntent(notificationPendingIntent)
 
         if(trip.destination!=null){
-            builder.setContentTitle("finished trip")
-                    .setContentText("finished trip from ${trip.origin?.name}  to ${trip.destination?.name}")
+            builder.setContentTitle("finished transaction")
+                    .setContentText("finished transaction from ${trip.origin?.name}  to ${trip.destination?.name}")
         } else{
-            builder.setContentTitle("started trip")
-                    .setContentText("started trip on ${trip.origin?.name}")
+            builder.setContentTitle("started transaction")
+                    .setContentText("started transaction on ${trip.origin?.name}")
         }
 
         // Set the Channel ID for Android O.

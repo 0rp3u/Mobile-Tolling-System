@@ -5,21 +5,23 @@ import androidx.work.*
 import kotlinx.coroutines.experimental.runBlocking
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import pt.isel.ps.g30.tollingsystem.data.api.TollingService
-import pt.isel.ps.g30.tollingsystem.data.api.model.TollingTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
+import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase_Impl
 import javax.inject.Inject
 
-class PostFinishTripToApiWork : Worker() {
+class verifyTollingPassageWork : Worker() {
 
     // Define the parameter keys:
-    private val KEY_X_ARG = "X"
-    private val KEY_Y_ARG = "Y"
-    private val KEY_Z_ARG = "Z"
+    private val KEY_PLAZA_ID = "KEY_PLAZA_ID"
 
     // The result key:
     private val KEY_RESULT = "result"
 
     @Inject
     lateinit var apiService: TollingService
+
+    @Inject
+    lateinit var tollingSystemDatabase: TollingSystemDatabase
 
 
     fun injectDependencies() {
@@ -34,25 +36,21 @@ class PostFinishTripToApiWork : Worker() {
         injectDependencies()
 
         // Fetch the arguments (and specify default values):
-        val x = inputData.getLong(KEY_X_ARG, 0)
-        val y = inputData.getLong(KEY_Y_ARG, 0)
-        val z = inputData.getLong(KEY_Z_ARG, 0)
+        val plaza_id = inputData.getLong(KEY_PLAZA_ID, -1)
 
-        val timeToSleep = x  + y + z
-        Thread.sleep(timeToSleep)
 
         runBlocking {
 //            val transaction = TollingTransaction()
-//            val res = apiService.closeTollingTransaction(transaction)
+//            val res = apiService.verifyTollingTransaction()
 
         }
 
-        //...set the output, and we're done!
-        val output = Data.Builder()
-                .putInt(KEY_RESULT, timeToSleep.toInt())
-                .build()
-
-        outputData = output
+//        //...set the output, and we're done!
+//        val output = Data.Builder()
+//                .putInt(KEY_RESULT, timeToSleep.toInt())
+//                .build()
+//
+//        outputData = output
         // Indicate success or failure with your return value.
         return Result.SUCCESS
     }
