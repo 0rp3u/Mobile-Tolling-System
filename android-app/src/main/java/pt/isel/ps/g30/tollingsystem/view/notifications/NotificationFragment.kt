@@ -63,11 +63,11 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
     }
 
     fun showTripDialog(notification: Notification){
-        val trip = notification.trip ?: throw Exception("No trip found on the notification")
+        val trip = notification.transaction ?: throw Exception("No transaction found on the notification")
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_trip_notification, null).apply {
 
-                tare.imageResource = trip.vehicle.getIconResource() //<- !! fine because the trip is active in here
+                tare.imageResource = trip.vehicle.getIconResource() //<- !! fine because the transaction is active in here
                 plate.text = trip.vehicle.licensePlate
                 from.text = trip.origin.name
                 date_origin.text = trip.originTimestamp.dateTimeParsed()
@@ -82,7 +82,7 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
                 .setTitle("Trip detected options")
                 .setView(dialogView)
                 .setPositiveButton("I Confirm") { dialogInterface, i -> presenter.confirmTrip(notification); dialogInterface.dismiss() }
-                .setNegativeButton("I didn't do this trip") { dialogInterface, i ->presenter.cancelTrip(notification); dialogInterface.dismiss() }
+                .setNegativeButton("I didn't do this transaction") { dialogInterface, i ->presenter.cancelTrip(notification); dialogInterface.dismiss() }
                 .setCancelable(true)
                 .create()
                 .show()
@@ -90,12 +90,12 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
     }
 
     fun showPaidDialog(notification: Notification){
-        val trip = notification.trip ?: throw Exception("No trip found on the notification")
+        val trip = notification.transaction ?: throw Exception("No transaction found on the notification")
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_trip_paid_notification, null).apply {
 
 
-                tare.imageResource = trip.vehicle.getIconResource() //<- !! fine because the trip is active in here
+                tare.imageResource = trip.vehicle.getIconResource() //<- !! fine because the transaction is active in here
                 plate.text = trip.vehicle.licensePlate
                 from.text = trip.origin.name
                 date_origin.text = trip.originTimestamp.dateTimeParsed()
@@ -106,10 +106,10 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
         }
 
         AlertDialog.Builder(this.requireContext())
-                .setTitle("Paid trip information")
+                .setTitle("Paid transaction information")
                 .setView(dialogView)
                 .setPositiveButton("I Confirm") { dialogInterface, i -> presenter.dismissNotification(notification); dialogInterface.dismiss() }
-                .setNegativeButton("I didn't do this trip") { dialogInterface, i ->presenter.disputePaidTrip(notification); dialogInterface.dismiss() }
+                .setNegativeButton("I didn't do this transaction") { dialogInterface, i ->presenter.disputePaidTrip(notification); dialogInterface.dismiss() }
                 .setCancelable(true)
                 .create()
                 .show()

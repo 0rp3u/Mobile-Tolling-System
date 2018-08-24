@@ -118,7 +118,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:text="Do you want to cancel this trip? if you used this toll booth you will be fined"/>
+        android:text="Do you want to cancel this transaction? if you used this toll booth you will be fined"/>
 
 
 </LinearLayout>

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.progress_bar.*
 import kotlinx.android.synthetic.main.fragment_vehicle_trips.*
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.extension.app
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 import pt.isel.ps.g30.tollingsystem.extension.longSnackbar
 import pt.isel.ps.g30.tollingsystem.extension.snackbar
 import pt.isel.ps.g30.tollingsystem.extension.startActivity
@@ -64,7 +64,7 @@ class TollingTripsFragment: BaseFragment<TollingTripFragPresenter, TollingTripsF
                 presenter.getTollingTripList(arguments?.getInt(VehicleActivity.EXTRA_VEHICLE_ID)?:1)
     }
 
-    override fun showTripList(list: List<TollingTrip>) {
+    override fun showTripList(list: List<TollingTransaction>) {
         Log.d(TAG, "show VEHICLE")
         tollingTripsRecyclerViewAdapter.historyList = list
     }

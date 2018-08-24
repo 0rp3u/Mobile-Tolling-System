@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_history.view.*
 import pt.isel.ps.g30.tollingsystem.R
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 import pt.isel.ps.g30.tollingsystem.extension.dateTimeParsed
 
-class TollingTripsRecyclerViewAdapter(val listener: (TollingTrip) -> Unit) : RecyclerView.Adapter<TollingTripsRecyclerViewAdapter.ViewHolder>() {
+class TollingTripsRecyclerViewAdapter(val listener: (TollingTransaction) -> Unit) : RecyclerView.Adapter<TollingTripsRecyclerViewAdapter.ViewHolder>() {
 
-    var historyList = listOf<TollingTrip>()
+    var historyList = listOf<TollingTransaction>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -32,7 +32,7 @@ class TollingTripsRecyclerViewAdapter(val listener: (TollingTrip) -> Unit) : Rec
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(history: TollingTrip, listener: (TollingTrip) -> Unit) {
+        fun bind(history: TollingTransaction, listener: (TollingTransaction) -> Unit) {
 
             itemView.date_origin.text = history.originTimestamp.dateTimeParsed()
             itemView.from.text = history.origin.name

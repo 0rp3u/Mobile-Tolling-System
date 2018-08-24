@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_tolling_trip_details.*
 import kotlinx.android.synthetic.main.template_trip_details.*
 import pt.isel.ps.g30.tollingsystem.R
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 import pt.isel.ps.g30.tollingsystem.extension.*
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.presenter.tollingtrip.TollingTripDetailsPresenter
@@ -56,15 +56,15 @@ class TollingTripDetails : BaseActivity<TollingTripDetailsPresenter, TollingTrip
 
 
 
-    override fun showTrip(tollingTrip: TollingTrip) {
+    override fun showTrip(tollingTransaction: TollingTransaction) {
 
-        val originLatLong = tollingTrip.origin.let { LatLng(it.lat, it.Lng) }
-        val destinationLatLong = tollingTrip.destination.let { LatLng(it.lat, it.Lng) }
+        val originLatLong = tollingTransaction.origin.let { LatLng(it.lat, it.Lng) }
+        val destinationLatLong = tollingTransaction.destination.let { LatLng(it.lat, it.Lng) }
         map.trip_details.background.alpha = 130
 
-        tollingTrip.origin.let{
+        tollingTransaction.origin.let{
             map.from.text = it.name
-            map.date_origin.text = tollingTrip.originTimestamp.dateTimeParsed()
+            map.date_origin.text = tollingTransaction.originTimestamp.dateTimeParsed()
 
             mMap.addMarker(
                     MarkerOptions()
@@ -75,9 +75,9 @@ class TollingTripDetails : BaseActivity<TollingTripDetailsPresenter, TollingTrip
 
             )
         }
-        tollingTrip.destination.let{
+        tollingTransaction.destination.let{
             map.destination.text = it.name
-            map.date_destination.text = tollingTrip.destTimestamp.dateTimeParsed()
+            map.date_destination.text = tollingTransaction.destTimestamp.dateTimeParsed()
 
             mMap.addMarker(
                     MarkerOptions()

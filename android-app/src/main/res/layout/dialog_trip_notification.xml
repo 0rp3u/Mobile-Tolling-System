@@ -170,7 +170,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
 
-        android:text="This trip has been detected, do you confirm? if you did this trip and cancel you will be fined" />
+        android:text="This transaction has been detected, do you confirm? if you did this transaction and cancel you will be fined" />
 
 
 

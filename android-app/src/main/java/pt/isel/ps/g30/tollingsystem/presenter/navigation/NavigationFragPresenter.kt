@@ -1,12 +1,10 @@
 package pt.isel.ps.g30.tollingsystem.presenter.navigation
 
-import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenter
 import pt.isel.ps.g30.tollingsystem.view.navigation.NavigationFragmentView
-import pt.isel.ps.g30.tollingsystem.view.tollingtrip.TollingTripsFragmentView
 
 interface NavigationFragPresenter : BasePresenter<NavigationFragmentView> {
 
@@ -14,7 +12,7 @@ interface NavigationFragPresenter : BasePresenter<NavigationFragmentView> {
 
     fun prepareVehiclesDialog()
 
-    fun prepareCancelActiveTripDialog(activeTrip: ActiveTrip)
+    fun prepareCancelActiveTripDialog(currentTransaction: CurrentTransaction)
 
     fun setActiveVehicle(vehicle: Vehicle)
 
@@ -24,6 +22,6 @@ interface NavigationFragPresenter : BasePresenter<NavigationFragmentView> {
 
     fun finishTrip(tollingPlaza: TollingPlaza)
 
-    fun cancelActiveTrip(trip: ActiveTrip)
+    fun cancelActiveTrip(trip: CurrentTransaction)
 
 }

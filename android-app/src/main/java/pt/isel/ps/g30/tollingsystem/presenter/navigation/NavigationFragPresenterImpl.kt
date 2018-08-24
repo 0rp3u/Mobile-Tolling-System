@@ -1,25 +1,23 @@
 package pt.isel.ps.g30.tollingsystem.presenter.navigation
 
 import android.util.Log
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
-import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
-import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTripInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.geofencing.GeofencingInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.navigation.NavigationFragmentView
 
 class NavigationFragPresenterImpl(
-        private val tollingInteractor: TollingTripInteractor,
+        private val tollingInteractor: TollingTransactionInteractor,
         private val plazaInteractor: TollingPlazaInteractor,
         private val vehiclesInteractor: VehicleInteractor,
         private val geofencingInteractor: GeofencingInteractor
@@ -45,7 +43,7 @@ class NavigationFragPresenterImpl(
                 view?.showActiveVehicle(activeVehicle)
 
 
-                tollingInteractor.getActiveTollingTripLiveData().await().observe(view!!, Observer{
+                tollingInteractor.getCurrentTransactionLiveData().await().observe(view!!, Observer {
                     it?.let {
                         if(it.vehicle != null)
                             if(it.origin !=null) view?.showActiveTrip(it) else view?.removeActiveTrip(it)
@@ -125,16 +123,16 @@ class NavigationFragPresenterImpl(
         }
     }
 
-    override fun prepareCancelActiveTripDialog(activeTrip: ActiveTrip) {
+    override fun prepareCancelActiveTripDialog(currentTransaction: CurrentTransaction) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                view?.showCancelActiveTripDialog(activeTrip)
+                view?.showCancelActiveTripDialog(currentTransaction)
                 view?.hideLoadingIndicator()
 
             }catch (e: Throwable){
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", { prepareCancelActiveTripDialog(activeTrip) })
+                view?.showErrorMessage("something went wrong, ${e.message}", { prepareCancelActiveTripDialog(currentTransaction) })
             }
 
         }
@@ -145,14 +143,14 @@ class NavigationFragPresenterImpl(
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                val trip = tollingInteractor.startTollingTrip(tollingPlaza).await()
+                val trip = tollingInteractor.startTollingTransaction(tollingPlaza).await()
 
-                Log.d(TAG, "started trip ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+                Log.d(TAG, "started transaction ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
 
                 view?.showActiveTrip(trip)
 
                 view?.hideLoadingIndicator()
-                view?.showDoneMessage("started trip on ${tollingPlaza.name}")
+                view?.showDoneMessage("passed on ${tollingPlaza.name}")
 
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
@@ -167,13 +165,13 @@ class NavigationFragPresenterImpl(
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                val trip = tollingInteractor.finishTollingTrip(tollingPlaza).await()
+                val trip = tollingInteractor.finishTransaction(tollingPlaza).await()
 
-                Log.d(TAG, "finish trip ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
-                //view?.removeActiveTrip(trip)
+                Log.d(TAG, "finish transaction ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+                //view?.removeActiveTrip(transaction)
 
                 view?.hideLoadingIndicator()
-                view?.showDoneMessage("finished trip on ${tollingPlaza.name}")
+                view?.showDoneMessage("passed on ${tollingPlaza.name}")
 
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
@@ -183,16 +181,16 @@ class NavigationFragPresenterImpl(
         }
     }
 
-    override fun cancelActiveTrip(trip: ActiveTrip) {
-        Log.d(TAG, "canceling trip ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+    override fun cancelActiveTrip(trip: CurrentTransaction) {
+        Log.d(TAG, "canceling transaction ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
 
-                tollingInteractor.cancelActiveTrip(trip).await()
+                tollingInteractor.cancelCurrentTransaction(trip).await()
 
 
-                //view?.removeActiveTrip(trip)
+                //view?.removeActiveTrip(transaction)
 
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage()

@@ -55,13 +55,13 @@ class NotificationRecyclerViewAdapter(val listener: (Notification) -> Unit) : Re
         }
 
         fun showTripPaidItemView(itemView: View, notification: Notification){
-            itemView.description.text = "trip from ${notification.trip?.origin?.name} to ${notification.trip?.destination?.name} has been paid"
+            itemView.description.text = "transaction from ${notification.transaction?.origin?.name} to ${notification.transaction?.destination?.name} has been paid"
             itemView.image.imageResource = R.drawable.ic_toll_green
         }
 
         fun showTripDetectedItemView(itemView: View, notification: Notification){
-            itemView.description.text = "trip from ${notification.trip?.origin?.name} to ${notification.trip?.destination?.name}"
-            itemView.image.imageResource = notification.trip?.vehicle!!.getIconResource()
+            itemView.description.text = "transaction from ${notification.transaction?.origin?.name} to ${notification.transaction?.destination?.name}"
+            itemView.image.imageResource = notification.transaction?.vehicle!!.getIconResource()
 
         }
 

@@ -4,13 +4,13 @@ import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
-import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTripInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleDetailsView
 
 class
-VehicleDetailsPresenterImpl(private val vehicleInteractor: VehicleInteractor, private val tripInteractor: TollingTripInteractor) :
+VehicleDetailsPresenterImpl(private val vehicleInteractor: VehicleInteractor, private val transactionInteractor: TollingTransactionInteractor) :
         BasePresenterImpl<VehicleDetailsView>(), VehicleDetailsPresenter{
 
     private val jobs = Job()
@@ -20,7 +20,7 @@ VehicleDetailsPresenterImpl(private val vehicleInteractor: VehicleInteractor, pr
             view?.showLoadingIndicator()
             try {
                 val vehicle = vehicleInteractor.getVehicle(id)
-                val trips = tripInteractor.getVehicleTripList(id).await()
+                val trips = transactionInteractor.getVehicleTransactionList(id).await()
                 view?.showVehicleBasicInfo(vehicle.await())
                 view?.showVehiclePaidAmount(trips.fold(0.0) { curr, trip -> curr+(trip.paid ?: 0.0)})
                 view?.showVehicleTripNumber(trips.size)

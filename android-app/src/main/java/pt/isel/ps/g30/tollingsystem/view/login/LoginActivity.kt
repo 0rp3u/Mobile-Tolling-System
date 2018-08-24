@@ -13,11 +13,8 @@ import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
 import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import pt.isel.ps.g30.tollingsystem.extension.startActivity
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
-import pt.isel.ps.g30.tollingsystem.services.work.PostFinishTripToApiWork
 
 
 class LoginActivity : BaseActivity<LoginPresenter,LoginView>(), LoginView {

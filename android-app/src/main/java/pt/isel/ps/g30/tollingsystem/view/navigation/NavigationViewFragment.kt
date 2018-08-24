@@ -3,9 +3,7 @@ package pt.isel.ps.g30.tollingsystem.view.navigation
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.Color
 import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -15,12 +13,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import javax.inject.Inject
 import android.widget.TextView
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
-import com.google.android.gms.location.places.GeoDataClient
 import com.google.maps.android.ui.IconGenerator
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_location.*
@@ -33,12 +28,11 @@ import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.imageView
 import org.jetbrains.anko.textView
 import pt.isel.ps.g30.tollingsystem.R
-import pt.isel.ps.g30.tollingsystem.data.database.model.ActiveTrip
+import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.presenter.navigation.NavigationFragPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseMapViewFragment
-import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTrip
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 import pt.isel.ps.g30.tollingsystem.extension.*
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleActivity
@@ -58,7 +52,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     private var tollMarkers: List<Marker> = listOf()
     private var vehicleMarker: Marker? = null
-    private var currentTrip: ActiveTrip? = null
+    private var currentTrip: CurrentTransaction? = null
     private var trackMode: Boolean = false
 
 
@@ -72,8 +66,16 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     override fun mapReady() {
         askPermission(Manifest.permission.ACCESS_FINE_LOCATION) {
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NavigationViewFragment.requireContext())
+
             mMap.isMyLocationEnabled = true
             mMap.uiSettings.isMyLocationButtonEnabled = false
+
+            mFusedLocationClient.lastLocation.addOnSuccessListener {
+                it?.let {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(it.latitude, it.longitude)))
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f), 1000, null)
+                }
+            }
 
             presenter.setUpMap()
 
@@ -190,7 +192,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
             }
 
             mMap.setOnMyLocationChangeListener { //deprecated, but it's fine since we only want the vehicle icon to follow the maps blue dot
-                    vehicleMarker?.position = LatLng(it.latitude, it.longitude)
+                vehicleMarker?.position = LatLng(it.latitude, it.longitude)
                     if(trackMode){
                         mMap.animateCamera(CameraUpdateFactory.zoomTo(5f), 3000, null)
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
@@ -198,9 +200,8 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                                         .target(vehicleMarker?.position)
                                         .zoom(18f)
                                         .tilt(90f)
-                                        .bearing(10f)
+                                        .bearing(it.bearing ?: 10f)
                                         .build()
-
                         ))
 
                     }
@@ -249,16 +250,16 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     /** Trips **/
 
-    override fun showActiveTrip(trip: ActiveTrip) {
-        Log.d(TAG, "show trip view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+    override fun showActiveTrip(trip: CurrentTransaction) {
+        Log.d(TAG, "show transaction view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
         currentTrip = trip.also {
             tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == trip.origin?.id else false }?.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
             fab.setOnClickListener { showCancelActiveTripDialog(trip) }
         }
     }
 
-    override fun removeActiveTrip(trip: ActiveTrip) {
-        Log.d(TAG, "remove trip view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+    override fun removeActiveTrip(trip: CurrentTransaction) {
+        Log.d(TAG, "remove transaction view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
         tollMarkers.forEach{
             if (it.tag is TollingPlaza){
                 it.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_blue))
@@ -273,12 +274,12 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         currentTrip = trip
     }
 
-    override fun showCancelActiveTripDialog(trip: ActiveTrip) {
+    override fun showCancelActiveTripDialog(trip: CurrentTransaction) {
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_cancel_trip, null).apply {
             timestamp.text = trip.destTimestamp?.dateTimeParsed()
             plate.text = trip.vehicle?.licensePlate
-            tare.imageResource = trip.vehicle!!.getIconResource() //<- !! fine because the trip is active in here
+            tare.imageResource = trip.vehicle!!.getIconResource() //<- !! fine because the transaction is active in here
             toll_name.text = trip.origin?.name
             toll_concecion.text = trip.origin?.concession
         }
