@@ -15,7 +15,7 @@ const Vehicle = db.define('Vehicle', {
     category:   { type: Sequelize.STRING }
 })
 
-const Trip = db.define('Trip', {
+const Transaction = db.define('Transaction', {
     id:             { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     state:          { type: Sequelize.ENUM, values: ['STARTED', 'PENDING', 'CONFIRMED'] },
     vehicle_used:   { type: Sequelize.INTEGER, references: { model: Vehicle, Key: 'id' } },
@@ -37,15 +37,15 @@ const Transaction = db.define('Transaction', {
     direction:  { type: Sequelize.STRING },
     etc_id:     { type: Sequelize.STRING },
     toll_id:    { type: Sequelize.INTEGER, references: { model: Toll, Key: 'id' } },
-    trip_id:    { type: Sequelize.INTEGER, references: { model: Trip, Key: 'id' } }
+    Transaction_id:    { type: Sequelize.INTEGER, references: { model: Transaction, Key: 'id' } }
 })
-Toll.belongsToMany(Trip, { through: Transaction })
-Trip.belongsToMany(Toll, { through: Transaction })
+Toll.belongsToMany(Transaction, { through: Transaction })
+Transaction.belongsToMany(Toll, { through: Transaction })
 
 module.exports = {
     User,
     Vehicle,
-    Trip,
+    Transaction,
     Toll,
     Transaction
 }

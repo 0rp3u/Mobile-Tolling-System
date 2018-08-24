@@ -1,4 +1,4 @@
-package pt.isel.ps.g30.tollingsystem.presenter.tollingtrip
+package pt.isel.ps.g30.tollingsystem.presenter.tollingTransaction
 
 import android.util.Log
 import kotlinx.coroutines.experimental.Job
@@ -7,27 +7,27 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
 import kotlinx.coroutines.experimental.delay
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
-import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTransactionInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
-import pt.isel.ps.g30.tollingsystem.view.tollingtrip.TollingTripsFragmentView
+import pt.isel.ps.g30.tollingsystem.view.tollingTransaction.TollingTransactionsFragmentView
 
-class TollingTripFragPresenterImpl(private val interactor: TollingTransactionInteractor) :
-        BasePresenterImpl<TollingTripsFragmentView>(), TollingTripFragPresenter{
+class TollingTransactionFragPresenterImpl(private val interactor: TollingTransactionInteractor) :
+        BasePresenterImpl<TollingTransactionsFragmentView>(), TollingTransactionFragPresenter{
 
     companion object {
         private val TAG = this::class.java.simpleName
     }
 
-    private var tollingTripList = listOf<TollingTransaction>()
+    private var tollingTransactionList = listOf<TollingTransaction>()
     private val jobs = Job()
 
-    override fun getTollingTripList(vehicleId: Int) {
+    override fun getTollingTransactionList(vehicleId: Int) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
                 delay(1000)
-                tollingTripList = interactor.getVehicleTransactionList(vehicleId).await()
-                view?.showTripList(tollingTripList)
+                tollingTransactionList = interactor.getVehicleTransactionList(vehicleId).await()
+                view?.showTransactionList(tollingTransactionList)
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage()
 

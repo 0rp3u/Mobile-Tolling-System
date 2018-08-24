@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
  *
  * @param message the message text resource.
  */
+
 inline fun snackbar(view: View, message: Int) = Snackbar
         .make(view, message, Snackbar.LENGTH_SHORT)
         .apply { show() }

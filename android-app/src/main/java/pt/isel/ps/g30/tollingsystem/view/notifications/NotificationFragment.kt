@@ -9,8 +9,8 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.dialog_trip_notification.view.*
-import kotlinx.android.synthetic.main.dialog_trip_paid_notification.view.paid_amount
+import kotlinx.android.synthetic.main.dialog_transaction_notification.view.*
+import kotlinx.android.synthetic.main.dialog_transaction_paid_notification.view.paid_amount
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.progress_bar.*
 import org.jetbrains.anko.imageResource
@@ -44,8 +44,8 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
         notificationRecyclerViewAdapter = NotificationRecyclerViewAdapter {
             when(it.type){
                 NotificationType.VehicleAddedNotification -> showVehicleAddedDialog(it)
-                NotificationType.TripPaidNotification     -> showPaidDialog(it)
-                NotificationType.TripNotification         -> showTripDialog(it)
+                NotificationType.TransactionPaidNotification     -> showPaidDialog(it)
+                NotificationType.TransactionNotification         -> showTransactionDialog(it)
             }
         }
         return view
@@ -62,27 +62,27 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
 
     }
 
-    fun showTripDialog(notification: Notification){
-        val trip = notification.transaction ?: throw Exception("No transaction found on the notification")
+    fun showTransactionDialog(notification: Notification){
+        val Transaction = notification.transaction ?: throw Exception("No transaction found on the notification")
 
-        val dialogView = layoutInflater.inflate(R.layout.dialog_trip_notification, null).apply {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_transaction_notification, null).apply {
 
-                tare.imageResource = trip.vehicle.getIconResource() //<- !! fine because the transaction is active in here
-                plate.text = trip.vehicle.licensePlate
-                from.text = trip.origin.name
-                date_origin.text = trip.originTimestamp.dateTimeParsed()
-                destination.text = trip.destination.name
-                date_destination.text = trip.destTimestamp.dateTimeParsed()
+                tare.imageResource = Transaction.vehicle.getIconResource() //<- !! fine because the transaction is active in here
+                plate.text = Transaction.vehicle.licensePlate
+                from.text = Transaction.origin.name
+                date_origin.text = Transaction.originTimestamp.dateTimeParsed()
+                destination.text = Transaction.destination.name
+                date_destination.text = Transaction.destTimestamp.dateTimeParsed()
 
 
 
         }
 
         AlertDialog.Builder(this.requireContext())
-                .setTitle("Trip detected options")
+                .setTitle("Transaction detected options")
                 .setView(dialogView)
-                .setPositiveButton("I Confirm") { dialogInterface, i -> presenter.confirmTrip(notification); dialogInterface.dismiss() }
-                .setNegativeButton("I didn't do this transaction") { dialogInterface, i ->presenter.cancelTrip(notification); dialogInterface.dismiss() }
+                .setPositiveButton("I Confirm") { dialogInterface, i -> presenter.confirmTransaction(notification); dialogInterface.dismiss() }
+                .setNegativeButton("I didn't do this transaction") { dialogInterface, i ->presenter.cancelTransaction(notification); dialogInterface.dismiss() }
                 .setCancelable(true)
                 .create()
                 .show()
@@ -90,18 +90,18 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
     }
 
     fun showPaidDialog(notification: Notification){
-        val trip = notification.transaction ?: throw Exception("No transaction found on the notification")
+        val Transaction = notification.transaction ?: throw Exception("No transaction found on the notification")
 
-        val dialogView = layoutInflater.inflate(R.layout.dialog_trip_paid_notification, null).apply {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_transaction_paid_notification, null).apply {
 
 
-                tare.imageResource = trip.vehicle.getIconResource() //<- !! fine because the transaction is active in here
-                plate.text = trip.vehicle.licensePlate
-                from.text = trip.origin.name
-                date_origin.text = trip.originTimestamp.dateTimeParsed()
-                destination.text = trip.destination.name
-                date_destination.text = trip.destTimestamp.dateTimeParsed()
-                paid_amount.text = "${trip?.paid} $"
+                tare.imageResource = Transaction.vehicle.getIconResource() //<- !! fine because the transaction is active in here
+                plate.text = Transaction.vehicle.licensePlate
+                from.text = Transaction.origin.name
+                date_origin.text = Transaction.originTimestamp.dateTimeParsed()
+                destination.text = Transaction.destination.name
+                date_destination.text = Transaction.destTimestamp.dateTimeParsed()
+                paid_amount.text = "${Transaction?.paid} $"
 
         }
 
@@ -109,7 +109,7 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
                 .setTitle("Paid transaction information")
                 .setView(dialogView)
                 .setPositiveButton("I Confirm") { dialogInterface, i -> presenter.dismissNotification(notification); dialogInterface.dismiss() }
-                .setNegativeButton("I didn't do this transaction") { dialogInterface, i ->presenter.disputePaidTrip(notification); dialogInterface.dismiss() }
+                .setNegativeButton("I didn't do this transaction") { dialogInterface, i ->presenter.disputePaidTransaction(notification); dialogInterface.dismiss() }
                 .setCancelable(true)
                 .create()
                 .show()

@@ -9,83 +9,83 @@ import pt.isel.ps.g30.tollingsystem.data.api.model.TollingTransaction
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
 import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
-import pt.isel.ps.g30.tollingsystem.extension.toFInishedTransaction
+import pt.isel.ps.g30.tollingsystem.extension.toFinishedTransaction
 import pt.isel.ps.g30.tollingsystem.utils.NetworkUtils
 import java.util.*
 
-class TollingTripRepository(private val tollingSystemDatabase: TollingSystemDatabase, private val apiService: TollingService, private val networkUtils: NetworkUtils ){
+class TollingTransactionRepository(private val tollingSystemDatabase: TollingSystemDatabase, private val apiService: TollingService, private val networkUtils: NetworkUtils ){
 
 
-    fun getVehicleTripList(vehicleId: Int): Deferred<List<pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction>>{
-        return async { tollingSystemDatabase.TollingTripDao().findByVehicle(vehicleId) }
+    fun getVehicleTransactionList(vehicleId: Int): Deferred<List<pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction>>{
+        return async { tollingSystemDatabase.TollingTransactionDao().findByVehicle(vehicleId) }
 
     }
 
-    fun getTollingTripList() : Deferred<List<pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction>>{
-        return async { tollingSystemDatabase.TollingTripDao().findAll() }
+    fun getTollingTransactionList() : Deferred<List<pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction>>{
+        return async { tollingSystemDatabase.TollingTransactionDao().findAll() }
     }
 
-    fun getTollingTrip(id: Int): Deferred<pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction> {
-        return async { tollingSystemDatabase.TollingTripDao().findById(id) ?: throw Exception("Could not find transaction")}
+    fun getTollingTransaction(id: Int): Deferred<pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction> {
+        return async { tollingSystemDatabase.TollingTransactionDao().findById(id) ?: throw Exception("Could not find transaction")}
     }
 
-    fun startTollingTrip(origin: TollingPlaza): Deferred<CurrentTransaction> {
+    fun startTollingTransaction(origin: TollingPlaza): Deferred<CurrentTransaction> {
         return async {
 
-            val tollingTrip = tollingSystemDatabase.ActiveTripDao().find()
-            tollingTrip.vehicle ?: throw Exception("Could not start transaction, no active vehicle found")
+            val tollingTransaction = tollingSystemDatabase.ActiveTransactionDao().find()
+            tollingTransaction.vehicle ?: throw Exception("Could not start transaction, no active vehicle found")
 
 
-            tollingTrip.origin = origin
-            tollingTrip.destTimestamp =  Date()
+            tollingTransaction.origin = origin
+            tollingTransaction.destTimestamp =  Date()
 
-            if(tollingSystemDatabase.ActiveTripDao().update(tollingTrip) ==  0)  throw Exception("Could not start transaction")
+            if(tollingSystemDatabase.ActiveTransactionDao().update(tollingTransaction) ==  0)  throw Exception("Could not start transaction")
 
-            if(networkUtils.isConnected()) launch{apiService.initiateTollingTransaction(TollingTransaction(tollingTrip.id, tollingTrip.originTimestamp!!, tollingTrip.vehicle?.id!!, tollingTrip.origin?.id!!)).await()}
+            if(networkUtils.isConnected()) launch{apiService.initiateTollingTransaction(TollingTransaction(tollingTransaction.id, tollingTransaction.originTimestamp!!, tollingTransaction.vehicle?.id!!, tollingTransaction.origin?.id!!)).await()}
 
-            return@async tollingTrip
+            return@async tollingTransaction
         }
     }
 
-    suspend fun finishTollingTrip(dest: TollingPlaza): Deferred<CurrentTransaction> {
+    suspend fun finishTollingTransaction(dest: TollingPlaza): Deferred<CurrentTransaction> {
         return async {
-            val activeTrip = tollingSystemDatabase.ActiveTripDao().find()
+            val activeTransaction = tollingSystemDatabase.ActiveTransactionDao().find()
 
-            if(activeTrip.origin == null || activeTrip.vehicle== null) throw Exception("Could not finish transaction, no active transaction found")
+            if(activeTransaction.origin == null || activeTransaction.vehicle== null) throw Exception("Could not finish transaction, no active transaction found")
 
 
-            activeTrip.destination = dest
-            activeTrip.destTimestamp =  Calendar.getInstance().time
+            activeTransaction.destination = dest
+            activeTransaction.destTimestamp =  Calendar.getInstance().time
 
-            val insertedId = tollingSystemDatabase.TollingTripDao().insert(activeTrip.toFInishedTransaction())[0]
-            val insertedTollingTrip = tollingSystemDatabase.TollingTripDao().findById(insertedId.toInt())
+            val insertedId = tollingSystemDatabase.TollingTransactionDao().insert(activeTransaction.toFinishedTransaction())[0]
+            val insertedTollingTransaction = tollingSystemDatabase.TollingTransactionDao().findById(insertedId.toInt())
                     ?: throw Exception("Could not finish transaction")
 
-            activeTrip.origin = null
+            activeTransaction.origin = null
 
-            if(tollingSystemDatabase.ActiveTripDao().update(activeTrip) ==  0)  throw Exception("Could not finish transaction")
+            if(tollingSystemDatabase.ActiveTransactionDao().update(activeTransaction) ==  0)  throw Exception("Could not finish transaction")
 
-            if(networkUtils.isConnected()) launch{apiService.closeTollingTransaction(TollingTransaction(insertedTollingTrip.id, insertedTollingTrip.originTimestamp, insertedTollingTrip.vehicle.id, insertedTollingTrip.origin.id, insertedTollingTrip.destination.id)).await()}
+            if(networkUtils.isConnected()) launch{apiService.closeTollingTransaction(TollingTransaction(insertedTollingTransaction.id, insertedTollingTransaction.originTimestamp, insertedTollingTransaction.vehicle.id, insertedTollingTransaction.origin.id, insertedTollingTransaction.destination.id)).await()}
 
-            return@async activeTrip
+            return@async activeTransaction
         }
     }
 
-    fun getActiveTollingTripLiveData(): Deferred<LiveData<CurrentTransaction>> {
-        return async { tollingSystemDatabase.ActiveTripDao().findLiveData() }
+    fun getActiveTollingTransactionLiveData(): Deferred<LiveData<CurrentTransaction>> {
+        return async { tollingSystemDatabase.ActiveTransactionDao().findLiveData() }
     }
 
 
-    fun getActiveTollingTrip(): Deferred<CurrentTransaction> {
-        return async { tollingSystemDatabase.ActiveTripDao().find() }
+    fun getActiveTollingTransaction(): Deferred<CurrentTransaction> {
+        return async { tollingSystemDatabase.ActiveTransactionDao().find() }
     }
 
-    fun cancelActiveTrip(trip: CurrentTransaction): Deferred<Int>{
+    fun cancelActiveTransaction(Transaction: CurrentTransaction): Deferred<Int>{
         return async {
             if(networkUtils.isConnected()) {
-                apiService.cancelTollingTransaction(TollingTransaction(trip.id, trip.originTimestamp!!, trip.vehicle?.id!!, trip.origin?.id!!, trip.destination?.id)).await()
+                apiService.cancelTollingTransaction(TollingTransaction(Transaction.id, Transaction.originTimestamp!!, Transaction.vehicle?.id!!, Transaction.origin?.id!!, Transaction.destination?.id)).await()
 
-                tollingSystemDatabase.ActiveTripDao().update(trip.apply { origin = null; originTimestamp = null })
+                tollingSystemDatabase.ActiveTransactionDao().update(Transaction.apply { origin = null; originTimestamp = null })
             }else
                 throw Exception("Not connected to the internet, you need to be connected")
         }

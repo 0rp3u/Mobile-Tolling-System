@@ -12,16 +12,16 @@ interface NavigationFragPresenter : BasePresenter<NavigationFragmentView> {
 
     fun prepareVehiclesDialog()
 
-    fun prepareCancelActiveTripDialog(currentTransaction: CurrentTransaction)
+    fun prepareCancelActiveTransactionDialog(currentTransaction: CurrentTransaction)
 
     fun setActiveVehicle(vehicle: Vehicle)
 
     fun removeActiveVehicle(vehicle: Vehicle)
 
-    fun startTrip(tollingPlaza: TollingPlaza)
+    fun startTransaction(tollingPlaza: TollingPlaza)
 
-    fun finishTrip(tollingPlaza: TollingPlaza)
+    fun finishTransaction(tollingPlaza: TollingPlaza)
 
-    fun cancelActiveTrip(trip: CurrentTransaction)
+    fun cancelActiveTransaction(Transaction: CurrentTransaction)
 
 }

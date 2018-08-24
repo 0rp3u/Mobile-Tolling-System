@@ -39,8 +39,8 @@ class NotificationRecyclerViewAdapter(val listener: (Notification) -> Unit) : Re
 
             when(notification.type){
                 NotificationType.VehicleAddedNotification -> showVehicleAddedItemView(itemView, notification)
-                NotificationType.TripPaidNotification     -> showTripPaidItemView(itemView, notification)
-                NotificationType.TripNotification         -> showTripDetectedItemView(itemView, notification)
+                NotificationType.TransactionPaidNotification     -> showTransactionPaidItemView(itemView, notification)
+                NotificationType.TransactionNotification         -> showTransactionDetectedItemView(itemView, notification)
             }
 
             itemView.timestamp.text = notification.Timestamp.dateTimeParsed()
@@ -54,12 +54,12 @@ class NotificationRecyclerViewAdapter(val listener: (Notification) -> Unit) : Re
 
         }
 
-        fun showTripPaidItemView(itemView: View, notification: Notification){
+        fun showTransactionPaidItemView(itemView: View, notification: Notification){
             itemView.description.text = "transaction from ${notification.transaction?.origin?.name} to ${notification.transaction?.destination?.name} has been paid"
             itemView.image.imageResource = R.drawable.ic_toll_green
         }
 
-        fun showTripDetectedItemView(itemView: View, notification: Notification){
+        fun showTransactionDetectedItemView(itemView: View, notification: Notification){
             itemView.description.text = "transaction from ${notification.transaction?.origin?.name} to ${notification.transaction?.destination?.name}"
             itemView.image.imageResource = notification.transaction?.vehicle!!.getIconResource()
 

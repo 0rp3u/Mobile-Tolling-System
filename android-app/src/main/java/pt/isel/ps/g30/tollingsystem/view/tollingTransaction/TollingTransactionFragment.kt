@@ -1,4 +1,4 @@
-package pt.isel.ps.g30.tollingsystem.view.tollingtrip
+package pt.isel.ps.g30.tollingsystem.view.tollingTransaction
 
 
 import android.os.Bundle
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.progress_bar.*
-import kotlinx.android.synthetic.main.fragment_vehicle_trips.*
+import kotlinx.android.synthetic.main.fragment_vehicle_transaction.*
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.extension.app
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
@@ -17,21 +17,21 @@ import pt.isel.ps.g30.tollingsystem.extension.longSnackbar
 import pt.isel.ps.g30.tollingsystem.extension.snackbar
 import pt.isel.ps.g30.tollingsystem.extension.startActivity
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
-import pt.isel.ps.g30.tollingsystem.presenter.tollingtrip.TollingTripFragPresenter
+import pt.isel.ps.g30.tollingsystem.presenter.tollingTransaction.TollingTransactionFragPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseFragment
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleActivity
 import javax.inject.Inject
 
-class TollingTripsFragment: BaseFragment<TollingTripFragPresenter, TollingTripsFragmentView>(), TollingTripsFragmentView{
+class TollingTransactionsFragment: BaseFragment<TollingTransactionFragPresenter, TollingTransactionsFragmentView>(), TollingTransactionsFragmentView{
 
     companion object {
-        private val TAG = TollingTripsFragment::class.java.simpleName
+        private val TAG = TollingTransactionsFragment::class.java.simpleName
     }
 
-    lateinit var tollingTripsRecyclerViewAdapter: TollingTripsRecyclerViewAdapter
+    lateinit var tollingTransactionsRecyclerViewAdapter: TollingTransactionsRecyclerViewAdapter
 
     @Inject
-    override lateinit var presenter: TollingTripFragPresenter
+    override lateinit var presenter: TollingTransactionFragPresenter
 
     override fun injectDependencies() {
        app.applicationComponent
@@ -41,10 +41,10 @@ class TollingTripsFragment: BaseFragment<TollingTripFragPresenter, TollingTripsF
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(TAG, "VIEW ON CREATE")
-        val view = inflater.inflate(R.layout.fragment_vehicle_trips, container, false)
-        tollingTripsRecyclerViewAdapter = TollingTripsRecyclerViewAdapter {
-            startActivity<TollingTripDetails>(
-                    TollingTripDetails.EXTRA_TRIP_ID to it.id
+        val view = inflater.inflate(R.layout.fragment_vehicle_transaction, container, false)
+        tollingTransactionsRecyclerViewAdapter = TollingTransactionsRecyclerViewAdapter {
+            startActivity<TollingTransactionDetails>(
+                    TollingTransactionDetails.EXTRA_Transaction_ID to it.id
             )
         }
         return view
@@ -56,17 +56,16 @@ class TollingTripsFragment: BaseFragment<TollingTripFragPresenter, TollingTripsF
             Log.d(TAG, "VIEW CREATED")
             recycler_view.apply{
 
-                adapter = tollingTripsRecyclerViewAdapter
+                adapter = tollingTransactionsRecyclerViewAdapter
                 layoutManager = LinearLayoutManager(activity)
             }
-        val id = arguments?.getInt(VehicleActivity.EXTRA_VEHICLE_ID)
 
-                presenter.getTollingTripList(arguments?.getInt(VehicleActivity.EXTRA_VEHICLE_ID)?:1)
+                presenter.getTollingTransactionList(arguments?.getInt(VehicleActivity.EXTRA_VEHICLE_ID)?:1)
     }
 
-    override fun showTripList(list: List<TollingTransaction>) {
+    override fun showTransactionList(list: List<TollingTransaction>) {
         Log.d(TAG, "show VEHICLE")
-        tollingTripsRecyclerViewAdapter.historyList = list
+        tollingTransactionsRecyclerViewAdapter.historyList = list
     }
 
 

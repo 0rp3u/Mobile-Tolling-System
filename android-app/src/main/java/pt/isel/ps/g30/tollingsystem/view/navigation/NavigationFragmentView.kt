@@ -10,11 +10,11 @@ interface NavigationFragmentView : BaseView{
 
     fun showPlazaLocations(list: List<TollingPlaza>)
     fun showVehiclesDialog(list: List<Vehicle>)
-    fun showCancelActiveTripDialog(trip: CurrentTransaction)
-    fun showActiveTrip(trip: CurrentTransaction)
+    fun showCancelActiveTransactionDialog(Transaction: CurrentTransaction)
+    fun showActiveTransaction(Transaction: CurrentTransaction)
     fun showActiveVehicle(vehicle: Vehicle?)
     fun removeActiveVehicle()
-    fun removeActiveTrip(trip: CurrentTransaction)
+    fun removeActiveTransaction(Transaction: CurrentTransaction)
 
     fun showDoneMessage(message:String? = null)
     fun showErrorMessage(error:String? = null, action: ((View) -> Unit)? = null)

@@ -14,13 +14,13 @@ interface NotificationInteractor : BaseInteractor {
 
     suspend fun getNotificationListLiveData() : Deferred<LiveData<List<Notification>>>
 
-    suspend fun confirmTrip(notification: Notification) : Job
+    suspend fun confirmTransaction(notification: Notification) : Job
 
-    suspend fun cancelTrip(notification: Notification) : Job
+    suspend fun cancelTransaction(notification: Notification) : Job
 
     suspend fun dismissNotification(notification: Notification): Job
 
-    fun sendStartTripNotification(trip: CurrentTransaction)
+    fun sendStartTransactionNotification(Transaction: CurrentTransaction)
 
-    fun sendFinishTripNotification(transaction: TollingTransaction)
+    fun sendFinishTransactionNotification(transaction: TollingTransaction)
 }

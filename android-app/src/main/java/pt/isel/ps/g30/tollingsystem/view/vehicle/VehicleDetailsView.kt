@@ -8,7 +8,7 @@ import pt.isel.ps.g30.tollingsystem.view.base.BaseView
 interface VehicleDetailsView : BaseView {
 
     fun showVehicleBasicInfo(vehicle: Vehicle)
-    fun showVehicleTripNumber(tripNumber: Int)
+    fun showVehicleTransactionNumber(TransactionNumber: Int)
     fun showVehiclePaidAmount(amount: Double)
     fun showDoneMessage(message:String? = null)
     fun showErrorMessage(error:String? = null, action: ((View) -> Unit)? = null)

@@ -1,4 +1,4 @@
-package pt.isel.ps.g30.tollingsystem.presenter.tollingtrip
+package pt.isel.ps.g30.tollingsystem.presenter.tollingTransaction
 
 
 import android.util.Log
@@ -6,24 +6,24 @@ import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
-import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTransactionInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
-import pt.isel.ps.g30.tollingsystem.view.tollingtrip.TollingTripDetailsView
+import pt.isel.ps.g30.tollingsystem.view.tollingTransaction.TollingTransactionDetailsView
 
-class TollingTripDetailsPresenterImpl(private val interactor: TollingTransactionInteractor) :
-        BasePresenterImpl<TollingTripDetailsView>(), TollingTripDetailsPresenter{
+class TollingTransactionDetailsPresenterImpl(private val interactor: TollingTransactionInteractor) :
+        BasePresenterImpl<TollingTransactionDetailsView>(), TollingTransactionDetailsPresenter{
 
     companion object {
         private val TAG = this::class.java.simpleName
     }
     private val jobs = Job()
 
-    override fun getTollingTrip(tripId: Int) {
+    override fun getTollingTransaction(TransactionId: Int) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                val trip = interactor.getTollingTransaction(tripId).await()
-                view?.showTrip(trip)
+                val Transaction = interactor.getTollingTransaction(TransactionId).await()
+                view?.showTransaction(Transaction)
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage()
 

@@ -11,7 +11,7 @@ abstract class TollingSystemDatabase : RoomDatabase() {
     abstract fun UserDao(): UserDao
     abstract fun VehicleDao(): VehicleDao
     abstract fun TollingDao(): TollingPlazaDao
-    abstract fun TollingTripDao(): TollingTripDao
-    abstract fun ActiveTripDao(): ActiveTripDao
+    abstract fun TollingTransactionDao(): TollingTransactionDao
+    abstract fun ActiveTransactionDao(): ActiveTransactionDao
     abstract fun NotificationDao(): NotificationDao
 }

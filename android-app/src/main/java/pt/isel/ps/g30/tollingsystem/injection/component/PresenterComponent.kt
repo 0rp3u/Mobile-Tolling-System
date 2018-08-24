@@ -8,8 +8,8 @@ import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
 import pt.isel.ps.g30.tollingsystem.view.navigation.NavigationViewFragment
 import pt.isel.ps.g30.tollingsystem.view.notifications.NotificationFragment
 import pt.isel.ps.g30.tollingsystem.view.splash.SplashActivity
-import pt.isel.ps.g30.tollingsystem.view.tollingtrip.TollingTripDetails
-import pt.isel.ps.g30.tollingsystem.view.tollingtrip.TollingTripsFragment
+import pt.isel.ps.g30.tollingsystem.view.tollingTransaction.TollingTransactionDetails
+import pt.isel.ps.g30.tollingsystem.view.tollingTransaction.TollingTransactionsFragment
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleActivity
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleDetailsDetailFragment
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehiclesFragment
@@ -20,12 +20,12 @@ interface PresenterComponent {
 
     fun injectTo(Activity: LoginActivity)
     fun injectTo(Activity: SplashActivity)
-    fun injectTo(fragment: TollingTripsFragment)
+    fun injectTo(fragment: TollingTransactionsFragment)
     fun injectTo(fragment: VehicleDetailsDetailFragment)
     fun injectTo(fragment: VehiclesFragment)
     fun injectTo(Fragment: NotificationFragment)
     fun injectTo(Fragment: NavigationViewFragment)
     fun injectTo(Activity: MainActivity)
     fun injectTo(Activity: VehicleActivity)
-    fun injectTo(Activity: TollingTripDetails)
+    fun injectTo(Activity: TollingTransactionDetails)
 }

@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_location.*
 import kotlinx.android.synthetic.main.dialog_vehicles.view.*
 import com.google.android.gms.maps.model.*
-import kotlinx.android.synthetic.main.dialog_cancel_trip.view.*
+import kotlinx.android.synthetic.main.dialog_cancel_transaction.view.*
 import kotlinx.android.synthetic.main.dialog_toll_plaza_options.view.*
 import org.jetbrains.anko.image
 import org.jetbrains.anko.imageResource
@@ -52,7 +52,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     private var tollMarkers: List<Marker> = listOf()
     private var vehicleMarker: Marker? = null
-    private var currentTrip: CurrentTransaction? = null
+    private var currentTransaction: CurrentTransaction? = null
     private var trackMode: Boolean = false
 
 
@@ -103,10 +103,10 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                 .setView(dialogView)
                 .setPositiveButton("yes") { dialogInterface, i ->
 
-                    if(currentTrip?.origin != null)
-                        presenter.finishTrip(tollingPlaza)
+                    if(currentTransaction?.origin != null)
+                        presenter.finishTransaction(tollingPlaza)
                     else
-                        presenter.startTrip(tollingPlaza)
+                        presenter.startTransaction(tollingPlaza)
 
                     dialogInterface.dismiss()
                 }
@@ -248,18 +248,18 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     }
 
 
-    /** Trips **/
+    /** Transactions **/
 
-    override fun showActiveTrip(trip: CurrentTransaction) {
-        Log.d(TAG, "show transaction view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
-        currentTrip = trip.also {
-            tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == trip.origin?.id else false }?.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
-            fab.setOnClickListener { showCancelActiveTripDialog(trip) }
+    override fun showActiveTransaction(Transaction: CurrentTransaction) {
+        Log.d(TAG, "show transaction view ${Transaction.vehicle} : ${Transaction.origin} -> ${Transaction.destination}")
+        currentTransaction = Transaction.also {
+            tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == Transaction.origin?.id else false }?.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
+            fab.setOnClickListener { showCancelActiveTransactionDialog(Transaction) }
         }
     }
 
-    override fun removeActiveTrip(trip: CurrentTransaction) {
-        Log.d(TAG, "remove transaction view ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+    override fun removeActiveTransaction(Transaction: CurrentTransaction) {
+        Log.d(TAG, "remove transaction view ${Transaction.vehicle} : ${Transaction.origin} -> ${Transaction.destination}")
         tollMarkers.forEach{
             if (it.tag is TollingPlaza){
                 it.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_blue))
@@ -268,26 +268,26 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         }
 
         fab.setOnClickListener { view ->
-            trip.vehicle?.let { presenter.removeActiveVehicle(it)}
+            Transaction.vehicle?.let { presenter.removeActiveVehicle(it)}
             fab.setImageResource(R.drawable.ic_navigation_black_24dp)
         }
-        currentTrip = trip
+        currentTransaction = Transaction
     }
 
-    override fun showCancelActiveTripDialog(trip: CurrentTransaction) {
+    override fun showCancelActiveTransactionDialog(Transaction: CurrentTransaction) {
 
-        val dialogView = layoutInflater.inflate(R.layout.dialog_cancel_trip, null).apply {
-            timestamp.text = trip.destTimestamp?.dateTimeParsed()
-            plate.text = trip.vehicle?.licensePlate
-            tare.imageResource = trip.vehicle!!.getIconResource() //<- !! fine because the transaction is active in here
-            toll_name.text = trip.origin?.name
-            toll_concecion.text = trip.origin?.concession
+        val dialogView = layoutInflater.inflate(R.layout.dialog_cancel_transaction, null).apply {
+            timestamp.text = Transaction.destTimestamp?.dateTimeParsed()
+            plate.text = Transaction.vehicle?.licensePlate
+            tare.imageResource = Transaction.vehicle!!.getIconResource() //<- !! fine because the transaction is active in here
+            toll_name.text = Transaction.origin?.name
+            toll_concecion.text = Transaction.origin?.concession
         }
 
         AlertDialog.Builder(this.requireContext())
-                .setTitle("${trip.origin?.name} toll options")
+                .setTitle("${Transaction.origin?.name} toll options")
                 .setView(dialogView)
-                .setPositiveButton("yes, cancel!") { dialogInterface, i -> presenter.cancelActiveTrip(trip); dialogInterface.dismiss() }
+                .setPositiveButton("yes, cancel!") { dialogInterface, i -> presenter.cancelActiveTransaction(Transaction); dialogInterface.dismiss() }
                 .setNegativeButton("no") { dialogInterface, i -> dialogInterface.cancel() }
                 .create()
                 .show()

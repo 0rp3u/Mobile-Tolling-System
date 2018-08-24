@@ -1,4 +1,4 @@
-package pt.isel.ps.g30.tollingsystem.view.tollingtrip
+package pt.isel.ps.g30.tollingsystem.view.tollingTransaction
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 import pt.isel.ps.g30.tollingsystem.extension.dateTimeParsed
 
-class TollingTripsRecyclerViewAdapter(val listener: (TollingTransaction) -> Unit) : RecyclerView.Adapter<TollingTripsRecyclerViewAdapter.ViewHolder>() {
+class TollingTransactionsRecyclerViewAdapter(val listener: (TollingTransaction) -> Unit) : RecyclerView.Adapter<TollingTransactionsRecyclerViewAdapter.ViewHolder>() {
 
     var historyList = listOf<TollingTransaction>()
         set(value) {
