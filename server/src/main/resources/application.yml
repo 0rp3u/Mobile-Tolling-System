@@ -1,0 +1,35 @@
+spring:
+    application:
+      name: mobile-tolling-system
+    resources:
+      add-mappings: false
+    mvc:
+      throw-exception-if-no-handler-found: true
+debug: false
+trace: false
+server:
+  port: 8081
+
+---
+
+spring:
+  datasource:
+    initialization-mode: always
+    url: jdbc:postgresql://localhost:5432/postgisdb
+    platform: POSTGRESQL
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+        show_sql: true
+        format_sql: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
