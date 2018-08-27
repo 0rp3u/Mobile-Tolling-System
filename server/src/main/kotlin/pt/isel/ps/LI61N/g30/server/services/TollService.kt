@@ -1,17 +1,12 @@
 package pt.isel.ps.LI61N.g30.server.services
 
-import com.vividsolutions.jts.geom.Coordinate
-import com.vividsolutions.jts.geom.GeometryFactory
-import com.vividsolutions.jts.geom.Point
-import org.hibernate.spatial.jts.EnvelopeAdapter
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestClientException
-import pt.isel.ps.LI61N.g30.server.logic.GetNClosestTolls
+import pt.isel.ps.LI61N.g30.server.logic.gis.CountPointsWithinPolygon
+import pt.isel.ps.LI61N.g30.server.logic.gis.GetNClosestTolls
 import pt.isel.ps.LI61N.g30.server.model.domain.Toll
 import pt.isel.ps.LI61N.g30.server.model.domain.repositories.TollRepository
-import pt.isel.ps.LI61N.g30.server.services.clearing.ClearingService
 import pt.isel.ps.LI61N.g30.server.utils.GeoLocation
 import java.math.BigInteger
 import java.util.*
@@ -38,6 +33,10 @@ class TollService(
             .setParameter("lat", location.latitude)
             .resultList.map { with(it as BigInteger) { longValueExact() } }
 
+    fun TollCheck(geoLocations: Array<GeoLocation>, toll: Toll, area: CountPointsWithinPolygon.Area) : Int =
+            entityManager.createNativeQuery(CountPointsWithinPolygon.getQuery(geoLocations, area))
+                .setParameter("_toll_id", toll.id)
+                .singleResult.let { with(it as BigInteger) { intValueExact() } }
 
     fun getTolls(): Page<Toll>{
         return tollRepository.findAll(Pageable.unpaged())

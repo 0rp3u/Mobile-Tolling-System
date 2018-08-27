@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.async.DeferredResult
 import pt.isel.ps.LI61N.g30.server.model.domain.Transaction
 import pt.isel.ps.LI61N.g30.server.api.input.InputTransaction
+import pt.isel.ps.LI61N.g30.server.api.input.InputTrip
 import pt.isel.ps.LI61N.g30.server.services.AuthService
 import pt.isel.ps.LI61N.g30.server.services.TransactionService
 import pt.isel.ps.LI61N.g30.server.services.UserService
@@ -25,38 +26,70 @@ class TransactionController(
 
     val log = LoggerFactory.getLogger(TransactionController::class.java)
 
+    //async
+//    @Transactional
+////    @RequestMapping(method = [RequestMethod.POST], value = "/begin")
+////    fun BeginTransaction(
+////            @RequestBody input: InputTransaction
+////    ): DeferredResult<ResponseEntity<Transaction>> {
+////        val userId = authService.authenticatedUser().id
+////        val user = userService.getUserByid(userId)
+////        log.info("Fetched user: ${user.login}")
+////
+////        val result = DeferredResult<ResponseEntity<Transaction>>(TimeUnit.SECONDS.toMillis(10))
+////        CompletableFuture
+////                .supplyAsync( { transactionService.beginTransaction(input.vehicle_id, input.toll, input.timestamp, input.geoLocations, user)} )
+////                .thenAccept( { result.setResult(ResponseEntity.created(URI.create("/transactions/${it.uid.uid}/begin")).body(it))} )
+////        return result
+////    }
+
+    //sync
     @Transactional
     @RequestMapping(method = [RequestMethod.POST], value = "/begin")
     fun BeginTransaction(
             @RequestBody input: InputTransaction
-    ): DeferredResult<ResponseEntity<Transaction>> {
+    ): ResponseEntity<Transaction> {
         val userId = authService.authenticatedUser().id
         val user = userService.getUserByid(userId)
         log.info("Fetched user: ${user.login}")
 
-        val result = DeferredResult<ResponseEntity<Transaction>>(TimeUnit.SECONDS.toMillis(10))
-        CompletableFuture
-                .supplyAsync( { transactionService.beginTransaction(input.vehicle_id, input.toll, input.timestamp, input.geoLocations, user)} )
-                .thenAccept( { result.setResult(ResponseEntity.created(URI.create("/transactions/${it.uid.uid}/begin")).body(it))} )
-        return result
+        return transactionService.beginTransaction(input.vehicle_id, input.toll, input.timestamp, input.geoLocations, user).let {
+            ResponseEntity.created(URI.create("/transactions/${it.uid.uid}/begin")).body(it)
+        }
     }
 
-    @Transactional
-    @RequestMapping(method = [RequestMethod.POST], value = "/{trip_id}/end")
-    fun EndTransaction(
-            @RequestBody input: InputTransaction,
-            @PathVariable trip_id: Long
-    ): DeferredResult<ResponseEntity<Void>> {
-        val userId = authService.authenticatedUser().id
-        val user = userService.getUserByid(userId)
-        log.info("Fetched user: ${user.login}")
+//    @Transactional
+//    @RequestMapping(method = [RequestMethod.POST], value = "/{trip_id}/end")
+//    fun EndTransaction(
+//            @RequestBody input: InputTransaction,
+//            @PathVariable trip_id: Long
+//    ): DeferredResult<ResponseEntity<Void>> {
+//        val userId = authService.authenticatedUser().id
+//        val user = userService.getUserByid(userId)
+//        log.info("Fetched user: ${user.login}")
+//
+//        val result = DeferredResult<ResponseEntity<Void>>(TimeUnit.SECONDS.toMillis(10))
+//        CompletableFuture
+//                .supplyAsync( { transactionService.endTransaction(input.vehicle_id, input.toll, input.timestamp, trip_id, input.geoLocations, user)} )
+//                .thenAccept( { result.setResult(ResponseEntity.noContent().build())} )
+//        return result
+//    }
 
-        val result = DeferredResult<ResponseEntity<Void>>(TimeUnit.SECONDS.toMillis(10))
-        CompletableFuture
-                .supplyAsync( { transactionService.endTransaction(input.vehicle_id, input.toll, input.timestamp, trip_id, input.geoLocations, user)} )
-                .thenAccept( { result.setResult(ResponseEntity.noContent().build())} )
-        return result
+@Transactional
+@RequestMapping(method = [RequestMethod.POST], value = "/{trip_id}/end")
+fun EndTransaction(
+        @RequestBody input: InputTransaction,
+        @PathVariable trip_id: Long
+): ResponseEntity<Transaction> {
+    val userId = authService.authenticatedUser().id
+    val user = userService.getUserByid(userId)
+    log.info("Fetched user: ${user.login}")
+
+    return transactionService.endTransaction(input.vehicle_id, input.toll, input.timestamp, trip_id, input.geoLocations, user).let {
+        ResponseEntity.created(URI.create("/transactions/${it.uid.uid}/end")).body(it)
     }
+}
+
 
 //    @Transactional(readOnly = true)
 //    @RequestMapping(method = [RequestMethod.GET])

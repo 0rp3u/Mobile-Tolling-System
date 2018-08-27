@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate
 import pt.isel.ps.LI61N.g30.server.model.domain.User
 import pt.isel.ps.LI61N.g30.server.model.domain.repositories.UserRepository
 import pt.isel.ps.LI61N.g30.server.services.clearing.ClearingService
-import pt.isel.ps.LI61N.g30.server.services.clearing.ClearingUserService
+import pt.isel.ps.LI61N.g30.server.services.UserService
 import java.util.*
 
 @Component
@@ -28,7 +28,7 @@ class DomainUserDetailsService(
     val restTemplate: RestTemplate = restTemplateBuilder.build()
     val usersURI = "/users"
 
-    lateinit var userService: ClearingUserService
+    lateinit var userService: UserService
 
     @Transactional
     override fun loadUserByUsername(login: String): UserDetails {

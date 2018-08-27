@@ -1,4 +1,4 @@
-package pt.isel.ps.LI61N.g30.server.logic
+package pt.isel.ps.LI61N.g30.server.logic.gis
 
 object GetNClosestTolls{
     val MAX_TOLLS: Int = 90

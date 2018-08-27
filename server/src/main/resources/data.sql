@@ -54,10 +54,10 @@ values (200, 'Portagem Porto', 'NORMAL', 38.7054309, -9.3407711);
 
 /* trips */
 insert into mts_trip(id, state, vehicle)
-values (100, 'incomplete', 100);
+values (100, 'INCOMPLETE', 100);
 
 insert into mts_trip(id, state, vehicle)
-values (200, 'complete', 300);
+values (200, 'COMPLETE', 300);
 
 /* transactions */
 

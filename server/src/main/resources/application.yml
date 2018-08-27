@@ -5,26 +5,6 @@ spring:
       add-mappings: false
     mvc:
       throw-exception-if-no-handler-found: true
-    #datasource:
-      #platform: geodb
-        #dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
-        #ddl-auto: create
-    #datasource:
-      #driver-class-name: org.h2.Driver
-      #url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
-      #username: sa
-      #password: sa
-    #datasource:
-      #url: jdbc:postgresql://localhost:5432/postgres
-      #platform: POSTGRESQL
-      #username: postgres
-      #password: grupo15
-    #jpa:
-      #hibernate:
-        #ddl-auto: create-drop
-        #dialect: org.hibernate.dialect.PostgreSQL9Dialect
-        #show_sql: true
-      #properties.hibernate.temp.use_jdbc_metadata_defaults: false
 debug: false
 trace: false
 server:

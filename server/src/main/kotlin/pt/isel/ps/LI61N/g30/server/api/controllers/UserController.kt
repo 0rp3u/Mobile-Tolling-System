@@ -28,44 +28,44 @@ class UserController(
 
     val log = LoggerFactory.getLogger(UserController::class.java)
 
-    //TODO ADMIN
-    @Transactional
-    @RequestMapping(method = [RequestMethod.POST], value = "/ticket")
-    fun createTicket(
-            @RequestBody input: InputTicket
-    ): ResponseEntity<Ticket> {
-        with(input){
-            val ticket = userService.createTicket(user_id, amount, reason, timestamp)
-            return ResponseEntity
-                    .created(URI.create("users/ticket/{ticket_id}"))
-                    .body(ticket)
-        }
-    }
-
-    @Transactional
-    @RequestMapping(method = [RequestMethod.GET], value = "/ticket/{ticket_id}")
-    fun getTickets(
-        @PathVariable ticket_id: Long,
-        page: Pageable
-    ): ResponseEntity<Page<Ticket>>{
-        val userId = authService.authenticatedUser().id
-        val user = userService.getUserByid(userId)
-        log.info("Fetched user: ${user.login}")
-
-        return ResponseEntity.ok(userService.getTickets(user, page))
-    }
-
-    @Transactional
-    @RequestMapping(method = [RequestMethod.GET], value = "/ticket/{ticket_id}")
-    fun getOneTicket(
-            @PathVariable ticket_id: Long
-    ): ResponseEntity<Ticket>{
-        val userId = authService.authenticatedUser().id
-        val user = userService.getUserByid(userId)
-        log.info("Fetched user: ${user.login}")
-
-        return ResponseEntity.ok(userService.getTicket(ticket_id, user))
-    }
+//    //TODO ADMIN
+//    @Transactional
+//    @RequestMapping(method = [RequestMethod.POST], value = "/tickets")
+//    fun createTicket(
+//            @RequestBody input: InputTicket
+//    ): ResponseEntity<Ticket> {
+//        with(input){
+//            val ticket = userService.createTicket(user_id, amount, reason, timestamp)
+//            return ResponseEntity
+//                    .created(URI.create("users/tickets/{ticket_id}"))
+//                    .body(ticket)
+//        }
+//    }
+//
+//    @Transactional
+//    @RequestMapping(method = [RequestMethod.GET], value = "/tickets")
+//    fun getTickets(
+//        @PathVariable ticket_id: Long,
+//        page: Pageable
+//    ): ResponseEntity<Page<Ticket>>{
+//        val userId = authService.authenticatedUser().id
+//        val user = userService.getUserByid(userId)
+//        log.info("Fetched user: ${user.login}")
+//
+//        return ResponseEntity.ok(userService.getTickets(user, page))
+//    }
+//
+//    @Transactional
+//    @RequestMapping(method = [RequestMethod.GET], value = "/tickets/{ticket_id}")
+//    fun getOneTicket(
+//            @PathVariable ticket_id: Long
+//    ): ResponseEntity<Ticket>{
+//        val userId = authService.authenticatedUser().id
+//        val user = userService.getUserByid(userId)
+//        log.info("Fetched user: ${user.login}")
+//
+//        return ResponseEntity.ok(userService.getTicket(ticket_id, user))
+//    }
 
 
 //    val restTemplate: RestTemplate = restTemplateBuilder.build()

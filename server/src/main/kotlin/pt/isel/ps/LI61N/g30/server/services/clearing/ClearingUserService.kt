@@ -8,7 +8,7 @@ import pt.isel.ps.LI61N.g30.server.model.domain.repositories.RoleRepository
 
 
 @Service
-class UserService(
+class ClearingUserService(
         val userRepository: UserRepository,
         val roleRepository: RoleRepository,
         val passwordEncoder: PasswordEncoder

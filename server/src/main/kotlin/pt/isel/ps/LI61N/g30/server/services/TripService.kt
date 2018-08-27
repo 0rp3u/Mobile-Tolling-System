@@ -1,15 +1,20 @@
 package pt.isel.ps.LI61N.g30.server.services
 
 import org.springframework.stereotype.Service
+import pt.isel.ps.LI61N.g30.server.logic.gis.CountPointsWithinPolygon
 import pt.isel.ps.LI61N.g30.server.model.domain.*
-import pt.isel.ps.LI61N.g30.server.model.domain.repositories.TollRepository
-import pt.isel.ps.LI61N.g30.server.model.domain.repositories.TripAmendmentRepository
-import pt.isel.ps.LI61N.g30.server.model.domain.repositories.TripRepository
+import pt.isel.ps.LI61N.g30.server.model.domain.repositories.*
+import pt.isel.ps.LI61N.g30.server.utils.GeoLocation
+import java.util.*
 
 @Service
 class TripService(
         val tripRepository: TripRepository,
         val tollRepository: TollRepository,
+        val transationService: TransactionService,
+        val vehicleRepository: VehicleRepository,
+        val transactionRepository: TransactionRepository,
+        val tollService: TollService,
         val tripAmendmentRepository: TripAmendmentRepository
 ){
 
@@ -31,6 +36,11 @@ class TripService(
 
 
         tripRepository.save(trip)
+    }
+
+    fun getLatestTrip(vehicle_id: Long, user: User): Trip{
+        val vehicle = vehicleRepository.findByOwnerAndId(user, vehicle_id).orElseThrow { Exception("No vehicle found with the provided id.") }
+        return tripRepository.findOneByVehicleOrderByCreatedDesc(vehicle).orElseThrow { Exception("No trip found for vehicle.") }
     }
 
 }

@@ -36,21 +36,25 @@ data class Transaction(
         @Column(name = "issuer")
         val issuer: String? = null,
 
-        @Column(name = "enforcement_percentage")
-        val enforcement_percentage: Float?,
+        @Column(name = "enforcement_sample_size")
+        val enforcement_sample: Int?,
+
+        @Column(name = "enforcement_interceptions")
+        val enforcement_interceptions: Int?,
 
         @Column
         @CreationTimestamp
         val created: Date = Date()
 )
 
-fun createTransaction(trip: Trip, toll: Toll, timestamp: Date, type: TransactionType, enforcement_percentage: Float?): Transaction{
+fun createTransaction(trip: Trip, toll: Toll, timestamp: Date, type: TransactionType, enforcement_sample: Int?, enforcement_interceptions: Int?): Transaction{
         return Transaction(
                 tolltripId = pt.isel.ps.LI61N.g30.server.model.domain.TollTripId(trip_id = trip.id, toll_id = toll.id, type = type),
                 toll = toll,
                 trip = trip,
                 timestamp = timestamp,
-                enforcement_percentage = enforcement_percentage
+                enforcement_sample = enforcement_sample,
+                enforcement_interceptions = enforcement_interceptions
         )
 }
 

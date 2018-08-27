@@ -17,35 +17,10 @@ import java.util.concurrent.TimeUnit
 @RequestMapping("/tolls", produces = [MediaType.APPLICATION_JSON_VALUE])
 @RestController
 class TollController(
-        val tollClearing: ClearingTollService,
         val tollService: TollService
 ) {
 
-//    @Transactional(readOnly = true)
-//    @RequestMapping(method = [RequestMethod.POST], value="/nearest")
-//    fun findOne(
-//            @RequestBody inputModel: GeoLocation,
-//            @RequestParam("number") nTolls: Optional<Int>
-//    ): DeferredResult<ResponseEntity<List<Toll>>> {
-//        val result = DeferredResult<ResponseEntity<List<Toll>>>(TimeUnit.SECONDS.toMillis(50))
-//        CompletableFuture
-//                .supplyAsync( { tollService.getNearestTolls(inputModel, nTolls)} )
-//                .thenAccept( { result.setResult(ResponseEntity.ok(it))} )
-//        return result
-//    }
-
-//    @Transactional(readOnly = true)
-//    @RequestMapping(method = [RequestMethod.GET])
-//    fun findAll(
-//
-//    ): DeferredResult<ResponseEntity<Page<Toll>>> {
-//        val result = DeferredResult<ResponseEntity<Page<Toll>>>(TimeUnit.SECONDS.toMillis(10))
-//        CompletableFuture
-//                .supplyAsync( { tollService.getTolls()} )
-//                .thenAccept( { result.setResult(ResponseEntity.ok(it))} )
-//        return result
-//    }
-
+    //todo async
     @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.GET], value="/nearest")
     fun findNearestTolls(
@@ -55,7 +30,5 @@ class TollController(
     ): ResponseEntity<List<Long>>{
         return ResponseEntity.ok( tollService.getNearestTolls(GeoLocation(latitude, longitude), nTolls))
     }
-
-
 
 }
