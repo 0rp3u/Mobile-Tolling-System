@@ -16,7 +16,7 @@ data class Notification(
         @Embedded(prefix = "vehicle_")
         var vehicle: Vehicle? = null,
 
-        @Embedded(prefix = "trip_")
+        @Embedded(prefix = "Transaction_")
         var transaction: TollingTransaction? = null,
 
         var Timestamp: Date = Date(),

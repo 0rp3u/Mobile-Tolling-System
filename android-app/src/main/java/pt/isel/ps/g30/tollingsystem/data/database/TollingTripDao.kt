@@ -6,7 +6,7 @@ import androidx.room.*
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 
 @Dao
-interface TollingTripDao {
+interface TollingTransactionDao {
 
 
     @Query("SELECT * FROM TollingTransaction")
@@ -22,16 +22,16 @@ interface TollingTripDao {
     fun findByVehicle(vehicleId: Int): List<TollingTransaction>
 
     @Query("SELECT * FROM TollingTransaction WHERE TollingTransaction.destination_id is null")
-    fun findByActiveTripLiveData(): LiveData<TollingTransaction?>
+    fun findByActiveTransactionLiveData(): LiveData<TollingTransaction?>
 
 
     @Query("SELECT * FROM TollingTransaction WHERE TollingTransaction.destination_id is null")
-    fun findByActiveTrip(): TollingTransaction?
+    fun findByActiveTransaction(): TollingTransaction?
 
 
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateTrip(transaction: TollingTransaction)
+    fun updateTransaction(transaction: TollingTransaction)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg transactions: TollingTransaction): List<Long>

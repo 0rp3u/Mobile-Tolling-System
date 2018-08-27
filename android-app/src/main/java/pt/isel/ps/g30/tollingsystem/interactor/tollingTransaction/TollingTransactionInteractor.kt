@@ -1,4 +1,4 @@
-package pt.isel.ps.g30.tollingsystem.interactor.tollingtrip
+package pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction
 
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.experimental.Deferred
@@ -17,12 +17,12 @@ interface TollingTransactionInteractor : BaseInteractor {
 
     suspend fun getCurrentTransactionLiveData(): Deferred<LiveData<CurrentTransaction>>
 
-    suspend fun getCurrentTransactionTrip(): Deferred<CurrentTransaction>
+    suspend fun getCurrentTransactionTransaction(): Deferred<CurrentTransaction>
 
     suspend fun startTollingTransaction(origin: TollingPlaza): Deferred<CurrentTransaction>
 
     suspend fun finishTransaction(dest: TollingPlaza): Deferred<TollingTransaction>
 
-    suspend fun cancelCurrentTransaction(trip: CurrentTransaction): Deferred<Int>
+    suspend fun cancelCurrentTransaction(Transaction: CurrentTransaction): Deferred<Int>
 
 }

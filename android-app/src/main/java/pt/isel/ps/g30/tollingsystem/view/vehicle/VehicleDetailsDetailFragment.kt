@@ -57,8 +57,8 @@ class VehicleDetailsDetailFragment: BaseFragment<VehicleDetailsPresenter, Vehicl
 
     }
 
-    override fun showVehicleTripNumber(tripNumber: Int) {
-        trip_number.text = "$tripNumber"
+    override fun showVehicleTransactionNumber(TransactionNumber: Int) {
+        Transaction_number.text = "$TransactionNumber"
     }
 
     override fun showVehiclePaidAmount(amount: Double) {

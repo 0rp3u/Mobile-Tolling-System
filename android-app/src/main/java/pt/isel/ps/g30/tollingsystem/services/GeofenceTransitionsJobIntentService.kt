@@ -24,7 +24,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.location.Location
 import android.os.Build
 
 import android.text.TextUtils
@@ -44,7 +43,7 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.extension.getIconResource
 import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
-import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTransactionInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
 import java.util.*
 
@@ -174,21 +173,21 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
 
             if (passed) {
                 val plaza = tollingPlazaInteractor.getTollPlaza(plazaId).await()
-                val currentTrip = tollingTransactionInteractor.getCurrentTransactionTrip().await()
+                val currentTransaction = tollingTransactionInteractor.getCurrentTransactionTransaction().await()
 
                 // Send notification and log the transition details.
-                sendNotification(currentTrip)
+                sendNotification(currentTransaction)
 
-                if (currentTrip.origin != null) {
-                    val trip = tollingTransactionInteractor.finishTransaction(plaza).await()
+                if (currentTransaction.origin != null) {
+                    val Transaction = tollingTransactionInteractor.finishTransaction(plaza).await()
 
-                    notificationInteractor.sendFinishTripNotification(trip)
+                    notificationInteractor.sendFinishTransactionNotification(Transaction)
 
-                    Log.e(TAG, "finished transaction @ ${trip.destination}")
+                    Log.e(TAG, "finished transaction @ ${Transaction.destination}")
                 } else {
-                    val trip = tollingTransactionInteractor.startTollingTransaction(plaza).await()
-                    notificationInteractor.sendStartTripNotification(trip)
-                    Log.e(TAG, "started transaction @ ${trip.origin}")
+                    val Transaction = tollingTransactionInteractor.startTollingTransaction(plaza).await()
+                    notificationInteractor.sendStartTransactionNotification(Transaction)
+                    Log.e(TAG, "started transaction @ ${Transaction.origin}")
                 }
 
             }
@@ -200,7 +199,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
      * Posts a notification in the notification bar when a transition is detected.
      * If the user clicks the notification, control goes to the MainActivity.
      */
-    private fun sendNotification(trip: CurrentTransaction) {
+    private fun sendNotification(Transaction: CurrentTransaction) {
         // Get an instance of the Notification manager
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -233,18 +232,18 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
         val builder = NotificationCompat.Builder(this)
 
         // Define the notification settings.
-        val carIcon = trip.vehicle?.getIconResource() ?: R.drawable.ic_directions_car_black_24dp
+        val carIcon = Transaction.vehicle?.getIconResource() ?: R.drawable.ic_directions_car_black_24dp
         builder.setSmallIcon(carIcon)
                 .setLargeIcon(BitmapFactory.decodeResource(resources, carIcon))
                 .setColor(Color.RED)
                 .setContentIntent(notificationPendingIntent)
 
-        if(trip.destination!=null){
+        if(Transaction.destination!=null){
             builder.setContentTitle("finished transaction")
-                    .setContentText("finished transaction from ${trip.origin?.name}  to ${trip.destination?.name}")
+                    .setContentText("finished transaction from ${Transaction.origin?.name}  to ${Transaction.destination?.name}")
         } else{
             builder.setContentTitle("started transaction")
-                    .setContentText("started transaction on ${trip.origin?.name}")
+                    .setContentText("started transaction on ${Transaction.origin?.name}")
         }
 
         // Set the Channel ID for Android O.

@@ -7,7 +7,7 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 
 @Dao
-interface ActiveTripDao {
+interface ActiveTransactionDao {
 
     @Query("SELECT * FROM CurrentTransaction")
     fun find(): CurrentTransaction

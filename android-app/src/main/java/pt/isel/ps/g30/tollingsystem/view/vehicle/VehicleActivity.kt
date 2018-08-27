@@ -12,7 +12,7 @@ import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.presenter.vehicle.VehicleActivityPresenter
 import pt.isel.ps.g30.tollingsystem.view.base.BaseActivity
 import pt.isel.ps.g30.tollingsystem.view.common.CustomFragmentPagerAdapter
-import pt.isel.ps.g30.tollingsystem.view.tollingtrip.TollingTripsFragment
+import pt.isel.ps.g30.tollingsystem.view.tollingTransaction.TollingTransactionsFragment
 import javax.inject.Inject
 
 class VehicleActivity: BaseActivity<VehicleActivityPresenter, VehicleActivityView>(), VehicleActivityView{
@@ -54,8 +54,8 @@ class VehicleActivity: BaseActivity<VehicleActivityPresenter, VehicleActivityVie
                                 "title" to "vehicle info",
                                 EXTRA_VEHICLE_ID to id
                         ),
-                        TollingTripsFragment().withArguments(
-                                CustomFragmentPagerAdapter.ARG_NAME to "trips",
+                        TollingTransactionsFragment().withArguments(
+                                CustomFragmentPagerAdapter.ARG_NAME to "Transactions",
                                 EXTRA_VEHICLE_ID to id
 
                         ))

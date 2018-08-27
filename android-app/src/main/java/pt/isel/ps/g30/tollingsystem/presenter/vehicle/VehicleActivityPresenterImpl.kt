@@ -5,7 +5,7 @@ import kotlinx.coroutines.experimental.cancelChildren
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleActivityView
 
-class VehicleActivityPresenterImpl() : BasePresenterImpl<VehicleActivityView>(), VehicleActivityPresenter{
+class VehicleActivityPresenterImpl : BasePresenterImpl<VehicleActivityView>(), VehicleActivityPresenter{
 
     private val jobs = Job()
 

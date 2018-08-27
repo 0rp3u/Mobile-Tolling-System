@@ -33,10 +33,10 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
             tollingSystemDatabase.NotificationDao().findAllLiveData()}
     }
 
-    override suspend fun confirmTrip(notification: Notification) = launch {
+    override suspend fun confirmTransaction(notification: Notification) = launch {
         //TODO Work manager schedule to comunicate with backend that is confirmed
         if(notification.transaction?.id == 6) {
-            tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TripPaidNotification, transaction =tollingSystemDatabase.TollingTripDao().findById(6).also { it?.paid = 15.7 }))
+            tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TransactionPaidNotification, transaction =tollingSystemDatabase.TollingTransactionDao().findById(6).also { it?.paid = 15.7 }))
         }
 
 
@@ -49,13 +49,13 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
                 .setConstraints(constraints)
                 .build()
 
-        WorkManager.getInstance()?.enqueue(request)
+        WorkManager.getInstance().enqueue(request)
 
         if (tollingSystemDatabase.NotificationDao().delete(notification) <1) throw Exception("Could not delete notification")
     }
 
 
-    override suspend fun cancelTrip(notification: Notification) = launch {
+    override suspend fun cancelTransaction(notification: Notification) = launch {
         if (tollingSystemDatabase.NotificationDao().delete(notification) <1) throw Exception("Could not delete notification")
     }
 
@@ -64,16 +64,16 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
     }
 
 
-    override fun sendStartTripNotification(trip: CurrentTransaction){
+    override fun sendStartTransactionNotification(Transaction: CurrentTransaction){
         val builder = NotificationCompat.Builder(TollingSystemApp.instance)
 
-        val carIcon = trip.vehicle?.getIconResource() ?: R.drawable.ic_notifications_black_24dp
+        val carIcon = Transaction.vehicle?.getIconResource() ?: R.drawable.ic_notifications_black_24dp
 
         builder.setSmallIcon(carIcon)
                 .setLargeIcon(BitmapFactory.decodeResource(TollingSystemApp.instance.resources, carIcon))
                 .setColor(Color.RED)
                 .setContentTitle("started transaction")
-                .setContentText("started transaction on ${trip.origin?.name}")
+                .setContentText("started transaction on ${Transaction.origin?.name}")
 
         val extras = Bundle().also { it.putInt(MainActivity.SELECTED_ITEM_KEY, 2) }
 
@@ -86,7 +86,7 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
         sendNotification(builder)
     }
 
-    override fun sendFinishTripNotification(transaction: TollingTransaction){
+    override fun sendFinishTransactionNotification(transaction: TollingTransaction){
         val builder = NotificationCompat.Builder(TollingSystemApp.instance)
 
         val carIcon = transaction.vehicle.getIconResource()

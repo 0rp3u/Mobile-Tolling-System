@@ -70,7 +70,7 @@
             android:theme="@style/AppTheme.NoActionBar.Launcher"/>
 
         <activity
-            android:name=".view.tollingtrip.TollingTripDetails"
+            android:name=".view.tollingTransaction.TollingTransactionDetails"
             android:label="@string/title_activity_maps"/>
 
 

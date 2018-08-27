@@ -10,10 +10,10 @@ interface NotificationPresenter : BasePresenter<NotificationView> {
 
     fun dismissNotification(notification: Notification)
 
-    fun cancelTrip(notification: Notification)
+    fun cancelTransaction(notification: Notification)
 
-    fun confirmTrip(notification: Notification)
+    fun confirmTransaction(notification: Notification)
 
-    fun disputePaidTrip(notification: Notification)
+    fun disputePaidTransaction(notification: Notification)
 
 }

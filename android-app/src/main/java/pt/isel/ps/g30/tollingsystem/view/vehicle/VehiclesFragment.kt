@@ -63,7 +63,7 @@ class VehiclesFragment: BaseFragment<VehiclesFragPresenter, VehiclesFragmentView
 
         presenter.getVehicleList()
 
-        add_fab.setOnClickListener{ view -> toast("open add vehicle Activity") }
+        add_fab.setOnClickListener{ _ -> toast("open add vehicle Activity") }
     }
 
     override fun showVehicleList(list: List<Vehicle>) {

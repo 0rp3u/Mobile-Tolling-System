@@ -10,7 +10,7 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
-import pt.isel.ps.g30.tollingsystem.interactor.tollingtrip.TollingTransactionInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.geofencing.GeofencingInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
@@ -46,7 +46,7 @@ class NavigationFragPresenterImpl(
                 tollingInteractor.getCurrentTransactionLiveData().await().observe(view!!, Observer {
                     it?.let {
                         if(it.vehicle != null)
-                            if(it.origin !=null) view?.showActiveTrip(it) else view?.removeActiveTrip(it)
+                            if(it.origin !=null) view?.showActiveTransaction(it) else view?.removeActiveTransaction(it)
                     }
                 })
 
@@ -123,31 +123,31 @@ class NavigationFragPresenterImpl(
         }
     }
 
-    override fun prepareCancelActiveTripDialog(currentTransaction: CurrentTransaction) {
+    override fun prepareCancelActiveTransactionDialog(currentTransaction: CurrentTransaction) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                view?.showCancelActiveTripDialog(currentTransaction)
+                view?.showCancelActiveTransactionDialog(currentTransaction)
                 view?.hideLoadingIndicator()
 
             }catch (e: Throwable){
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", { prepareCancelActiveTripDialog(currentTransaction) })
+                view?.showErrorMessage("something went wrong, ${e.message}", { prepareCancelActiveTransactionDialog(currentTransaction) })
             }
 
         }
     }
 
 
-    override fun startTrip(tollingPlaza: TollingPlaza) {
+    override fun startTransaction(tollingPlaza: TollingPlaza) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                val trip = tollingInteractor.startTollingTransaction(tollingPlaza).await()
+                val Transaction = tollingInteractor.startTollingTransaction(tollingPlaza).await()
 
-                Log.d(TAG, "started transaction ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+                Log.d(TAG, "started transaction ${Transaction.vehicle} : ${Transaction.origin} -> ${Transaction.destination}")
 
-                view?.showActiveTrip(trip)
+                view?.showActiveTransaction(Transaction)
 
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage("passed on ${tollingPlaza.name}")
@@ -155,20 +155,20 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}") {startTrip(tollingPlaza)}
+                view?.showErrorMessage("something went wrong, ${e.message}") {startTransaction(tollingPlaza)}
             }
         }
     }
 
 
-    override fun finishTrip(tollingPlaza: TollingPlaza) {
+    override fun finishTransaction(tollingPlaza: TollingPlaza) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                val trip = tollingInteractor.finishTransaction(tollingPlaza).await()
+                val Transaction = tollingInteractor.finishTransaction(tollingPlaza).await()
 
-                Log.d(TAG, "finish transaction ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
-                //view?.removeActiveTrip(transaction)
+                Log.d(TAG, "finish transaction ${Transaction.vehicle} : ${Transaction.origin} -> ${Transaction.destination}")
+                //view?.removeActiveTransaction(transaction)
 
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage("passed on ${tollingPlaza.name}")
@@ -176,21 +176,21 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}") {startTrip(tollingPlaza)}
+                view?.showErrorMessage("something went wrong, ${e.message}") {startTransaction(tollingPlaza)}
             }
         }
     }
 
-    override fun cancelActiveTrip(trip: CurrentTransaction) {
-        Log.d(TAG, "canceling transaction ${trip.vehicle} : ${trip.origin} -> ${trip.destination}")
+    override fun cancelActiveTransaction(Transaction: CurrentTransaction) {
+        Log.d(TAG, "canceling transaction ${Transaction.vehicle} : ${Transaction.origin} -> ${Transaction.destination}")
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
 
-                tollingInteractor.cancelCurrentTransaction(trip).await()
+                tollingInteractor.cancelCurrentTransaction(Transaction).await()
 
 
-                //view?.removeActiveTrip(transaction)
+                //view?.removeActiveTransaction(transaction)
 
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage()
@@ -198,7 +198,7 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", {cancelActiveTrip(trip)})
+                view?.showErrorMessage("something went wrong, ${e.message}", {cancelActiveTransaction(Transaction)})
             }
         }
     }

@@ -59,11 +59,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Trip number:"
+                android:text="Transaction number:"
                 android:textSize="24sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/trip_number"
+                android:id="@+id/Transaction_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"/>

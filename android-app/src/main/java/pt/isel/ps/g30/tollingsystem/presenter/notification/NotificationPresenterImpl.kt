@@ -31,11 +31,11 @@ class NotificationPresenterImpl(private val interactor: NotificationInteractor) 
         }
     }
 
-    override fun cancelTrip(notification: Notification) {
+    override fun cancelTransaction(notification: Notification) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                interactor.cancelTrip(notification)
+                interactor.cancelTransaction(notification)
 
                 view?.hideLoadingIndicator()
 
@@ -46,11 +46,11 @@ class NotificationPresenterImpl(private val interactor: NotificationInteractor) 
         }
     }
 
-    override fun confirmTrip(notification: Notification) {
+    override fun confirmTransaction(notification: Notification) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                interactor.confirmTrip(notification)
+                interactor.confirmTransaction(notification)
 
                 view?.hideLoadingIndicator()
 
@@ -76,7 +76,7 @@ class NotificationPresenterImpl(private val interactor: NotificationInteractor) 
         }
     }
 
-    override fun disputePaidTrip(notification: Notification) {
+    override fun disputePaidTransaction(notification: Notification) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {

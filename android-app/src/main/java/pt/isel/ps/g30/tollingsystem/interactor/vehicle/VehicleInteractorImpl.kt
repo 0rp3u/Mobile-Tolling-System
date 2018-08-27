@@ -21,16 +21,16 @@ class VehicleInteractorImpl(private val tollingSystemDatabase: TollingSystemData
     }
 
     override suspend fun setActiveVehicle(vehicle: Vehicle) = launch {
-            val act = tollingSystemDatabase.ActiveTripDao().find()
+            val act = tollingSystemDatabase.ActiveTransactionDao().find()
             if(act.vehicle != null) throw Exception("a vehicle is already active")
             act.vehicle = vehicle
 
-            tollingSystemDatabase.ActiveTripDao().update(act)
+            tollingSystemDatabase.ActiveTransactionDao().update(act)
     }
 
     override suspend fun removeActiveVehicle(vehicle: Vehicle): Deferred<Boolean>{
        return async {
-           tollingSystemDatabase.ActiveTripDao().apply {
+           tollingSystemDatabase.ActiveTransactionDao().apply {
                find().let{
                    it.vehicle = null
                     update(it)

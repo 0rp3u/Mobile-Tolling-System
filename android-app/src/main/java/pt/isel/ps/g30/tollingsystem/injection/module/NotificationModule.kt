@@ -12,7 +12,6 @@ class NotificationModule {
 
     @Provides
     fun provideNotificationInteractor(tollingDatabase: TollingSystemDatabase): NotificationInteractor {
-        tollingDatabase
         return NotificationInteractorImpl(tollingDatabase)
     }
 }
