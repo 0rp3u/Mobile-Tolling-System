@@ -19,7 +19,7 @@ class LoginPresenterImpl(private val interactor: AuthInteractor) :
         launch (UI, parent =jobs) {
             view?.showLoadingIndicator()
             try {
-                //interactor.authenticate(login, password).await()
+                interactor.authenticate(login, password).await()
 
                 view?.hideLoadingIndicator()
                 view?.successfullLogin()

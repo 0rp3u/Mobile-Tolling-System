@@ -27,6 +27,7 @@ spring:
         dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
         show_sql: true
         format_sql: true
+        temp.use_jdbc_metadata_defaults: false
 
 logging:
   level:

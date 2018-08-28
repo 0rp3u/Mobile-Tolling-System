@@ -11,32 +11,27 @@ class AuthInteractorImpl(private val tollingService: TollingService, private val
 
     override suspend fun authenticate(login: String, password: String): Deferred<Boolean> {
         val deferred = CompletableDeferred<Boolean>()
-
-        if(login.isNotEmpty() && password.isNotEmpty()) {
-
-            if(login == "viaverdeuser" && password =="viaverdepass"){
-                deferred.complete(true)
-            }else{
-                deferred.completeExceptionally(Exception("failed Login"))
-            }
-            return deferred
+        if (login.isNotEmpty() && password.isNotEmpty()) {
 
             authInterceptor.setCredentials(login, password)
-            val response = tollingService.authenticate().await()
-            Log.v("AUTHInteractor", "${response.code()}")
-            if (response.isSuccessful) {
-                deferred.complete(true)
-                return deferred
-            }
+            return deferred.apply {  complete(verifyToken().await())}
         }
 
         deferred.completeExceptionally(Exception("failed Login"))
-
         return deferred
     }
 
+
     override suspend fun verifyToken(): Deferred<Boolean> {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        return CompletableDeferred<Boolean>().also { it.complete(true) }
+        val deferred = CompletableDeferred<Boolean>()
+        val response = tollingService.authenticate().await()
+        Log.v("AuthInteractor", "${response.code()}")
+        if (response.isSuccessful) {
+            deferred.complete(true)
+            return deferred
+        }
+
+        deferred.completeExceptionally(Exception("failed Login"))
+        return deferred
     }
 }

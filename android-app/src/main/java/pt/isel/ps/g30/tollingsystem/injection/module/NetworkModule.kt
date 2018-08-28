@@ -1,5 +1,6 @@
 package pt.isel.ps.g30.tollingsystem.injection.module
 
+import android.content.SharedPreferences
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -14,7 +15,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-class NetworkModule(private val baseUrl: String) {
+class NetworkModule {
 
     @Provides
     @Singleton
@@ -30,7 +31,7 @@ class NetworkModule(private val baseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor() = HttpAuthInterceptor()
+    fun provideAuthInterceptor(sharedPrederences: SharedPreferences) = HttpAuthInterceptor(sharedPrederences)
 
     @Provides
     @Singleton
@@ -44,7 +45,7 @@ class NetworkModule(private val baseUrl: String) {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .baseUrl(baseUrl)
+            .baseUrl("http://localhost:8081/")
             .client(okHttpClient)
             .build()
 

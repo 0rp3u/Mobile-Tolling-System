@@ -6,7 +6,6 @@ import com.vividsolutions.jts.geom.Polygon
 import org.hibernate.annotations.CreationTimestamp
 import java.util.*
 import javax.persistence.*
-import pt.isel.ps.LI61N.g30.server.model.domain.Toll
 
 @Entity
 @Table(name="mts_toll")
@@ -14,7 +13,7 @@ data class Toll(
 
         @Id
         @GeneratedValue
-        val id: Long = -1,
+        var id: Long = -1,
 
         @OneToMany(
                 mappedBy = "toll",
