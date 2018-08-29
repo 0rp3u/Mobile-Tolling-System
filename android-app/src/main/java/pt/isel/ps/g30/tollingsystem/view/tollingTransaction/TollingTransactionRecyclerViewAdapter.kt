@@ -34,10 +34,21 @@ class TollingTransactionsRecyclerViewAdapter(val listener: (TollingTransaction) 
 
         fun bind(history: TollingTransaction, listener: (TollingTransaction) -> Unit) {
 
-            itemView.date_origin.text = history.originTimestamp.dateTimeParsed()
-            itemView.from.text = history.origin.name
-            itemView.date_destination.text = history.destTimestamp.dateTimeParsed()
-            itemView.destination.text = history.destination.name
+            if (history.origin == history.destination){
+                itemView.closed_toll_layout.visibility = View.GONE
+                itemView.open_toll_layout.visibility = View.VISIBLE
+
+                itemView.date.text = history.originTimestamp.dateTimeParsed()
+                itemView.toll_name.text = history.origin.name
+
+            }else{
+                itemView.date_origin.text = history.originTimestamp.dateTimeParsed()
+                itemView.from.text = history.origin.name
+                itemView.date_destination.text = history.destTimestamp.dateTimeParsed()
+                itemView.destination.text = history.destination.name
+
+            }
+
             itemView.setOnClickListener { listener(history) }
         }
 

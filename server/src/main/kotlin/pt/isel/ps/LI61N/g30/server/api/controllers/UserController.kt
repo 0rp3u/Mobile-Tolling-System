@@ -2,21 +2,13 @@ package pt.isel.ps.LI61N.g30.server.api.controllers
 
 import org.slf4j.LoggerFactory
 import org.springframework.boot.web.client.RestTemplateBuilder
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.client.RestTemplate
-import pt.isel.ps.LI61N.g30.server.api.input.InputTicket
-import pt.isel.ps.LI61N.g30.server.api.input.Login
-import pt.isel.ps.LI61N.g30.server.model.domain.Ticket
 import pt.isel.ps.LI61N.g30.server.model.domain.User
-import pt.isel.ps.LI61N.g30.server.model.domain.repositories.UserRepository
 import pt.isel.ps.LI61N.g30.server.services.AuthService
 import pt.isel.ps.LI61N.g30.server.services.UserService
-import java.net.URI
 
 @RequestMapping("/users", produces = [MediaType.APPLICATION_JSON_VALUE])
 @RestController

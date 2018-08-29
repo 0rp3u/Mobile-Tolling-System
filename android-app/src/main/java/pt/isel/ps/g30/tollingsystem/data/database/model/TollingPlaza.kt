@@ -7,6 +7,9 @@ import androidx.room.TypeConverters
 @Entity
 data class TollingPlaza(
 
+        @PrimaryKey
+        var id: Int,
+
         val name: String,
 
         val concession: String,
@@ -17,8 +20,5 @@ data class TollingPlaza(
 
         val Lng:Double,
 
-        val openToll: Boolean = false,
-
-        @PrimaryKey(autoGenerate = true)
-        var id: Int = 0
+        val openToll: Boolean = false
 )

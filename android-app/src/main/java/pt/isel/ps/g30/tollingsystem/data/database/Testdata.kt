@@ -11,19 +11,19 @@ fun insertTestdata(database: TollingSystemDatabase){
     launch{
         database.UserDao().insert(User(100,"david","orpheu"))
         database.VehicleDao().insert(
-                Vehicle( "14-AR-43", 1, Tare.Classe_1),
-                Vehicle( "44-EW-82", 1, Tare.Classe_2),
-                Vehicle( "17-AC-19", 1, Tare.Classe_3),
-                Vehicle( "76-CC-63", 1, Tare.Classe_4),
-                Vehicle( "05-VW-59", 1, Tare.Classe_5)
+                Vehicle(1, "14-AR-43",  Tare.Classe_1),
+                Vehicle(2,"44-EW-82",  Tare.Classe_2),
+                Vehicle(3, "17-AC-19",  Tare.Classe_3),
+                Vehicle(4, "76-CC-63",  Tare.Classe_4),
+                Vehicle(5, "05-VW-59",  Tare.Classe_5)
         )
 
         database.TollingDao().insert(
-                TollingPlaza( "palmela", "brisa", true, 38.584453, -8.888651),
-                TollingPlaza( "Ponte 25 de abril", "lusoponte", true, 38.675975, -9.173930, true),
-                TollingPlaza( "coina", "brisa", true, 38.579182, -9.013340),
-                TollingPlaza( "dança", "ESD", true, 38.7564632,-9.1156641),
-                TollingPlaza( "química", "ISEL", true, 38.7568957,-9.1168083)
+                TollingPlaza(1, "palmela", "brisa", true, 38.584453, -8.888651),
+                TollingPlaza(2, "Ponte 25 de abril", "lusoponte", true, 38.675975, -9.173930, true),
+                TollingPlaza(3, "coina", "brisa", true, 38.579182, -9.013340),
+                TollingPlaza(4, "dança", "ESD", true, 38.7564632,-9.1156641),
+                TollingPlaza(5, "química", "ISEL", true, 38.7568957,-9.1168083)
         )
 
 

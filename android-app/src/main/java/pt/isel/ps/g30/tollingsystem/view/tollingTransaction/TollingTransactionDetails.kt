@@ -62,32 +62,57 @@ class TollingTransactionDetails : BaseActivity<TollingTransactionDetailsPresente
         val destinationLatLong = tollingTransaction.destination.let { LatLng(it.lat, it.Lng) }
         map.Transaction_details.background.alpha = 130
 
-        tollingTransaction.origin.let{
-            map.from.text = it.name
-            map.date_origin.text = tollingTransaction.originTimestamp.dateTimeParsed()
 
-            mMap.addMarker(
-                    MarkerOptions()
-                            .title(it.name)
-                            .snippet(it.concession)
-                            .icon(BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
-                            .position(originLatLong)
+        if(tollingTransaction.origin == tollingTransaction.destination){
+            map.open_toll_layout.visibility = View.VISIBLE
+            map.closed_toll_layout.visibility = View.GONE
 
-            )
+
+            tollingTransaction.origin.let{
+                map.toll_name.text = it.name
+                map.date.text = tollingTransaction.originTimestamp.dateTimeParsed()
+                map.toll_layout.setOnClickListener { goToToll(originLatLong) }
+
+                mMap.addMarker(
+                        MarkerOptions()
+                                .title(it.name)
+                                .snippet(it.concession)
+                                .icon(BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
+                                .position(originLatLong)
+
+                )
+            }
+
+
+        }else{
+            tollingTransaction.origin.let{
+                map.from.text = it.name
+                map.date_origin.text = tollingTransaction.originTimestamp.dateTimeParsed()
+                map.origin_layout.setOnClickListener { goToToll(originLatLong) }
+
+                mMap.addMarker(
+                        MarkerOptions()
+                                .title(it.name)
+                                .snippet(it.concession)
+                                .icon(BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
+                                .position(originLatLong)
+                )
+            }
+            tollingTransaction.destination.let{
+                map.destination.text = it.name
+                map.date_destination.text = tollingTransaction.destTimestamp.dateTimeParsed()
+                map.destination_layout.setOnClickListener { goToToll(destinationLatLong) }
+
+                mMap.addMarker(
+                        MarkerOptions()
+                                .title(it.name)
+                                .snippet(it.concession)
+                                .icon(BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_red))
+                                .position(destinationLatLong)
+                )
+            }
         }
-        tollingTransaction.destination.let{
-            map.destination.text = it.name
-            map.date_destination.text = tollingTransaction.destTimestamp.dateTimeParsed()
 
-            mMap.addMarker(
-                    MarkerOptions()
-                            .title(it.name)
-                            .snippet(it.concession)
-                            .icon(BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_red))
-                            .position(destinationLatLong)
-
-            )
-        }
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(5f), 3000, null)
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
@@ -99,6 +124,20 @@ class TollingTransactionDetails : BaseActivity<TollingTransactionDetailsPresente
                         .build()
 
         ))
+    }
+
+    fun goToToll(tollPosition: LatLng){
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10f), 3000, null)
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+                CameraPosition.Builder()
+                        .target(tollPosition)
+                        .zoom(10f)
+                        .tilt(90f)
+                        .bearing(10f)
+                        .build()
+
+        ))
+
     }
 
 

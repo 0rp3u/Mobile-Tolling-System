@@ -5,19 +5,11 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.context.request.async.DeferredResult
 import pt.isel.ps.LI61N.g30.server.model.domain.Trip
-import pt.isel.ps.LI61N.g30.server.api.input.InputAmendTrip
-import pt.isel.ps.LI61N.g30.server.api.input.InputTrip
-import pt.isel.ps.LI61N.g30.server.model.domain.Transaction
+import pt.isel.ps.LI61N.g30.server.api.input.AmendTrip
 import pt.isel.ps.LI61N.g30.server.services.AuthService
-import pt.isel.ps.LI61N.g30.server.services.TransactionService
 import pt.isel.ps.LI61N.g30.server.services.TripService
 import pt.isel.ps.LI61N.g30.server.services.UserService
-import pt.isel.ps.LI61N.g30.server.utils.GeoLocation
-import java.net.URI
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.TimeUnit
 
 @RequestMapping("/trips", produces = [MediaType.APPLICATION_JSON_VALUE])
 @RestController
@@ -46,7 +38,7 @@ class TripController(
     @RequestMapping(method = [RequestMethod.POST], value = "/{trip_id}/amend")
     fun amendTrip(
             @PathVariable trip_id: Long,
-            @RequestBody input: InputAmendTrip
+            @RequestBody input: AmendTrip
     ): ResponseEntity<Void> {
         val userId = authService.authenticatedUser().id
         val user = userService.getUserByid(userId)

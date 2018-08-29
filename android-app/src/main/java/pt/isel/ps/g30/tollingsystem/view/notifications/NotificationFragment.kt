@@ -67,15 +67,23 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_transaction_notification, null).apply {
 
-                tare.imageResource = Transaction.vehicle.getIconResource() //<- !! fine because the transaction is active in here
-                plate.text = Transaction.vehicle.licensePlate
-                from.text = Transaction.origin.name
+            tare.imageResource = Transaction.vehicle.getIconResource() //<- !! fine because the transaction is active in here
+            plate.text = Transaction.vehicle.licensePlate
+
+            if (Transaction.origin == Transaction.destination){
+                closed_toll_layout.visibility = View.GONE
+                open_toll_layout.visibility = View.VISIBLE
+
+                date.text = Transaction.originTimestamp.dateTimeParsed()
+                toll_name.text = Transaction.origin.name
+
+            }else{
                 date_origin.text = Transaction.originTimestamp.dateTimeParsed()
-                destination.text = Transaction.destination.name
+                from.text = Transaction.origin.name
                 date_destination.text = Transaction.destTimestamp.dateTimeParsed()
+                destination.text = Transaction.destination.name
 
-
-
+            }
         }
 
         AlertDialog.Builder(this.requireContext())
@@ -94,14 +102,24 @@ class NotificationFragment: BaseFragment<NotificationPresenter, NotificationView
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_transaction_paid_notification, null).apply {
 
+            tare.imageResource = Transaction.vehicle.getIconResource() //<- !! fine because the transaction is active in here
+            plate.text = Transaction.vehicle.licensePlate
+            paid_amount.text = "${Transaction?.paid} $"
 
-                tare.imageResource = Transaction.vehicle.getIconResource() //<- !! fine because the transaction is active in here
-                plate.text = Transaction.vehicle.licensePlate
-                from.text = Transaction.origin.name
+            if (Transaction.origin == Transaction.destination){
+                closed_toll_layout.visibility = View.GONE
+                open_toll_layout.visibility = View.VISIBLE
+
+                date.text = Transaction.originTimestamp.dateTimeParsed()
+                toll_name.text = Transaction.origin.name
+
+            }else{
                 date_origin.text = Transaction.originTimestamp.dateTimeParsed()
-                destination.text = Transaction.destination.name
+                from.text = Transaction.origin.name
                 date_destination.text = Transaction.destTimestamp.dateTimeParsed()
-                paid_amount.text = "${Transaction?.paid} $"
+                destination.text = Transaction.destination.name
+
+            }
 
         }
 

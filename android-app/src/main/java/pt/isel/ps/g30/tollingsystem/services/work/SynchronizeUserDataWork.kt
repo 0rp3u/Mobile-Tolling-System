@@ -9,15 +9,20 @@ import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase_Impl
 import pt.isel.ps.g30.tollingsystem.data.api.model.TollingPlaza as apiPlaza
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
+import pt.isel.ps.g30.tollingsystem.interactor.syncronization.SynchronizationInteractor
 import javax.inject.Inject
 
-class GetTollPazasWork : Worker() {
+class SynchronizeUserDataWork : Worker() {
+
+    companion object {
+        val TAG = SynchronizeUserDataWork::class.simpleName!!
+    }
 
     @Inject
     lateinit var apiService: TollingService
 
     @Inject
-    lateinit var tollingSystemDatabase: TollingSystemDatabase
+    lateinit var synchronizationInteractor: SynchronizationInteractor
 
 
     fun injectDependencies() {
@@ -32,19 +37,15 @@ class GetTollPazasWork : Worker() {
         injectDependencies()
 
         runBlocking {
-            val plazas = apiService.getAllPlazas().await()
-            tollingSystemDatabase.TollingDao().insert(
-                    *plazas.map {
-                        TollingPlaza(it.name,
-                                it.concession,
-                                false,
-                                it.latLong.lat,
-                                it.latLong.long,
-                                it.openToll,
-                                it.id)
-                    }.toTypedArray())
+            val auth = apiService.authenticate().await()
+
+            if (auth.isSuccessful && auth.body() != null){
+                synchronizationInteractor.SynchronizeUserData(auth.body()!!)
+                return@runBlocking Result.SUCCESS
+            }else
+                return@runBlocking Result.RETRY
 
         }
-        return Result.SUCCESS
+        return Result.RETRY
     }
 }
