@@ -13,9 +13,6 @@ import javax.inject.Inject
 
 class SplashActivity : BaseActivity<SplashPresenter, SplashView>(), SplashView {
 
-    //TODO use @String values for the literals used on the UI
-
-
     @Inject
     override lateinit var presenter: SplashPresenter
 

@@ -17,7 +17,8 @@ class SplashPresenterImpl(private val interactor: AuthInteractor) :
         launch (UI, parent = jobs) {
 
             try {
-                interactor.verifyToken().await()
+                val user = interactor.verifyAuthentication().await()
+
                 view?.successfullLogin()
 
             }catch (e: Throwable){
