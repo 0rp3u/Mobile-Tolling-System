@@ -19,7 +19,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideConnectivityUtils(app: TollingSystemApp) = NetworkUtils
+    fun provideConnectivityUtils() = NetworkUtils
 
 
     @Provides
@@ -45,7 +45,7 @@ class NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .baseUrl("http://localhost:8081/")
+            .baseUrl("http://192.168.1.67:8081/")
             .client(okHttpClient)
             .build()
 

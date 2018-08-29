@@ -1,8 +1,10 @@
 package pt.isel.ps.g30.tollingsystem.interactor.auth
 
 import android.util.Log
+import androidx.core.content.edit
 import kotlinx.coroutines.experimental.CompletableDeferred
 import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.Job
 import pt.isel.ps.g30.tollingsystem.data.api.TollingService
 import pt.isel.ps.g30.tollingsystem.data.api.interceptor.HttpAuthInterceptor
 
@@ -34,4 +36,6 @@ class AuthInteractorImpl(private val tollingService: TollingService, private val
         deferred.completeExceptionally(Exception("failed Login"))
         return deferred
     }
+
+    override fun logout() = authInterceptor.logout()
 }

@@ -79,36 +79,13 @@ class UserController(
 ////        return ResponseEntity.ok(JSONPObject("", ""))
 ////    }
 
-//    @Transactional
-//    @RequestMapping(method = [RequestMethod.POST], value = "/authentication")
-//    fun authentication(
-//            @RequestBody input: Login
-//    ): ResponseEntity<User> {
-//        //check if user already exists in repository
-//        val user = userRepository.findByLogin(input.username)
-//        //if not, check if it exists in clearing server
-//        if(!user.isPresent){
-//            val url = String.format("%s%s/%s", ClearingService.BASE_URI, usersURI, input.username)
-//            val result = try{
-//                restTemplate.exchange(url, HttpMethod.GET, HttpEntity.EMPTY, ClearingService.Companion.UserDTO::class.java)
-//            }catch (e: RestClientException){
-//                throw e
-//            }
-//            //if exists in clearing, create a new user here
-//            result.body?.let {
-//                val newUser = try {
-//                    userService.createUser(it)
-//                }catch (e: Throwable){
-//                    throw e
-//                }
-//                return ResponseEntity.created(URI.create("/users/${newUser.login}")).body(newUser)
-//            }
-//            //TODO Status Code???
-//            return ResponseEntity.unprocessableEntity().build()
-//        }else{
-//            //User already exits
-//            return ResponseEntity.ok(user.get())
-//        }
-//    }
+    @Transactional
+    @GetMapping("/authentication")
+    fun authentication(): ResponseEntity<User> {
+        val userId = authService.authenticatedUser().id
+        val user = userService.getUserByid(userId)
+
+        return ResponseEntity.ok(user)
+    }
 
 }

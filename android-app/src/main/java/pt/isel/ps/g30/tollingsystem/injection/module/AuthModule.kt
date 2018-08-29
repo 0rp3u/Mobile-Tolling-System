@@ -12,5 +12,5 @@ class AuthModule {
 
     @Provides
     fun provideAuthInteractor(tollingService: TollingService, authInterceptor: HttpAuthInterceptor): AuthInteractor
-            =AuthInteractorImpl(tollingService,authInterceptor).also {  }
+            =AuthInteractorImpl(tollingService,authInterceptor)
     }

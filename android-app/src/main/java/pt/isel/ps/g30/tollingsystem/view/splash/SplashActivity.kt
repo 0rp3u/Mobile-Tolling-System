@@ -29,7 +29,7 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashView>(), SplashView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.authenticate("","")
+        presenter.verifyAuthentication()
     }
 
     override fun successfullLogin() {
