@@ -11,12 +11,10 @@ import pt.isel.ps.g30.tollingsystem.data.api.model.Tare
 @Entity
 data class Vehicle(
 
+        @PrimaryKey
+        var id : Int,
+
         val licensePlate: String,
 
-        val ownerId: Int,
-
-        val tare: Tare,
-
-        @PrimaryKey(autoGenerate = true)
-        var id : Int = 0
+        val tare: Tare
 )

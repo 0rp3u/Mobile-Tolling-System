@@ -11,7 +11,7 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 
 interface SynchronizationInteractor : BaseInteractor {
 
-    suspend fun SynchronizeUserData(apiUser: User):Job
+    suspend fun SynchronizeUserData(apiUser: User)
 
     suspend fun getNotificationListLiveData() : Deferred<LiveData<List<Notification>>>
 

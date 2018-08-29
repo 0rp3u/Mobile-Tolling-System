@@ -26,18 +26,20 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
 
 
 
-    override suspend fun SynchronizeUserData(apiUser: ApiUser):Job {
+    override suspend fun SynchronizeUserData(apiUser: ApiUser){
         val user = tollingSystemDatabase.UserDao().findById(apiUser.id)
-        if(user ==null){
-            tollingSystemDatabase.UserDao().insert(User(apiUser.id, apiUser.name, apiUser.login))
-        }
+                ?: User(apiUser.id, apiUser.name, apiUser.login).also { tollingSystemDatabase.UserDao().insert(it) }
+
         val apiVehicles = service.getVehicleList().await()
         val dbVehicles = tollingSystemDatabase.VehicleDao().findAll()
 
         val newVehicles = dbVehicles
                 .filterNot { dbVehicle -> apiVehicles.find { dbVehicle.id == it.id } != null}
-                .map { Vehicle(it.id, it.licensePlate, it.) }
+                .map { Vehicle(it.id, it.licensePlate, it.tare) }
 
+        tollingSystemDatabase.VehicleDao().insert(*newVehicles.toTypedArray())
+
+        
     }
 
 
