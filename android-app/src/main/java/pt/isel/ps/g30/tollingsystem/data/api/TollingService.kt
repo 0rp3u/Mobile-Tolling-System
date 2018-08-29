@@ -8,7 +8,7 @@ import retrofit2.http.*
 
 interface TollingService {
 
-    @GET("/users/authentication")
+    @GET("users/authentication")
     fun authenticate(): Deferred<Response<Void>>
 
     @GET("plazas/{position}")

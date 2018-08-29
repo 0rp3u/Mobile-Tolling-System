@@ -37,20 +37,38 @@ values (400, 'USER');
 
 /* vehicles */
 insert into mts_vehicle(id, plate, type, user_id)
-values (100, 'AA-00-00', 100, 400);
+values (100, 'AA-00-00', 1, 400);
 
 insert into mts_vehicle(id, plate, type, user_id)
-values (200, 'BB-00-00', 200, 100);
+values (200, 'BB-00-00', 2, 100);
 
 insert into mts_vehicle(id, plate, type, user_id)
-values (300, 'CC-00-00', 300, 400);
+values (300, 'CC-00-00', 3, 400);
 
 /* tolls */
 insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
-values (100, 'Portagem Lisboa', 'TWOWAY', 38.7054309, -9.3407711);
+values (100, 'Portagem Lisboa', 'NORMAL', 38.7054309, -9.3407711);
 
 insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
-values (200, 'Portagem Porto', 'TWOWAY', 38.7054309, -9.3407711);
+values (200, 'Portagem Porto', 'NORMAL', 38.7054309, -9.3407711);
+
+insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
+values (300, ' Portagem de Mem Martins', 'NORMAL', 38.8175118,-9.3332501);
+
+insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
+values (400, 'Portagem da Abrunheira', 'NORMAL', 38.7794866,-9.3606079);
+
+insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
+values (500, 'Portagem de Agualva', 'NORMAL', 38.7730868,-9.282046);
+
+insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
+values (600, 'Portagem Oeiras', 'NORMAL', 38.7118793,-9.3021738);
+
+insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
+values (700, 'Ponte 25 de abril', 'OPEN', 38.675975, -9.173930);
+
+insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
+values (800, 'Palmela', 'NORMAL', 38.584453, -8.888651);
 
 /* trips */
 insert into mts_trip(id, state, vehicle)

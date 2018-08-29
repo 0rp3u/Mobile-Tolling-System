@@ -33,12 +33,16 @@ class HttpAuthInterceptor(private val sharedPreferences: SharedPreferences) : In
 
         val originalResponse = chain.proceed(newRequest)
 
-        if (originalResponse.code() == 401) {
-            sharedPreferences.edit{
-                remove("authorizationValue")
-            }
-        }
+        if (originalResponse.code() == 401) logout()
+
 
         return originalResponse
+    }
+
+    fun logout(){
+        sharedPreferences.edit{
+            remove("authorizationValue")
+        }
+
     }
 }

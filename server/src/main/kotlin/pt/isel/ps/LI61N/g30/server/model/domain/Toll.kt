@@ -65,7 +65,7 @@ data class Toll(
                             id = id,
                             transaction = mutableListOf(),
                             name = name,
-                            toll_type = TollType.TWOWAY,
+                            toll_type = TollType.NORMAL,
                             geolocation = geolocation,
                             entry_area = entry_area,
                             exit_area = null,
