@@ -47,10 +47,10 @@ values (300, 'CC-00-00', 300, 400);
 
 /* tolls */
 insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
-values (100, 'Portagem Lisboa', 'NORMAL', 38.7054309, -9.3407711);
+values (100, 'Portagem Lisboa', 'TWOWAY', 38.7054309, -9.3407711);
 
 insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
-values (200, 'Portagem Porto', 'NORMAL', 38.7054309, -9.3407711);
+values (200, 'Portagem Porto', 'TWOWAY', 38.7054309, -9.3407711);
 
 /* trips */
 insert into mts_trip(id, state, vehicle)

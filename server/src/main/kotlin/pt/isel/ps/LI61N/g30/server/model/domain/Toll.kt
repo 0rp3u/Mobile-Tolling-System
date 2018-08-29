@@ -26,8 +26,8 @@ data class Toll(
         @Column(name="name", unique = true)
         val name: String,
 
-        @Column(name="toll_type")
-        val toll_type: String,
+        @Enumerated(EnumType.STRING)
+        val toll_type: TollType,
 
         @Column
         val geolocation: Point?,
@@ -65,7 +65,7 @@ data class Toll(
                             id = id,
                             transaction = mutableListOf(),
                             name = name,
-                            toll_type = "NORMAL",
+                            toll_type = TollType.TWOWAY,
                             geolocation = geolocation,
                             entry_area = entry_area,
                             exit_area = null,
