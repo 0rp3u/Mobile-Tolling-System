@@ -16,8 +16,8 @@ data class Vehicle(
         @Column(name= "plate")
         val plate: String,
 
-        @Column(name= "type")
-        var tier: Long,
+        @Enumerated(EnumType.ORDINAL)
+        var tier: VehicleType,
 
         @JsonIgnoreProperties("vehicles")
         @JoinColumn(name = "user_id", nullable = false)

@@ -37,13 +37,13 @@ values (400, 'USER');
 
 /* vehicles */
 insert into mts_vehicle(id, plate, type, user_id)
-values (100, 'AA-00-00', 100, 400);
+values (100, 'AA-00-00', 1, 400);
 
 insert into mts_vehicle(id, plate, type, user_id)
-values (200, 'BB-00-00', 200, 100);
+values (200, 'BB-00-00', 2, 100);
 
 insert into mts_vehicle(id, plate, type, user_id)
-values (300, 'CC-00-00', 300, 400);
+values (300, 'CC-00-00', 3, 400);
 
 /* tolls */
 insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
