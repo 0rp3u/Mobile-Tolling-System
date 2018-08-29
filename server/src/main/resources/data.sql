@@ -36,14 +36,14 @@ insert into mts_user_roles(user_id, role_id)
 values (400, 'USER');
 
 /* vehicles */
-insert into mts_vehicle(id, plate, type, user_id)
-values (100, 'AA-00-00', 1, 400);
+insert into mts_vehicle(id, plate, tier, user_id)
+values (100, 'AA-00-00', 'Classe_1', 400);
 
-insert into mts_vehicle(id, plate, type, user_id)
-values (200, 'BB-00-00', 2, 100);
+insert into mts_vehicle(id, plate, tier, user_id)
+values (200, 'BB-00-00', 'Classe_2', 100);
 
-insert into mts_vehicle(id, plate, type, user_id)
-values (300, 'CC-00-00', 3, 400);
+insert into mts_vehicle(id, plate, tier, user_id)
+values (300, 'CC-00-00', 'Classe_3', 400);
 
 /* tolls */
 insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
