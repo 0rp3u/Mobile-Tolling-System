@@ -7,7 +7,7 @@ interface AuthInteractor : BaseInteractor {
 
     suspend fun authenticate(login:String,password:String) : Deferred<Boolean> //TODO not boolean, to discuss
 
-    suspend fun verifyToken() : Deferred<Boolean>
+    suspend fun verifyAuthentication() : Deferred<Int>
 
     fun logout()
 
