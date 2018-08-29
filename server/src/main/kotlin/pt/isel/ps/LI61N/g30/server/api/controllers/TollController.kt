@@ -31,4 +31,10 @@ class TollController(
         return ResponseEntity.ok( tollService.getNearestTolls(GeoLocation(latitude, longitude), nTolls))
     }
 
+    @Transactional(readOnly = true)
+    @RequestMapping(method = [RequestMethod.GET], value="")
+    fun getAllTolls(): ResponseEntity<Page<Toll>>{
+        return ResponseEntity.ok( tollService.getTolls())
+    }
+
 }
