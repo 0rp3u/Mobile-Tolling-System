@@ -1,4 +1,5 @@
 package pt.isel.ps.g30.tollingsystem.interactor.vehicle
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.async
@@ -10,6 +11,10 @@ class VehicleInteractorImpl(private val tollingSystemDatabase: TollingSystemData
 
     override  suspend fun getVehicleList() : Deferred<List<Vehicle>>{
         return async { tollingSystemDatabase.VehicleDao().findAll() }
+    }
+
+    override  suspend fun getVehicleListLiveData() : Deferred<LiveData<List<Vehicle>>>{
+        return async { tollingSystemDatabase.VehicleDao().findAllLiveData() }
     }
 
     override suspend fun getVehicle(id: Int): Deferred<Vehicle> {

@@ -30,6 +30,9 @@ data class Toll(
         val toll_type: TollType,
 
         @Column
+        val concession: String,
+
+        @Column
         val geolocation: Point?,
 
         @Column
@@ -65,6 +68,7 @@ data class Toll(
                             id = id,
                             event = mutableListOf(),
                             name = name,
+                            concession ="Brisa",
                             toll_type = TollType.NORMAL,
                             geolocation = geolocation,
                             entry_area = entry_area,

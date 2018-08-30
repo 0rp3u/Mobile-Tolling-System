@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.progress_bar.*
 import pt.isel.ps.g30.tollingsystem.R
@@ -66,8 +68,8 @@ class VehiclesFragment: BaseFragment<VehiclesFragPresenter, VehiclesFragmentView
         add_fab.setOnClickListener{ _ -> toast("open add vehicle Activity") }
     }
 
-    override fun showVehicleList(list: List<Vehicle>) {
-        vehicleRecyclerViewAdapter.vehicleList = list
+    override fun showVehicleList(list: LiveData<List<Vehicle>>) {
+        list.observe(this, Observer{ vehicleRecyclerViewAdapter.vehicleList = it })
     }
 
 

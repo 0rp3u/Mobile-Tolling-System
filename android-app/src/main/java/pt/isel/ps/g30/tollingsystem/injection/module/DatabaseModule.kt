@@ -30,8 +30,8 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesRoomDatabaseWithData(@Named("memory") database: TollingSystemDatabase): TollingSystemDatabase
-            =database.apply { /*insertTestdata(this)*/ }
+    fun providesRoomDatabaseWithData(@Named("disk") database: TollingSystemDatabase): TollingSystemDatabase
+            =database.apply { insertTestdata(this) }
 
 
 }

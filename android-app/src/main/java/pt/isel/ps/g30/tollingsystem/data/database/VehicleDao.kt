@@ -1,6 +1,7 @@
 package pt.isel.ps.g30.tollingsystem.data.database
 
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 
@@ -9,6 +10,9 @@ interface VehicleDao {
 
     @Query("SELECT * FROM Vehicle")
     fun findAll(): List<Vehicle>
+
+    @Query("SELECT * FROM Vehicle")
+    fun findAllLiveData(): LiveData<List<Vehicle>>
 
     @Query("SELECT * FROM Vehicle WHERE id = :id")
     fun findById(id: Int): Vehicle
