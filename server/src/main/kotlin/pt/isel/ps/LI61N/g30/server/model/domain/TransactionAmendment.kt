@@ -6,16 +6,16 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name="mts_trip_amendment")
-data class TripAmendment(
+@Table(name="mts_transaction_amendment")
+data class TransactionAmendment(
 
         @Id
         @GeneratedValue
         val id: Long = -1,
 
-        @JoinColumn(name = "trip_id")
+        @JoinColumn(name = "transaction_id")
         @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-        val trip: Trip,
+        val transaction: Transaction,
 
         @Column
         val old_begin_toll: Long,

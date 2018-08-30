@@ -21,7 +21,7 @@ data class Toll(
                 orphanRemoval = true
         )
         @JsonIgnore
-        val transaction: MutableList<Transaction>,
+        val event: MutableList<Event>,
 
         @Column(name="name", unique = true)
         val name: String,
@@ -63,7 +63,7 @@ data class Toll(
             fun create(id: Long, name: String, toll_type: String, geolocation: Point, entry_area: Polygon?): Toll{
                     return Toll(
                             id = id,
-                            transaction = mutableListOf(),
+                            event = mutableListOf(),
                             name = name,
                             toll_type = TollType.NORMAL,
                             geolocation = geolocation,

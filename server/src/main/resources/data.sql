@@ -70,20 +70,20 @@ values (700, 'Ponte 25 de abril', 'OPEN', 38.675975, -9.173930);
 insert into mts_toll(id, name, toll_type, geolocation_latitude, geolocation_longitude)
 values (800, 'Palmela', 'NORMAL', 38.584453, -8.888651);
 
-/* trips */
-insert into mts_trip(id, state, vehicle)
+/* transactions */
+insert into mts_transaction(id, state, vehicle)
 values (100, 'INCOMPLETE', 100);
 
-insert into mts_trip(id, state, vehicle)
+insert into mts_transaction(id, state, vehicle)
 values (200, 'COMPLETE', 300);
 
-/* transactions */
+/* events */
 
-insert into mts_transaction(type, event_date, toll_id, trip_id)
+insert into mts_event(type, event_date, toll_id, transaction_id)
 values ('BEGIN', '2018-06-24 06:00:00', 100, 100);
 
-insert into mts_transaction(type, event_date, toll_id, trip_id)
+insert into mts_event(type, event_date, toll_id, transaction_id)
 values ('BEGIN', '2018-06-23 06:00:00', 100, 200);
 
-insert into mts_transaction(type, event_date, toll_id, trip_id)
+insert into mts_event(type, event_date, toll_id, transaction_id)
 values ('END', '2018-06-25 08:00:00', 100, 200);

@@ -37,7 +37,7 @@ class ClearingService{
             val road: String?
         )
 
-        data class TransactionDTO(
+        data class EventDTO(
             val id: Int,
             val direction: String?,
             val etc_id: String?,

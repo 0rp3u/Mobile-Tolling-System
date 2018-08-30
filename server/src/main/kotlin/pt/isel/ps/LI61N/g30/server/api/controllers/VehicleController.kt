@@ -85,4 +85,18 @@ class VehicleController(
         }
     }
 
+    @Transactional
+    @RequestMapping(method = [RequestMethod.GET], value = "/{vehicle_id}")
+    fun getUserVehicle(
+            @RequestBody vehicle_id: Long
+    ): ResponseEntity<Vehicle> {
+        val userId = authService.authenticatedUser().id
+        val user = userService.getUserByid(userId)
+        log.info("Fetched user: ${user.login}")
+
+        return vehicleService.getVehicle(user, vehicle_id).let {
+            ResponseEntity.ok(it)
+        }
+    }
+
 }

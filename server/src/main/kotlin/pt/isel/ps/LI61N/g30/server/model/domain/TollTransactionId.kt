@@ -5,11 +5,11 @@ import java.util.*
 import javax.persistence.*
 
 @Embeddable
-data class TollTripId(
+data class TollTransactionId(
         @Enumerated(EnumType.STRING)
-        val type: TransactionType,
+        val type: EventType,
         val toll_id: Long,
-        val trip_id: Long
+        val transaction_id: Long
 ) : Serializable {
 
     override fun equals(o: Any?): Boolean {
@@ -18,10 +18,10 @@ data class TollTripId(
         if (o == null || javaClass != o.javaClass)
             return false
 
-        val that = o as TollTripId
-        return Objects.equals(toll_id, that.toll_id) && Objects.equals(trip_id, that.trip_id) && Objects.equals(type, that.type)
+        val that = o as TollTransactionId
+        return Objects.equals(toll_id, that.toll_id) && Objects.equals(transaction_id, that.transaction_id) && Objects.equals(type, that.type)
     }
 
     override fun hashCode(): Int =
-            Objects.hash(toll_id, trip_id, type)
+            Objects.hash(toll_id, transaction_id, type)
 }

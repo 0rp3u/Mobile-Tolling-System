@@ -3,12 +3,12 @@ package pt.isel.ps.LI61N.g30.server.services.clearing
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-import pt.isel.ps.LI61N.g30.server.model.domain.repositories.TransactionRepository
+import pt.isel.ps.LI61N.g30.server.model.domain.repositories.EventRepository
 
 @Service
-class ClearingTransactionService(
+class ClearingEventService(
         restTemplateBuilder: RestTemplateBuilder,
-        private val transactionRepository: TransactionRepository
+        private val eventRepository: EventRepository
 ) {
 
     private val vehiclesURI = "/vehicles"
@@ -26,10 +26,10 @@ class ClearingTransactionService(
 //        //vehicleRepository.findByOwner(user)
 //    }
 
-//    fun getTransactions(user: User, car_id: Long, initialDate: Date, finalDate: Date): Transaction
-//            = transactionRepository.findByOwnerAndId(user, car_id)
+//    fun getEvents(user: User, car_id: Long, initialDate: Date, finalDate: Date): Event
+//            = eventRepository.findByOwnerAndId(user, car_id)
 
-    fun registerTrip(){
+    fun registerTransaction(){
 
     }
 }

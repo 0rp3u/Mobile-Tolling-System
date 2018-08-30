@@ -1,5 +1,6 @@
 package pt.isel.ps.LI61N.g30.server.model.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.annotations.CreationTimestamp
 import java.util.*
@@ -19,7 +20,7 @@ data class Vehicle(
         @Enumerated(EnumType.STRING)
         var tier: VehicleType,
 
-        @JsonIgnoreProperties("vehicles")
+        @JsonIgnore
         @JoinColumn(name = "user_id", nullable = false)
         @ManyToOne
         val owner: User,

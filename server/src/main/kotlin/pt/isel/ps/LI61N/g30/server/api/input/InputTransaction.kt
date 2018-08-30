@@ -6,10 +6,15 @@ import java.util.*
 
 data class InputTransaction(
         val vehicle_id: Long,
-        val toll: Long,
+        val geo_accuracy: Long?,
+        val begin_toll: Long,
         @JsonFormat
         (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
-        val timestamp: Date,
-        val geo_accuracy: Long?,
-        val geoLocations: Array<GeoLocation>?
+        val begin_timestamp: Date,
+        val begin_geoLocations: Array<GeoLocation>?,
+        val end_toll: Long,
+        @JsonFormat
+        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+        val end_timestamp: Date,
+        val end_geoLocations: Array<GeoLocation>?
 )

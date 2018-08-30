@@ -5,7 +5,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClientException
 import pt.isel.ps.LI61N.g30.server.api.controllers.VehicleController
-import pt.isel.ps.LI61N.g30.server.model.domain.Trip
+import pt.isel.ps.LI61N.g30.server.model.domain.Transaction
 import pt.isel.ps.LI61N.g30.server.model.domain.User
 import pt.isel.ps.LI61N.g30.server.model.domain.Vehicle
 import pt.isel.ps.LI61N.g30.server.model.domain.VehicleType
@@ -20,8 +20,8 @@ class VehicleService(
         fun isVehicleFromOwner(vehicle: Vehicle, user: User): Boolean =
                 vehicle.owner.id == user.id
 
-        fun isVehicleFromTrip(trip: Trip, vehicle: Vehicle) =
-                trip.vehicle.id == vehicle.id
+        fun isVehicleFromTransaction(transaction: Transaction, vehicle: Vehicle) =
+                transaction.vehicle.id == vehicle.id
     }
 
     fun getVehicles(user: User): List<Vehicle>{

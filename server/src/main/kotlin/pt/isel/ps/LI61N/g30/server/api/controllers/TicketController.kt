@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import pt.isel.ps.LI61N.g30.server.api.input.InputTicket
 import pt.isel.ps.LI61N.g30.server.model.domain.Ticket
-import pt.isel.ps.LI61N.g30.server.model.domain.Trip
+import pt.isel.ps.LI61N.g30.server.model.domain.Transaction
 import pt.isel.ps.LI61N.g30.server.services.AuthService
-import pt.isel.ps.LI61N.g30.server.services.TripService
+import pt.isel.ps.LI61N.g30.server.services.TransactionService
 import pt.isel.ps.LI61N.g30.server.services.UserService
 import java.net.URI
 
@@ -20,7 +20,7 @@ import java.net.URI
 class TicketController(
         val userService : UserService,
         val authService: AuthService,
-        val tripService: TripService
+        val transactionService: TransactionService
 ) {
 
     val log = LoggerFactory.getLogger(TicketController::class.java)
