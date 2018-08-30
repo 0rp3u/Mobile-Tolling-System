@@ -43,7 +43,7 @@ class SynchronizeUserDataWork : Worker() {
                 synchronizationInteractor.SynchronizeUserData(auth.body()!!)
                 return@runBlocking Result.SUCCESS
             }else
-                return@runBlocking Result.RETRY
+                return@runBlocking Result.FAILURE
 
         }
         return Result.RETRY

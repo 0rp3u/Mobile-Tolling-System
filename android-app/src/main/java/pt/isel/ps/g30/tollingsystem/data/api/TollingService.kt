@@ -11,28 +11,28 @@ interface TollingService {
     @GET("users/authentication")
     fun authenticate(): Deferred<Response<User>>
 
-    @GET("plazas/{position}")
+    @GET("tolls/{position}")
     fun getNearPlazas(position : LatLong): Deferred<List<TollingPlaza>>
 
-    @GET("plazas")
+    @GET("tolls")
     fun getAllPlazas(): Deferred<List<TollingPlaza>>
 
-    @GET("vehicle")
+    @GET("vehicles")
     fun getVehicleList(): Deferred<List<Vehicle>>
 
-    @PUT("vehicle")
+    @PUT("vehicles")
     fun addVehicle( @Body vehicle: Vehicle): Deferred<Vehicle>
 
-    @GET("vehicle/{id}")
+    @GET("vehicles/{id}")
     fun getVehicleDetails(@Path("id") id: Int): Deferred<Vehicle>
 
-    @GET("vehicle/{id}/transaction")
+    @GET("vehicles/{id}/transaction")
     fun getVehicleTransactions(@Path("id") id: Int): Deferred<List<TollingTransaction>>
 
-    @GET("vehicle/{id}/transaction/open")
+    @GET("vehicles/{id}/transaction/open")
     fun getVehicleOpenTransactions(@Path("id") id: Int):Deferred<List<TollingTransaction>>
 
-    @GET("vehicle/{id}/transaction/closed")
+    @GET("vehicles/{id}/transaction/closed")
     fun getVehicleCLosedTransactions(@Path("id") id: Int): Deferred<List<TollingTransaction>>
 
     @GET("transaction")
