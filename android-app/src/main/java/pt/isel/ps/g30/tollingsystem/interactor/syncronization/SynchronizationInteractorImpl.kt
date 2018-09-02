@@ -2,6 +2,7 @@ package pt.isel.ps.g30.tollingsystem.interactor.syncronization
 
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.lifecycle.Observer
 import androidx.work.*
 import pt.isel.ps.g30.tollingsystem.data.api.TollingService
 import pt.isel.ps.g30.tollingsystem.data.api.model.User as ApiUser
@@ -17,23 +18,29 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
     override suspend fun VerifySynchronization() {
 
         val workManager : WorkManager = WorkManager.getInstance()
-
-        val tes = workManager.getStatusesByTag("aa")
-        val tes2 = workManager.getStatusesByTag(SynchronizeUserDataWork.TAG)
-        if(workManager.getStatusesByTag(SynchronizeUserDataWork.TAG).value ==null){
-            val constraints = Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build()
-            val request = PeriodicWorkRequestBuilder<SynchronizeUserDataWork>(12, TimeUnit.SECONDS)
-                    .setConstraints(constraints)
-                    .build()
-            workManager.enqueue(request)
+        val workInfo = workManager.getStatusesByTag(SynchronizeUserDataWork.TAG)
+        val observer = Observer<MutableList<WorkStatus>>{
+            if (it == null || it.isEmpty()) {
+                val constraints = Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                val request = PeriodicWorkRequestBuilder<SynchronizeUserDataWork>(12, TimeUnit.SECONDS)
+                        .setConstraints(constraints)
+                        .addTag(SynchronizeUserDataWork.TAG)
+                        .build()
+                workManager.enqueue(request)
+            }
         }
+
+        workInfo.observeForever(observer)
+
+
     }
 
 
     override suspend fun SynchronizeUserData(apiUser: ApiUser){
         try {
+
             val user = tollingSystemDatabase.UserDao().findById(apiUser.id)
                     ?: User(apiUser.id, apiUser.name, apiUser.login).also { tollingSystemDatabase.UserDao().insert(it) }
 
@@ -42,7 +49,7 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
 
             val newVehicles = apiVehicles
                     .filterNot { dbVehicle -> dbVehicles.find { dbVehicle.id == it.id } != null }
-                    .map { Vehicle(it.id, it.licensePlate, it.tier) }
+                    .map { Vehicle(it.id, it.plate, it.tier) }
 
             tollingSystemDatabase.VehicleDao().insert(*newVehicles.toTypedArray())
 
@@ -57,14 +64,19 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
 
 
     suspend fun synchronizePlazas(){
+        try {
         val apiPlazas = service.getAllPlazas().await()
 
         val dbPlazas = tollingSystemDatabase.TollingDao().findAll()
         val newTolls = apiPlazas
                 .filterNot { apiPlaza -> dbPlazas.find { apiPlaza.id == it.id} != null}
-                .map { TollingPlaza(it.id,it.name, it.concession, false,it.location_latitude, it.geolocation_longitude) }
+                .map { TollingPlaza(it.id,it.name, it.concession, false,it.geolocation_latitude, it.geolocation_longitude) }
 
         tollingSystemDatabase.TollingDao().insert(*newTolls.toTypedArray())
+        }catch (e: Exception){
+            Log.d("synch", e.localizedMessage)
+
+        }
 
     }
 }

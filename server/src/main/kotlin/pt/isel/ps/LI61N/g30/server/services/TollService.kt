@@ -38,7 +38,7 @@ class TollService(
                 .setParameter("_toll_id", toll.id)
                 .singleResult.let { with(it as BigInteger) { intValueExact() } }
 
-    fun getTolls(): Page<Toll>{
-        return tollRepository.findAll(Pageable.unpaged())
+    fun getTolls(): List<Toll>{
+        return tollRepository.findAll().toList()
     }
 }

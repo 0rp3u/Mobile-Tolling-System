@@ -6,7 +6,7 @@ data class TollingPlaza(
 
         val concession: String,
 
-        val location_latitude: Double,
+        val geolocation_latitude: Double,
 
         val geolocation_longitude: Double,
 

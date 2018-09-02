@@ -33,7 +33,7 @@ class TollController(
 
     @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.GET], value="")
-    fun getAllTolls(): ResponseEntity<Page<Toll>>{
+    fun getAllTolls(): ResponseEntity<List<Toll>>{
         return ResponseEntity.ok( tollService.getTolls())
     }
 

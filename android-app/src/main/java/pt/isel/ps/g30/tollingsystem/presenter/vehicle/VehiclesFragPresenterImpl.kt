@@ -20,8 +20,8 @@ class VehiclesFragPresenterImpl(private val interactor: VehicleInteractor) :
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                val vehicleList = interactor.getVehicleList().await()
-                delay(1000)
+                val vehicleList = interactor.getVehicleListLiveData().await()
+
                 view?.showVehicleList(vehicleList)
                 view?.hideLoadingIndicator()
 

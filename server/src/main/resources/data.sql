@@ -37,13 +37,31 @@ values (400, 'USER');
 
 /* vehicles */
 insert into mts_vehicle(id, plate, tier, user_id)
-values (100, 'AA-00-00', 'Classe_1', 400);
+values (100, 'AA-00-00', 'Classe_1', 100);
 
 insert into mts_vehicle(id, plate, tier, user_id)
-values (200, 'BB-00-00', 'Classe_2', 100);
+values (200, 'BB-00-00', 'Classe_2', 400);
 
 insert into mts_vehicle(id, plate, tier, user_id)
 values (300, 'CC-00-00', 'Classe_3', 400);
+
+insert into mts_vehicle(id, plate, tier, user_id)
+values (400, 'DD-00-00', 'Classe_1', 200);
+
+insert into mts_vehicle(id, plate, tier, user_id)
+values (500, 'EE-00-00', 'Classe_2', 200);
+
+insert into mts_vehicle(id, plate, tier, user_id)
+values (600, 'FF-00-00', 'Classe_3', 300);
+
+insert into mts_vehicle(id, plate, tier, user_id)
+values (700, 'GG-00-00', 'Classe_1', 200);
+
+insert into mts_vehicle(id, plate, tier, user_id)
+values (800, 'HH-00-00', 'Classe_2', 200);
+
+insert into mts_vehicle(id, plate, tier, user_id)
+values (900, 'II-00-00', 'Classe_5', 200);
 
 /* tolls */
 insert into mts_toll(id, name, toll_type, geolocation_longitude, geolocation_latitude, entry_area, exit_area)
