@@ -29,6 +29,9 @@ data class Toll(
         @Column(name="toll_type")       //NORMAL - TRUE ; OPEN - FALSE
         val toll_type: Boolean,
 
+        @Column(name = "concession")
+        val concession: String = "Brisa",
+
         @Column
         val geolocation: Point?,
 
@@ -60,12 +63,13 @@ data class Toll(
         companion object {
 
             //private val geometryFactory = GeometryFactory()
-            fun create(id: Long, name: String, toll_type: Boolean, geolocation: Point, entry_area: Polygon?): Toll{
+            fun create(id: Long, name: String, toll_type: Boolean, concession: String, geolocation: Point, entry_area: Polygon?): Toll{
                     return Toll(
                             id = id,
                             event = mutableListOf(),
                             name = name,
                             toll_type = toll_type,
+                            concession = concession,
                             geolocation = geolocation,
                             entry_area = entry_area,
                             exit_area = null,

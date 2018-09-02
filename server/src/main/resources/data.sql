@@ -231,8 +231,8 @@ ST_MakePolygon(
 )
 );
 
-insert into mts_toll(id, name, toll_type, geolocation_longitude, geolocation_latitude, entry_area, exit_area)
-values (700, 'Ponte 25 de abril', false, -9.173930, 38.675975,
+insert into mts_toll(id, name, toll_type, concession, geolocation_longitude, geolocation_latitude, entry_area, exit_area)
+values (700, 'Ponte 25 de abril', false, 'Luso Ponte', -9.173930, 38.675975,
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
