@@ -54,7 +54,9 @@ class EventController(
         log.info("Fetched user: ${user.login}")
 
         return eventService.beginEvent(input.vehicle_id, input.toll, input.timestamp, input.geoLocations, user).let {
-            ResponseEntity.created(URI.create("/events/${it.uid.uid}/begin")).body(it)
+            with(it.event.first()){
+                ResponseEntity.created(URI.create("/events/${uid.uid}/begin")).body(this)
+            }
         }
     }
 
@@ -86,7 +88,9 @@ fun EndEvent(
     log.info("Fetched user: ${user.login}")
 
     return eventService.endEvent(input.vehicle_id, input.toll, input.timestamp, transaction_id, input.geoLocations, user).let {
-        ResponseEntity.created(URI.create("/events/${it.uid.uid}/end")).body(it)
+        with(it.event.last()){
+            ResponseEntity.created(URI.create("/events/${uid.uid}/end")).body(this)
+        }
     }
 }
 

@@ -20,6 +20,9 @@ data class Vehicle(
         @Enumerated(EnumType.STRING)
         var tier: VehicleType,
 
+        @Enumerated(EnumType.STRING)
+        var registry_state: RegistryState = RegistryState.AWAITING_REGISTRY,
+
         @JsonIgnore
         @JoinColumn(name = "user_id", nullable = false)
         @ManyToOne
@@ -29,3 +32,8 @@ data class Vehicle(
         @CreationTimestamp
         var created: Date? = Date()
 )
+
+enum class RegistryState{
+        AWAITING_REGISTRY,
+        REGISTERED
+}

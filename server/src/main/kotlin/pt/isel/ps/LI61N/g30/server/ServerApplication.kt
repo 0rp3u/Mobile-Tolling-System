@@ -41,8 +41,8 @@ class ServerApplication{
                 Coordinate(-9.11488652229309,38.75673549392286)
         ))
         poly.srid = 4326
-        val toll = Toll.create(1,"road below", "NORMAL", geometryFactory.createPoint(Coordinate(-9.1129222, 38.7555662)), poly)
-        val toll2 = Toll.create(2,"isel parking lot", "NORMAL", geometryFactory.createPoint(Coordinate(-9.1143576, 38.755951)), poly)
+        val toll = Toll.create(1,"road below", true, geometryFactory.createPoint(Coordinate(-9.1129222, 38.7555662)), poly)
+        val toll2 = Toll.create(2,"isel parking lot", true, geometryFactory.createPoint(Coordinate(-9.1143576, 38.755951)), poly)
         //val toll3 = Toll.create(3,"alameda", "NORMAL", geometryFactory.createPoint(Coordinate(-9.1254526, 38.7338987)))
         //civil isel Coordinate(-9.1155807, 38.7562773)
         toll.entry_area?.srid = 4326

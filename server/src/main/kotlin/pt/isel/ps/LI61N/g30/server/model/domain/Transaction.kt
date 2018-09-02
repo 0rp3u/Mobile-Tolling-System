@@ -33,6 +33,9 @@ data class Transaction(
         val amendments: MutableList<TransactionAmendment> = mutableListOf(),
 
         @Column
+        var billing: Double = Double.NaN,
+
+        @Column
         @CreationTimestamp
         val created: Date? = Date()
 
@@ -40,7 +43,7 @@ data class Transaction(
 
 enum class TransactionState{
     INCOMPLETE,
-    CANCELED,
     AWAITING_CONFIRMATION,
-    CONFIRMED
+    CONFIRMED,
+    CANCELED
 }
