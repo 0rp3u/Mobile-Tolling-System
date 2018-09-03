@@ -29,7 +29,7 @@ class ClearingService{
         data class TollDTO(
             val id: Int,
             val name: String?,
-            val toll_type: String,
+            val toll_type: Boolean,
             val geolocation_latitude: Float,
             val geolocation_longitude: Float,
             val azimuth: Float?,

@@ -18,7 +18,7 @@ class TransactionService(
         val transactionAmendmentRepository: TransactionAmendmentRepository
 ){
 
-    fun amendTransaction(transaction_id: Long, new_begin_toll_id: Long, new_end_toll_id: Long, user: User){
+    fun confirmTransaction(transaction_id: Long, new_begin_toll_id: Long, new_end_toll_id: Long, user: User){
         //Get Transaction
         val transaction = transactionRepository.findById(transaction_id).orElseThrow { Exception("Invalid transaction.") }
         if(transaction.state == TransactionState.AWAITING_CONFIRMATION) throw Exception("Invalid transaction.")
@@ -27,6 +27,7 @@ class TransactionService(
         val tolls = tollRepository.findAllById(listOf(new_begin_toll_id, new_end_toll_id)).toList()
         val old_begin = transaction.event.first { it.tolltransactionId.type == EventType.BEGIN }
         val old_end = transaction.event.first { it.tolltransactionId.type == EventType.END }
+
         //Create new Amend
         TransactionAmendment(transaction = transaction, old_begin_toll = old_begin.toll.id, old_end_toll = old_end.toll.id, new_begin_toll = tolls[0].id, new_end_toll = tolls[1].id).let {
             transaction.amendments.add(it)
@@ -34,8 +35,9 @@ class TransactionService(
 
         //Change Transaction's events?
 
+        transactionRepository.save(transaction.apply {
 
-        transactionRepository.save(transaction)
+        })
     }
 
     fun getLatestTransaction(vehicle_id: Long, user: User): Transaction{
@@ -46,5 +48,36 @@ class TransactionService(
     fun getTransactions(user: User): List<Transaction>{
         return transactionRepository.findAll().filter { it.vehicle.owner.id == user.id }
     }
+
+    fun getTransaction(transaction_id: Long, user: User): Transaction{
+        transactionRepository.findById(transaction_id).orElseThrow { Exception("Invalid Transaction.") }.let {
+            if(it.vehicle.owner.id != user.id) throw Exception("Invalid Transaction.")
+            return it
+        }
+    }
+
+    fun cancelTransaction(transaction_id: Long, user: User): Transaction{
+        getTransaction(transaction_id, user).let {
+            return transactionRepository.save(it.apply { this.state = TransactionState.CANCELED })
+        }
+    }
+
+    //TODO
+    fun create(): Transaction{
+
+
+        throw NotImplementedError()
+    }
+
+//    fun confirmTransaction(id: Long, user: User): Transaction{
+//        transactionRepository.findById(id).orElseThrow { Exception("Invalid transaction.") }.let {
+//            if(it.vehicle.owner.id != user.id)
+//                throw Exception("Invalid user for this action")
+//
+//
+//            //todo
+//            throw NotImplementedError()
+//        }
+//    }
 
 }
