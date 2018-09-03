@@ -15,7 +15,7 @@ import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleDetailsDetailFragment
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehiclesFragment
 
 
-@Subcomponent(modules = [PresentersModule::class, AuthModule::class, TollingModule::class, VehicleModule::class, NotificationModule::class, SynchronizationModule::class])
+@Subcomponent(modules = [PresentersModule::class, AuthModule::class, TollingModule::class, VehicleModule::class, NotificationModule::class, SynchronizationModule::class, UserModule::class])
 interface PresenterComponent {
 
     fun injectTo(Activity: LoginActivity)

@@ -10,21 +10,19 @@ import java.util.*
 
 @TypeConverters(Converters::class)
 @Entity
-data class CurrentTransaction(
+data class TemporaryTransaction(
 
         @Embedded(prefix = "vehicle_")
         var vehicle: Vehicle? = null,
 
         @Embedded(prefix = "origin_")
-        var origin: TollingPlaza? = null,
-
-        var originTimestamp: Date? = null,
+        var origin: TollingPassage? = null,
 
         @Embedded(prefix = "destination_")
-        var destination: TollingPlaza? = null,
+        var destination: TollingPassage? = null,
 
-        var destTimestamp: Date? = null,
+        var clean :Boolean = true,
 
-        @PrimaryKey
-        var id: Int=1
+        @PrimaryKey(autoGenerate = true)
+        var id: Int=0
 )

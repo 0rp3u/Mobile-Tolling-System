@@ -2,6 +2,7 @@ package pt.isel.ps.g30.tollingsystem.data.api
 
 import kotlinx.coroutines.experimental.Deferred
 import pt.isel.ps.g30.tollingsystem.data.api.model.*
+import pt.isel.ps.g30.tollingsystem.data.database.model.TemporaryTransaction
 
 import retrofit2.Response
 import retrofit2.http.*
@@ -29,32 +30,26 @@ interface TollingService {
     @GET("vehicles/{id}/transaction")
     fun getVehicleTransactions(@Path("id") id: Int): Deferred<List<TollingTransaction>>
 
-    @GET("vehicles/{id}/transaction/open")
-    fun getVehicleOpenTransactions(@Path("id") id: Int):Deferred<List<TollingTransaction>>
-
-    @GET("vehicles/{id}/transaction/closed")
-    fun getVehicleCLosedTransactions(@Path("id") id: Int): Deferred<List<TollingTransaction>>
-
     @GET("transaction")
-    fun getTransactionList(@Query("owner") owner: String): Deferred<List<TollingTransaction>>
+    fun getTransactionList(): Deferred<List<TollingTransaction>>
 
     @GET("transaction/closed")
-    fun getClosedTransactionList(@Query("owner") owner: String): Deferred<List<TollingTransaction>>
+    fun getClosedTransactionList(): Deferred<List<TollingTransaction>>
 
     @GET("transaction/open")
     fun getOpenTransactionList(): Deferred<List<TollingTransaction>>
 
     @POST("transaction/verify")
-    fun verifyTollingTransaction(@Body passageInfo: TollPassageInfo): Deferred<Boolean>
+    fun verifyTollPassage(@Body passageInfo: TollPassageInfo): Deferred<Boolean>
 
-    @POST("transaction/new")
-    fun initiateTollingTransaction(@Body transaction: TollingTransaction): Deferred<TollingTransaction>
+    @POST("transaction/create")
+    fun createTollingTransaction(@Body transaction: TransactionInfo): Deferred<TollingTransaction>
 
-    @POST("transaction/close")
-    fun closeTollingTransaction( @Body transaction: TollingTransaction): Deferred<TollingTransaction>
+    @PUT("transaction/{id}/confirm")
+    fun confirmTollingTransaction(@Path("id") id: Int, @Body transaction: TollingTransaction): Deferred<TollingTransaction>
 
-    @POST("transaction/cancel")
-    fun cancelTollingTransaction( @Body transaction: TollingTransaction): Deferred<TollingTransaction>
+    @PUT("transaction/{id}/cancel")
+    fun cancelTollingTransaction( @Path("id") id: Int): Deferred<TollingTransaction>
 
 
 

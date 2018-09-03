@@ -27,25 +27,26 @@ import android.graphics.Color
 import android.os.Build
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.core.app.JobIntentService
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
+import androidx.lifecycle.Observer
+import androidx.work.*
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-import com.google.android.gms.maps.model.LatLng
 
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
-import pt.isel.ps.g30.tollingsystem.data.api.model.Point
-import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.model.Point
+import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
+import pt.isel.ps.g30.tollingsystem.data.database.model.TemporaryTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPassage
 import pt.isel.ps.g30.tollingsystem.extension.getIconResource
-import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
+import pt.isel.ps.g30.tollingsystem.services.work.VerifyTollingPassageWork
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
-import java.util.*
 
 import javax.inject.Inject
 
@@ -64,14 +65,15 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
     lateinit var tollingPlazaInteractor: TollingPlazaInteractor
 
     @Inject
-    lateinit var notificationInteractor: NotificationInteractor
+    lateinit var tollingSystemDatabase: TollingSystemDatabase
+
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
     private val locationCallback = object: LocationCallback(){
         override fun onLocationResult(lr: LocationResult){
             lr.locations.map {
-                locations.add(Point(LatLng(it.latitude, it.longitude), it.time ))
+                locations.add(Point(it.latitude, it.longitude, it.bearing ,  it.time))
             }
         }
 
@@ -165,33 +167,38 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
 
     private fun handleGeofenceExiting(plazaId: Int){
         mFusedLocationClient.removeLocationUpdates(locationCallback)
+        runBlocking {
+            val currentTransaction = tollingTransactionInteractor.getCurrentTransactionTransaction().await()
+            val plaza = tollingPlazaInteractor.getTollPlaza(plazaId).await()
 
-        launch {
-            //val passed = tollingPlazaInteractor.verifyPassage(plazaId, locations).await()
+            if(currentTransaction.vehicle == null) throw Exception("No active Vehicle") //should not happen
 
-            val passed = true
+            val passageId = tollingSystemDatabase.TollingPassageDao().insert(TollingPassage(currentTransaction.vehicle!!, plaza))[0]
 
-            if (passed) {
-                val plaza = tollingPlazaInteractor.getTollPlaza(plazaId).await()
-                val currentTransaction = tollingTransactionInteractor.getCurrentTransactionTransaction().await()
+            val points = locations.map { it.PassageId =passageId.toInt(); it }
+            locations.removeAll { true }
 
-                // Send notification and log the transition details.
-                sendNotification(currentTransaction)
+            tollingSystemDatabase.TollingPassageDao().AddPointsToPassage(*points.toTypedArray())
 
-                if (currentTransaction.origin != null) {
-                    val Transaction = tollingTransactionInteractor.finishTransaction(plaza).await()
-
-                    notificationInteractor.sendFinishTransactionNotification(Transaction)
-
-                    Log.e(TAG, "finished transaction @ ${Transaction.destination}")
-                } else {
-                    val Transaction = tollingTransactionInteractor.startTollingTransaction(plaza).await()
-                    notificationInteractor.sendStartTransactionNotification(Transaction)
-                    Log.e(TAG, "started transaction @ ${Transaction.origin}")
+            val workManager : WorkManager = WorkManager.getInstance()
+            val workInfo = workManager.getStatusesByTag(VerifyTollingPassageWork.TAG)
+            val observer = Observer<MutableList<WorkStatus>>{
+                if (it == null || it.isEmpty()) {
+                    val constraints = Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .build()
+                    val request = OneTimeWorkRequestBuilder<VerifyTollingPassageWork>()
+                            .setConstraints(constraints)
+                            .addTag(VerifyTollingPassageWork.TAG)
+                            .build()
+                    workManager.enqueue(request)
                 }
 
             }
+
+            workInfo.observeForever(observer)
         }
+
     }
 
 
@@ -199,7 +206,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
      * Posts a notification in the notification bar when a transition is detected.
      * If the user clicks the notification, control goes to the MainActivity.
      */
-    private fun sendNotification(Transaction: CurrentTransaction) {
+    private fun sendNotification(transaction: TemporaryTransaction) {
         // Get an instance of the Notification manager
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -232,18 +239,18 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
         val builder = NotificationCompat.Builder(this)
 
         // Define the notification settings.
-        val carIcon = Transaction.vehicle?.getIconResource() ?: R.drawable.ic_directions_car_black_24dp
+        val carIcon = transaction.vehicle?.getIconResource() ?: R.drawable.ic_directions_car_black_24dp
         builder.setSmallIcon(carIcon)
                 .setLargeIcon(BitmapFactory.decodeResource(resources, carIcon))
                 .setColor(Color.RED)
                 .setContentIntent(notificationPendingIntent)
 
-        if(Transaction.destination!=null){
+        if(transaction.destination!=null){
             builder.setContentTitle("finished transaction")
-                    .setContentText("finished transaction from ${Transaction.origin?.name}  to ${Transaction.destination?.name}")
+                    .setContentText("finished transaction from ${transaction.origin?.plaza?.name}  to ${transaction.destination?.plaza?.name}")
         } else{
             builder.setContentTitle("started transaction")
-                    .setContentText("started transaction on ${Transaction.origin?.name}")
+                    .setContentText("started transaction on ${transaction.origin?.plaza?.name}")
         }
 
         // Set the Channel ID for Android O.

@@ -131,7 +131,7 @@ class TollingTransactionDetails : BaseActivity<TollingTransactionDetailsPresente
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
                 CameraPosition.Builder()
                         .target(tollPosition)
-                        .zoom(10f)
+                        .zoom(15f)
                         .tilt(90f)
                         .bearing(10f)
                         .build()

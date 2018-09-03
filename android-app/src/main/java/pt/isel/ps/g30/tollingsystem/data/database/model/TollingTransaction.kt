@@ -12,6 +12,9 @@ import java.util.*
 @Entity
 data class TollingTransaction(
 
+        @PrimaryKey
+        var id: Int=-1,
+
         @Embedded(prefix = "vehicle_")
         val vehicle: Vehicle,
 
@@ -25,8 +28,5 @@ data class TollingTransaction(
 
         val destTimestamp: Date =  Date(),
 
-        var paid: Double? = null,
-
-        @PrimaryKey(autoGenerate = true)
-        var id: Int=0
+        var paid: Double? = null
 )

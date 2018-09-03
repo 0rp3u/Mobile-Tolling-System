@@ -206,7 +206,7 @@ class DatabaseTest {
 
         assert(insertedTransactions.size == 7)
 
-        val active =  database.ActiveTransactionDao().findLiveData()
+        val active =  database.TemporaryTransactionDao().findCleanData()
 
         var iter = 0
         active.observeForever {
@@ -219,19 +219,19 @@ class DatabaseTest {
         }
 
         //add vehicle
-        database.ActiveTransactionDao().insert(CurrentTransaction(database.VehicleDao().findById(1)))
+        database.TemporaryTransactionDao().insert(TemporaryTransaction(database.VehicleDao().findById(1)))
 
-        val activeVehicle = database.ActiveTransactionDao().findActiveVehicle()
+        val activeVehicle = database.TemporaryTransactionDao().findActiveVehicle()
 
         assert(activeVehicle?.id == 1)
 
 
-        val currentTransaction = database.ActiveTransactionDao().find()
+        val currentTransaction = database.TemporaryTransactionDao().findClean()
 
         currentTransaction.origin = database.TollingDao().findById(3)
         currentTransaction.destTimestamp = Date()
 
-        database.ActiveTransactionDao().update(currentTransaction)
+        database.TemporaryTransactionDao().update(currentTransaction)
 
 
         val paid = database.TollingTransactionDao().findPaid()
@@ -285,7 +285,7 @@ class DatabaseTest {
 
         val paid2 = database.TollingTransactionDao().findPaid()
 
-        assert(paid2.find { it.id == lastone.id } != null)
+        assert(paid2.findClean { it.id == lastone.id } != null)
 
         database.close()
 

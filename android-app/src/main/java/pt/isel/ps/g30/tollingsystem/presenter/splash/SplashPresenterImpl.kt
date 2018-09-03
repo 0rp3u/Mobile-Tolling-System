@@ -15,10 +15,8 @@ class SplashPresenterImpl(private val interactor: AuthInteractor) :
 
     override fun verifyAuthentication() {
         launch (UI, parent = jobs) {
-
             try {
-                val user = interactor.verifyAuthentication().await()
-
+                interactor.verifyUserAuthenticationAndSyncronization().await()
                 view?.successfullLogin()
 
             }catch (e: Throwable){

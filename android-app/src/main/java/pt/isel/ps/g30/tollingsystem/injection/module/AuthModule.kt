@@ -7,11 +7,12 @@ import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractorImpl
 import pt.isel.ps.g30.tollingsystem.data.api.interceptor.HttpAuthInterceptor
 import pt.isel.ps.g30.tollingsystem.interactor.syncronization.SynchronizationInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.user.UserInteractor
 
 @Module
 class AuthModule {
 
     @Provides
-    fun provideAuthInteractor(tollingService: TollingService, authInterceptor: HttpAuthInterceptor, synchronizationInteractor: SynchronizationInteractor): AuthInteractor
-            =AuthInteractorImpl(tollingService,authInterceptor,synchronizationInteractor)
+    fun provideAuthInteractor(tollingService: TollingService, authInterceptor: HttpAuthInterceptor, synchronizationInteractor: SynchronizationInteractor, userInteractor: UserInteractor): AuthInteractor
+            =AuthInteractorImpl(tollingService,authInterceptor,synchronizationInteractor, userInteractor)
     }

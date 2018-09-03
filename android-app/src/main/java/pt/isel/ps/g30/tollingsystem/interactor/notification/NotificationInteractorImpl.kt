@@ -13,12 +13,12 @@ import kotlinx.coroutines.experimental.*
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
-import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.model.TemporaryTransaction
 import pt.isel.ps.g30.tollingsystem.data.database.model.Notification
 import pt.isel.ps.g30.tollingsystem.data.database.model.NotificationType
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 import pt.isel.ps.g30.tollingsystem.extension.getIconResource
-import pt.isel.ps.g30.tollingsystem.services.work.verifyTollingPassageWork
+import pt.isel.ps.g30.tollingsystem.services.work.VerifyTollingPassageWork
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
 
 class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSystemDatabase) : NotificationInteractor {
@@ -45,7 +45,7 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-        val request = OneTimeWorkRequestBuilder<verifyTollingPassageWork>()
+        val request = OneTimeWorkRequestBuilder<VerifyTollingPassageWork>()
                 .setConstraints(constraints)
                 .build()
 
@@ -64,16 +64,16 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
     }
 
 
-    override fun sendStartTransactionNotification(Transaction: CurrentTransaction){
+    override fun sendStartTransactionNotification(transaction: TemporaryTransaction){
         val builder = NotificationCompat.Builder(TollingSystemApp.instance)
 
-        val carIcon = Transaction.vehicle?.getIconResource() ?: R.drawable.ic_notifications_black_24dp
+        val carIcon = transaction.vehicle?.getIconResource() ?: R.drawable.ic_notifications_black_24dp
 
         builder.setSmallIcon(carIcon)
                 .setLargeIcon(BitmapFactory.decodeResource(TollingSystemApp.instance.resources, carIcon))
                 .setColor(Color.RED)
                 .setContentTitle("started transaction")
-                .setContentText("started transaction on ${Transaction.origin?.name}")
+                .setContentText("started transaction on ${transaction.origin?.plaza?.name}")
 
         val extras = Bundle().also { it.putInt(MainActivity.SELECTED_ITEM_KEY, 2) }
 

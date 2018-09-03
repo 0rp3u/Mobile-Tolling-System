@@ -5,5 +5,6 @@ import java.util.*
 
 data class Point(
         val position : LatLng,
-        val timeStamp: Long = Date().time
+        val bearing: Float,
+        val timeStamp: Long
 )

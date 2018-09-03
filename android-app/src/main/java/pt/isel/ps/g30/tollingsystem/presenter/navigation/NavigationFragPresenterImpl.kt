@@ -6,7 +6,8 @@ import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
-import pt.isel.ps.g30.tollingsystem.data.database.model.CurrentTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.model.TemporaryTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPassage
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
@@ -28,7 +29,6 @@ class NavigationFragPresenterImpl(
     }
 
     private val jobs = Job()
-
 
 
     override fun setUpMap(){
@@ -123,16 +123,16 @@ class NavigationFragPresenterImpl(
         }
     }
 
-    override fun prepareCancelActiveTransactionDialog(currentTransaction: CurrentTransaction) {
+    override fun prepareCancelActiveTransactionDialog(temporaryTransaction: TemporaryTransaction) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                view?.showCancelActiveTransactionDialog(currentTransaction)
+                view?.showCancelActiveTransactionDialog(temporaryTransaction)
                 view?.hideLoadingIndicator()
 
             }catch (e: Throwable){
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", { prepareCancelActiveTransactionDialog(currentTransaction) })
+                view?.showErrorMessage("something went wrong, ${e.message}", { prepareCancelActiveTransactionDialog(temporaryTransaction) })
             }
 
         }
@@ -143,7 +143,11 @@ class NavigationFragPresenterImpl(
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                val Transaction = tollingInteractor.startTollingTransaction(tollingPlaza).await()
+
+                val activeVehicle = vehiclesInteractor.getActiveVehicle().await()
+
+                activeVehicle ?: throw Exception("No active Vehicle")
+                val Transaction = tollingInteractor.startTollingTransaction(TollingPassage(activeVehicle, tollingPlaza)).await()
 
                 Log.d(TAG, "started transaction ${Transaction.vehicle} : ${Transaction.origin} -> ${Transaction.destination}")
 
@@ -165,11 +169,10 @@ class NavigationFragPresenterImpl(
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                val Transaction = tollingInteractor.finishTransaction(tollingPlaza).await()
+                val activeVehicle = vehiclesInteractor.getActiveVehicle().await()
 
-                Log.d(TAG, "finish transaction ${Transaction.vehicle} : ${Transaction.origin} -> ${Transaction.destination}")
-                //view?.removeActiveTransaction(transaction)
-
+                activeVehicle ?: throw Exception("No active Vehicle")
+                 tollingInteractor.finishTransaction(TollingPassage(activeVehicle, tollingPlaza))
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage("passed on ${tollingPlaza.name}")
 
@@ -181,13 +184,13 @@ class NavigationFragPresenterImpl(
         }
     }
 
-    override fun cancelActiveTransaction(Transaction: CurrentTransaction) {
-        Log.d(TAG, "canceling transaction ${Transaction.vehicle} : ${Transaction.origin} -> ${Transaction.destination}")
+    override fun cancelActiveTransaction(transaction: TemporaryTransaction) {
+        Log.d(TAG, "canceling transaction ${transaction.vehicle} : ${transaction.origin} -> ${transaction.destination}")
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
 
-                tollingInteractor.cancelCurrentTransaction(Transaction).await()
+                tollingInteractor.cancelCurrentTransaction(transaction).await()
 
 
                 //view?.removeActiveTransaction(transaction)
@@ -198,7 +201,7 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", {cancelActiveTransaction(Transaction)})
+                view?.showErrorMessage("something went wrong, ${e.message}", {cancelActiveTransaction(transaction)})
             }
         }
     }

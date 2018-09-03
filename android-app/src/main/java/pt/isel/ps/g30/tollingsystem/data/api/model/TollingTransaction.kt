@@ -4,9 +4,11 @@ import java.util.*
 
 data class TollingTransaction(
         val id: Int,
-        val timestamp: Date,
         val vehicleId: Int,
         val openPlaza: Int,
+        val openTimestamp: Date,
         val closePlaza: Int? = null,
+        val closeTimestamp: Date,
         val paid: Boolean = false
+
 )
