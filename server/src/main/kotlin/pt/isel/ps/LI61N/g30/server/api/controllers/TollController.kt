@@ -1,6 +1,7 @@
 package pt.isel.ps.LI61N.g30.server.api.controllers
 
 import org.springframework.data.domain.Page
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
@@ -33,8 +34,10 @@ class TollController(
 
     @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.GET], value="")
-    fun getAllTolls(): ResponseEntity<List<Toll>>{
-        return ResponseEntity.ok( tollService.getTolls())
+    fun getAllTolls(
+           @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss.SSS") date: Date?
+    ): ResponseEntity<List<Toll>>{
+        return ResponseEntity.ok( tollService.getTolls(date))
     }
 
 }
