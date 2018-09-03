@@ -1,6 +1,7 @@
 package pt.isel.ps.LI61N.g30.server.model.domain
 
 import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
 import javax.persistence.*
 
@@ -33,12 +34,15 @@ data class Transaction(
         val amendments: MutableList<TransactionAmendment> = mutableListOf(),
 
         @Column
-        var billing: Double = Double.NaN,
+        var billing: Double? = Double.NaN,
 
         @Column
         @CreationTimestamp
-        val created: Date? = Date()
+        val created: Date? = Date(),
 
+        @Column
+        @UpdateTimestamp
+        var updated: Date? = Date()
 )
 
 enum class TransactionState{
