@@ -49,7 +49,7 @@ class ClearingTollService(
 
 //data class Clearing_Toll(
 //        val name: String,
-//        val toll_type: Boolean,
+//        val open_toll: Boolean,
 //        val geolocation_latitude: Float,
 //        val geolocation_longitude: Float,
 //        val azimuth: Float,

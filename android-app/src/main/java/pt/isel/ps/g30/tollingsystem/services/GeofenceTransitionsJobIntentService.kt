@@ -117,7 +117,8 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
 
 
 
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) handleGeofenceEntering()
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER)
+            handleGeofenceEntering()
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT){
             // Get the geofences that were triggered. A single event can trigger multiple geofences.
             val triggeringGeofences = geofencingEvent.triggeringGeofences

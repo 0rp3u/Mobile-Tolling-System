@@ -27,8 +27,8 @@ data class Toll(
         @Column(name="name", unique = true)
         val name: String,
 
-        @Column(name="toll_type")       //NORMAL - TRUE ; OPEN - FALSE
-        val toll_type: Boolean,
+        @Column(name="open_toll")       //NORMAL - FALSE ; OPEN - TRUE
+        val open_toll: Boolean,
 
         @Column(name = "concession")
         val concession: String = "Brisa",
@@ -73,7 +73,7 @@ data class Toll(
                             id = id,
                             event = mutableListOf(),
                             name = name,
-                            toll_type = toll_type,
+                            open_toll = toll_type,
                             concession = concession,
                             geolocation = geolocation,
                             entry_area = entry_area,
