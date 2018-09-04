@@ -11,6 +11,7 @@ import pt.isel.ps.LI61N.g30.server.model.domain.Vehicle
 import pt.isel.ps.LI61N.g30.server.model.domain.VehicleType
 import pt.isel.ps.LI61N.g30.server.model.domain.repositories.VehicleRepository
 import pt.isel.ps.LI61N.g30.server.services.clearing.ClearingService
+import java.util.*
 
 @Service
 class VehicleService(
@@ -24,8 +25,12 @@ class VehicleService(
                 transaction.vehicle.id == vehicle.id
     }
 
-    fun getVehicles(user: User): List<Vehicle>{
-        return vehicleRepository.findByOwner(user)
+    fun getVehicles(date: Date?, user: User): List<Vehicle>{
+        return if(date != null){
+            vehicleRepository.findByUpdatedAfterAndOwner(date, user)
+        }else{
+            vehicleRepository.findByOwner(user)
+        }
     }
 
     fun getVehicle(user: User, car_id: Long): Vehicle

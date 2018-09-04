@@ -18,6 +18,7 @@ class TransactionService(
         val transactionAmendmentRepository: TransactionAmendmentRepository
 ){
 
+    //TODO
     fun confirmTransaction(transaction_id: Long, new_begin_toll_id: Long, new_end_toll_id: Long, user: User){
         //Get Transaction
         val transaction = transactionRepository.findById(transaction_id).orElseThrow { Exception("Invalid transaction.") }
@@ -45,8 +46,12 @@ class TransactionService(
         return transactionRepository.findOneByVehicleOrderByCreatedDesc(vehicle).orElseThrow { Exception("No transaction found for vehicle.") }
     }
 
-    fun getTransactions(user: User): List<Transaction>{
-        return transactionRepository.findAll().filter { it.vehicle.owner.id == user.id }
+    fun getTransactions(date: Date?, user: User): List<Transaction>{
+        return if(date != null){
+            transactionRepository.findByUpdatedAfter(date).filter { it.vehicle.owner.id == user.id }
+        }else{
+            return transactionRepository.findAll().filter { it.vehicle.owner.id == user.id }
+        }
     }
 
     fun getTransaction(transaction_id: Long, user: User): Transaction{

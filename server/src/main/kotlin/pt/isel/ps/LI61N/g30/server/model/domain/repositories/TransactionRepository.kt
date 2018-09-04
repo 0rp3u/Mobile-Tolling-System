@@ -10,4 +10,6 @@ import java.util.*
 interface TransactionRepository : PagingAndSortingRepository<Transaction, Long> {
 
     fun findOneByVehicleOrderByCreatedDesc(vehicle: Vehicle): Optional<Transaction>
+
+    fun findByUpdatedAfter(date: Date): List<Transaction>
 }

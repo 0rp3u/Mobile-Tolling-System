@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.vividsolutions.jts.geom.Point
 import com.vividsolutions.jts.geom.Polygon
 import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
 import javax.persistence.*
 
@@ -58,7 +59,11 @@ data class Toll(
 
         @Column
         @CreationTimestamp
-        val created: Date? = Date()
+        val created: Date? = Date(),
+
+        @Column
+        @UpdateTimestamp
+        var updated: Date? = Date()
 ){
         companion object {
 

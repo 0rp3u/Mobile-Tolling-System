@@ -3,6 +3,7 @@ package pt.isel.ps.LI61N.g30.server.model.domain
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
 import javax.persistence.*
 
@@ -30,7 +31,11 @@ data class Vehicle(
 
         @Column
         @CreationTimestamp
-        var created: Date? = Date()
+        var created: Date? = Date(),
+
+        @Column
+        @UpdateTimestamp
+        var updated: Date? = Date()
 )
 
 enum class RegistryState{

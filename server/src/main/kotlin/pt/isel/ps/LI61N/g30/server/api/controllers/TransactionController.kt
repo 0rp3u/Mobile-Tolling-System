@@ -1,6 +1,7 @@
 package pt.isel.ps.LI61N.g30.server.api.controllers
 
 import org.slf4j.LoggerFactory
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
@@ -16,6 +17,7 @@ import pt.isel.ps.LI61N.g30.server.services.TransactionService
 import pt.isel.ps.LI61N.g30.server.services.UserService
 import pt.isel.ps.LI61N.g30.server.utils.GeoLocation
 import java.net.URI
+import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
 
@@ -58,12 +60,14 @@ class TransactionController(
 
     @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.GET], value = "")
-    fun getTransactions(): ResponseEntity<List<Transaction>> {
+    fun getTransactions(
+            @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss.SSS") date: Date?
+    ): ResponseEntity<List<Transaction>> {
         val userId = authService.authenticatedUser().id
         val user = userService.getUserByid(userId)
         log.info("Fetched user: ${user.login}")
 
-        return ResponseEntity.ok(transactionService.getTransactions(user))
+        return ResponseEntity.ok(transactionService.getTransactions(date, user))
     }
 
     @Transactional(readOnly = true)

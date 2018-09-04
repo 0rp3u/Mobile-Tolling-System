@@ -39,11 +39,11 @@ values (400, 'USER');
 insert into mts_vehicle(id, plate, tier, user_id)
 values (100, 'AA-00-00', 'Classe_1', 100);
 
-insert into mts_vehicle(id, plate, tier, user_id)
-values (200, 'BB-00-00', 'Classe_2', 400);
+insert into mts_vehicle(id, plate, tier, user_id, updated)
+values (200, 'BB-00-00', 'Classe_2', 400, '2018-09-2 10:00:00');
 
-insert into mts_vehicle(id, plate, tier, user_id)
-values (300, 'CC-00-00', 'Classe_3', 400);
+insert into mts_vehicle(id, plate, tier, user_id, updated)
+values (300, 'CC-00-00', 'Classe_3', 400, '2018-09-2 10:00:00');
 
 insert into mts_vehicle(id, plate, tier, user_id)
 values (400, 'DD-00-00', 'Classe_1', 200);
@@ -63,9 +63,12 @@ values (800, 'HH-00-00', 'Classe_2', 200);
 insert into mts_vehicle(id, plate, tier, user_id)
 values (900, 'II-00-00', 'Classe_5', 200);
 
+insert into mts_vehicle(id, plate, tier, user_id, updated)
+values (1000, 'JJ-00-00', 'Classe_3', 400, '2018-09-1 10:00:00');
+
 /* tolls */
-insert into mts_toll(id, name, toll_type, geolocation_longitude, geolocation_latitude, entry_area, exit_area)
-values (100, 'Portagem Lisboa', true, -9.3407711, 38.7054309,
+insert into mts_toll(id, name, toll_type, geolocation_longitude, geolocation_latitude, updated, entry_area, exit_area)
+values (100, 'Portagem Lisboa', true, -9.3407711, 38.7054309, '2018-09-3 10:00:00',
     ST_MakePolygon(
         ST_MakeLine(
             ARRAY[
@@ -90,8 +93,8 @@ values (100, 'Portagem Lisboa', true, -9.3407711, 38.7054309,
     )
 );
 
-insert into mts_toll(id, name, toll_type, geolocation_longitude, geolocation_latitude, entry_area, exit_area)
-values (200, 'Portagem Porto', true, -8.454753, 41.183728,
+insert into mts_toll(id, name, toll_type, geolocation_longitude, geolocation_latitude, updated, entry_area, exit_area)
+values (200, 'Portagem Porto', true, -8.454753, 41.183728, '2018-09-2 10:00:00',
 ST_MakePolygon(
      ST_MakeLine(
          ARRAY[
@@ -119,8 +122,8 @@ ST_MakePolygon(
 );
 
 
-insert into mts_toll(id, name, toll_type, geolocation_longitude, geolocation_latitude, entry_area, exit_area)
-values (300, ' Portagem de Mem Martins', true, -9.331716299057007, 38.818052036825385,
+insert into mts_toll(id, name, toll_type, geolocation_longitude, geolocation_latitude, updated, entry_area, exit_area)
+values (300, ' Portagem de Mem Martins', true, -9.331716299057007, 38.818052036825385, '2018-09-1 10:00:00',
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -292,11 +295,11 @@ ST_MakePolygon(
 );
 
 /* transactions */
-insert into mts_transaction(id, state, vehicle)
-values (100, 'INCOMPLETE', 100);
+insert into mts_transaction(id, state, vehicle, updated)
+values (100, 'INCOMPLETE', 200, '2018-09-02 06:00:00');
 
 insert into mts_transaction(id, state, vehicle)
-values (200, 'COMPLETE', 300);
+values (200, 'CONFIRMED', 300);
 
 /* events */
 

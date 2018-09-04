@@ -38,7 +38,11 @@ class TollService(
                 .setParameter("_toll_id", toll.id)
                 .singleResult.let { with(it as BigInteger) { intValueExact() } }
 
-    fun getTolls(): List<Toll>{
-        return tollRepository.findAll().toList()
+    fun getTolls(date: Date?): List<Toll>{
+        return if(date != null){
+            tollRepository.findByUpdatedAfter(date)
+        }else{
+            return tollRepository.findAll().toList()
+        }
     }
 }

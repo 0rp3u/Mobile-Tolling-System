@@ -1,13 +1,11 @@
 package pt.isel.ps.LI61N.g30.server.api.controllers
 
 import org.slf4j.LoggerFactory
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.async.DeferredResult
 import pt.isel.ps.LI61N.g30.server.api.input.InputModelVehicle
 import pt.isel.ps.LI61N.g30.server.model.domain.Vehicle
@@ -17,6 +15,7 @@ import pt.isel.ps.LI61N.g30.server.services.AuthService
 import pt.isel.ps.LI61N.g30.server.services.UserService
 import pt.isel.ps.LI61N.g30.server.services.VehicleService
 import java.net.URI
+import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
 
@@ -47,12 +46,14 @@ class VehicleController(
 
     @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.GET])
-    fun getUserVehicles(): ResponseEntity<List<Vehicle>> {
+    fun getUserVehicles(
+            @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss.SSS") date: Date?
+    ): ResponseEntity<List<Vehicle>> {
         val userId = authService.authenticatedUser().id
         val user = userService.getUserByid(userId)
         log.info("Fetched user: ${user.login}")
 
-        return vehicleService.getVehicles(user).let { ResponseEntity.ok(it) }
+        return vehicleService.getVehicles(date, user).let { ResponseEntity.ok(it) }
     }
 
 //    @Transactional
