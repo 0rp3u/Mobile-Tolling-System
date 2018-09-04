@@ -1,7 +1,6 @@
 package pt.isel.ps.g30.tollingsystem.services.work
 
 import androidx.work.*
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.experimental.runBlocking
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import pt.isel.ps.g30.tollingsystem.data.api.TollingService
@@ -65,13 +64,6 @@ class VerifyTollingPassageWork : Worker() {
 
         }
 
-//        //...set the output, and we're done!
-//        val output = Data.Builder()
-//                .putInt(KEY_RESULT, timeToSleep.toInt())
-//                .build()
-//
-//        outputData = output
-        // Indicate success or failure with your return value.
         return Result.SUCCESS
     }
 }

@@ -24,7 +24,7 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
                 val constraints = Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.CONNECTED)
                         .build()
-                val request = PeriodicWorkRequestBuilder<SynchronizeUserDataWork>(12, TimeUnit.SECONDS)
+                val request = PeriodicWorkRequestBuilder<SynchronizeUserDataWork>(6, TimeUnit.HOURS)
                         .setConstraints(constraints)
                         .addTag(SynchronizeUserDataWork.TAG)
                         .build()
