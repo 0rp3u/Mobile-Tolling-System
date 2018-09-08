@@ -9,13 +9,13 @@ import java.util.*
 fun insertTestdata(database: TollingSystemDatabase){
 
     launch{
-//        database.UserDao().insert(User(100,"david","orpheu"))
+        database.UserDao().insert(User(200,"david","orpheu"))
         database.VehicleDao().insert(
-                Vehicle(1, "14-AR-43",  Tare.Classe_1),
-                Vehicle(2,"44-EW-82",  Tare.Classe_2),
-                Vehicle(3, "17-AC-19",  Tare.Classe_3),
-                Vehicle(4, "76-CC-63",  Tare.Classe_4),
-                Vehicle(5, "05-VW-59",  Tare.Classe_5)
+                Vehicle(1, "14-AR-43",  Tare.Classe_1, 200),
+                Vehicle(2,"44-EW-82",  Tare.Classe_2,200),
+                Vehicle(3, "17-AC-19",  Tare.Classe_3,200),
+                Vehicle(4, "76-CC-63",  Tare.Classe_4,200),
+                Vehicle(5, "05-VW-59",  Tare.Classe_5,200)
         )
 
         database.TollingDao().insert(
@@ -38,8 +38,8 @@ fun insertTestdata(database: TollingSystemDatabase){
         )
 
          //if there is no current transaction create one.
-            if(database.ActiveTransactionDao().findClean() == null)
-                database.ActiveTransactionDao().insert(TemporaryTransaction())
+            if(database.ActiveTransactionDao().findToClose() == null)
+                database.ActiveTransactionDao().insert(UnvalidatedTransactionInfo())
 
         database.NotificationDao().insert(Notification(NotificationType.TransactionNotification, transaction =database.TollingTransactionDao().findById(1)))
 

@@ -10,7 +10,7 @@ import java.util.*
 
 @TypeConverters(Converters::class)
 @Entity
-data class TemporaryTransaction(
+data class UnvalidatedTransactionInfo(
 
         @Embedded(prefix = "vehicle_")
         var vehicle: Vehicle? = null,
@@ -21,7 +21,7 @@ data class TemporaryTransaction(
         @Embedded(prefix = "destination_")
         var destination: TollingPassage? = null,
 
-        var clean :Boolean = true,
+        var closed :Boolean = false,
 
         @PrimaryKey(autoGenerate = true)
         var id: Int=0

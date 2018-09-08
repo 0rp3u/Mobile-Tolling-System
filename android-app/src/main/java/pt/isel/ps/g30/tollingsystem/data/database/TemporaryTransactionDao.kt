@@ -3,31 +3,31 @@ package pt.isel.ps.g30.tollingsystem.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import pt.isel.ps.g30.tollingsystem.data.database.model.TemporaryTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.model.UnvalidatedTransactionInfo
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 
 @Dao
 interface TemporaryTransactionDao {
 
-    @Query("SELECT * FROM TemporaryTransaction WHERE TemporaryTransaction.id = :id")
-    fun find(id: Int): TemporaryTransaction?
+    @Query("SELECT * FROM UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.id = :id")
+    fun find(id: Int): UnvalidatedTransactionInfo?
 
-    @Query("SELECT * FROM TemporaryTransaction WHERE TemporaryTransaction.clean = 1")
-    fun findClean(): TemporaryTransaction?
+    @Query("SELECT * FROM UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.closed = 0")
+    fun findToClose(): UnvalidatedTransactionInfo?
 
-    @Query("SELECT * FROM TemporaryTransaction WHERE TemporaryTransaction.clean = 1")
-    fun findCleanData(): LiveData<TemporaryTransaction>
+    @Query("SELECT * FROM UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.closed = 0")
+    fun findToCloseData(): LiveData<UnvalidatedTransactionInfo>
 
-    @Query("SELECT Vehicle.* FROM Vehicle, TemporaryTransaction WHERE TemporaryTransaction.clean = 1 and TemporaryTransaction.vehicle_id = Vehicle.id")
+    @Query("SELECT Vehicle.* FROM Vehicle, UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.closed = 0 and UnvalidatedTransactionInfo.vehicle_id = Vehicle.id")
     fun findActiveVehicle(): Vehicle?
 
     @Update
-    fun update(active :TemporaryTransaction): Int
+    fun update(active :UnvalidatedTransactionInfo): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(active: TemporaryTransaction): Long
+    fun insert(active: UnvalidatedTransactionInfo): Long
 
     @Delete
-    fun delete(active :TemporaryTransaction): Int
+    fun delete(active :UnvalidatedTransactionInfo): Int
 
 }

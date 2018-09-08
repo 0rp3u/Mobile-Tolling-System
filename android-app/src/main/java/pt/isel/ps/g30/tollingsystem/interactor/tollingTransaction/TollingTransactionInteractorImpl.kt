@@ -8,7 +8,6 @@ import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
 import pt.isel.ps.g30.tollingsystem.data.database.model.*
 import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
 import pt.isel.ps.g30.tollingsystem.services.work.CreateTransactionWork
-import java.util.*
 
 class TollingTransactionInteractorImpl(
         private val tollingSystemDatabase: TollingSystemDatabase,
@@ -26,10 +25,10 @@ class TollingTransactionInteractorImpl(
     }
 
     override suspend fun getTollingTransaction(id: Int): Deferred<TollingTransaction> {
-        return async { tollingSystemDatabase.TollingTransactionDao().findById(id) ?: throw Exception("Could not findClean transaction")}
+        return async { tollingSystemDatabase.TollingTransactionDao().findById(id) ?: throw Exception("Could not findToClose transaction")}
     }
 
-    override suspend fun startTollingTransaction(origin: TollingPassage): Deferred<TemporaryTransaction> {
+    override suspend fun startTollingTransaction(origin: TollingPassage): Deferred<UnvalidatedTransactionInfo> {
         return async {
 
             val tollingTransaction = getCurrentTransactionTransaction().await()
@@ -59,7 +58,7 @@ class TollingTransactionInteractorImpl(
 
             activeTransaction.destination = dest
             dest.TransactionId = activeTransaction.id
-            activeTransaction.clean = false
+            activeTransaction.closed = true
 
         if(tollingSystemDatabase.ActiveTransactionDao().update(activeTransaction) ==  0)  throw Exception("Could not start transaction")
 
@@ -83,18 +82,18 @@ class TollingTransactionInteractorImpl(
             if(tollingSystemDatabase.ActiveTransactionDao().update(activeTransaction) ==  0)  throw Exception("Could not finish transaction")
     }
 
-    override suspend fun getCurrentTransactionLiveData(): Deferred<LiveData<TemporaryTransaction>> {
-        return async { tollingSystemDatabase.ActiveTransactionDao().findCleanData() }
+    override suspend fun getCurrentTransactionLiveData(): Deferred<LiveData<UnvalidatedTransactionInfo>> {
+        return async { tollingSystemDatabase.ActiveTransactionDao().findToCloseData() }
     }
 
 
-    override suspend fun getCurrentTransactionTransaction(): Deferred<TemporaryTransaction> {
-        return async { tollingSystemDatabase.ActiveTransactionDao().findClean() ?: TemporaryTransaction().also {  tollingSystemDatabase.ActiveTransactionDao().insert(it)}
+    override suspend fun getCurrentTransactionTransaction(): Deferred<UnvalidatedTransactionInfo> {
+        return async { tollingSystemDatabase.ActiveTransactionDao().findToClose() ?: UnvalidatedTransactionInfo().also {  tollingSystemDatabase.ActiveTransactionDao().insert(it)}
         }
     }
 
 
-    override suspend fun cancelCurrentTransaction(transaction: TemporaryTransaction): Deferred<Int>{
+    override suspend fun cancelCurrentTransaction(transaction: UnvalidatedTransactionInfo): Deferred<Int>{
         return async { tollingSystemDatabase.ActiveTransactionDao().delete(transaction) }
     }
 }

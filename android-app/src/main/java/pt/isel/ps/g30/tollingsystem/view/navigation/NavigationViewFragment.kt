@@ -28,7 +28,7 @@ import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.imageView
 import org.jetbrains.anko.textView
 import pt.isel.ps.g30.tollingsystem.R
-import pt.isel.ps.g30.tollingsystem.data.database.model.TemporaryTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.model.UnvalidatedTransactionInfo
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
 import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 import pt.isel.ps.g30.tollingsystem.presenter.navigation.NavigationFragPresenter
@@ -52,7 +52,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     private var tollMarkers: List<Marker> = listOf()
     private var vehicleMarker: Marker? = null
-    private var temporaryTransaction: TemporaryTransaction? = null
+    private var temporaryTransaction: UnvalidatedTransactionInfo? = null
     private var trackMode: Boolean = false
 
 
@@ -192,7 +192,8 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
             }
 
             mMap.setOnMyLocationChangeListener { //deprecated, but it's fine since we only want the vehicle icon to follow the maps blue dot
-                vehicleMarker?.position = LatLng(it.latitude, it.longitude)
+                if(it != null) try{
+                    vehicleMarker?.position = LatLng(it.latitude, it.longitude)
                     if(trackMode){
                         mMap.animateCamera(CameraUpdateFactory.zoomTo(5f), 3000, null)
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
@@ -203,9 +204,11 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                                         .bearing(it.bearing ?: 10f)
                                         .build()
                         ))
-
                     }
+                }catch (e:Exception){
+                    Log.e(TAG, e.message)
                 }
+            }
         }
     }
 
@@ -250,7 +253,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     /** Transactions **/
 
-    override fun showActiveTransaction(transaction: TemporaryTransaction) {
+    override fun showActiveTransaction(transaction: UnvalidatedTransactionInfo) {
         Log.d(TAG, "show transaction view ${transaction.vehicle} : ${transaction.origin} -> ${transaction.destination}")
         temporaryTransaction = transaction.also {
             tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == transaction.origin?.id else false }?.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
@@ -258,7 +261,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         }
     }
 
-    override fun removeActiveTransaction(transaction: TemporaryTransaction) {
+    override fun removeActiveTransaction(transaction: UnvalidatedTransactionInfo) {
         Log.d(TAG, "remove transaction view ${transaction.vehicle} : ${transaction.origin} -> ${transaction.destination}")
         tollMarkers.forEach{
             if (it.tag is TollingPlaza){
@@ -274,7 +277,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         temporaryTransaction = transaction
     }
 
-    override fun showCancelActiveTransactionDialog(transaction: TemporaryTransaction) {
+    override fun showCancelActiveTransactionDialog(transaction: UnvalidatedTransactionInfo) {
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_cancel_transaction, null).apply {
             timestamp.text = transaction.origin?.timestamp?.dateTimeParsed()

@@ -6,7 +6,7 @@ import java.util.*
 
 
 @TypeConverters(Converters::class)
-@Entity(foreignKeys = [ForeignKey(entity = TemporaryTransaction::class, parentColumns = ["id"], childColumns = ["transaction_id"], onDelete = ForeignKey.CASCADE )])
+@Entity()
 
 data class TollingPassage(
 

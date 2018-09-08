@@ -18,22 +18,19 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
     override suspend fun VerifySynchronization() {
 
         val workManager : WorkManager = WorkManager.getInstance()
-        val workInfo = workManager.getStatusesByTag(SynchronizeUserDataWork.TAG)
-        val observer = Observer<MutableList<WorkStatus>>{
-            if (it == null || it.isEmpty()) {
-                val constraints = Constraints.Builder()
-                        .setRequiredNetworkType(NetworkType.CONNECTED)
-                        .build()
-                val request = PeriodicWorkRequestBuilder<SynchronizeUserDataWork>(6, TimeUnit.HOURS)
-                        .setConstraints(constraints)
-                        .addTag(SynchronizeUserDataWork.TAG)
-                        .build()
-                workManager.enqueue(request)
-            }
-        }
+        val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+        val request = PeriodicWorkRequestBuilder<SynchronizeUserDataWork>(6, TimeUnit.HOURS)
+                .setConstraints(constraints)
+                .addTag(SynchronizeUserDataWork.TAG)
+                .build()
 
-        workInfo.observeForever(observer)
-
+        workManager.enqueueUniquePeriodicWork(
+                SynchronizeUserDataWork.TAG,
+                ExistingPeriodicWorkPolicy.REPLACE,
+                request
+        )
 
     }
 
@@ -49,7 +46,7 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
 
             val newVehicles = apiVehicles
                     .filterNot { dbVehicle -> dbVehicles.find { dbVehicle.id == it.id } != null }
-                    .map { Vehicle(it.id, it.plate, it.tier) }
+                    .map { Vehicle(it.id, it.plate, it.tier, user.id) }
 
             tollingSystemDatabase.VehicleDao().insert(*newVehicles.toTypedArray())
 

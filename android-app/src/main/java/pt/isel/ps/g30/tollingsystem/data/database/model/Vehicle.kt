@@ -16,5 +16,7 @@ data class Vehicle(
 
         val licensePlate: String,
 
-        val tare: Tare
+        val tare: Tare,
+
+        val userId: Int
 )

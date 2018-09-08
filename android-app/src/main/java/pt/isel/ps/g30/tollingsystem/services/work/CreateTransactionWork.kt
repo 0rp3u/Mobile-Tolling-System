@@ -66,6 +66,10 @@ class CreateTransactionWork : Worker() {
 
                 tollingSystemDatabase.TollingTransactionDao().insert(dbTransaction)
 
+                tollingSystemDatabase.TollingPassageDao().delete(transaction.origin!!)
+
+                tollingSystemDatabase.TollingPassageDao().delete(transaction.destination!!)
+
                 tollingSystemDatabase.ActiveTransactionDao().delete(transaction)
 
                 tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TransactionNotification, transaction =dbTransaction))

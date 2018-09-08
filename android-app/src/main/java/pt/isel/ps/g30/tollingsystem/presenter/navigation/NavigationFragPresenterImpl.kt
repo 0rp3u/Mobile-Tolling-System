@@ -6,7 +6,7 @@ import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
-import pt.isel.ps.g30.tollingsystem.data.database.model.TemporaryTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.model.UnvalidatedTransactionInfo
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPassage
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
@@ -123,7 +123,7 @@ class NavigationFragPresenterImpl(
         }
     }
 
-    override fun prepareCancelActiveTransactionDialog(temporaryTransaction: TemporaryTransaction) {
+    override fun prepareCancelActiveTransactionDialog(temporaryTransaction: UnvalidatedTransactionInfo) {
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
@@ -184,7 +184,7 @@ class NavigationFragPresenterImpl(
         }
     }
 
-    override fun cancelActiveTransaction(transaction: TemporaryTransaction) {
+    override fun cancelActiveTransaction(transaction: UnvalidatedTransactionInfo) {
         Log.d(TAG, "canceling transaction ${transaction.vehicle} : ${transaction.origin} -> ${transaction.destination}")
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()

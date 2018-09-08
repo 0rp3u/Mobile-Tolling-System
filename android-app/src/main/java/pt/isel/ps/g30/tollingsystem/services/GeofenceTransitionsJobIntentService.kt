@@ -30,7 +30,6 @@ import android.text.TextUtils
 import androidx.core.app.JobIntentService
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
-import androidx.lifecycle.Observer
 import androidx.work.*
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -40,7 +39,7 @@ import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import pt.isel.ps.g30.tollingsystem.data.database.model.Point
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
-import pt.isel.ps.g30.tollingsystem.data.database.model.TemporaryTransaction
+import pt.isel.ps.g30.tollingsystem.data.database.model.UnvalidatedTransactionInfo
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPassage
 import pt.isel.ps.g30.tollingsystem.extension.getIconResource
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
@@ -58,6 +57,25 @@ import javax.inject.Inject
  * as the output.
  */
 class GeofenceTransitionsJobIntentService : JobIntentService(){
+
+    companion object {
+
+        private val JOB_ID = 573
+
+        private val TAG = "GeofenceTransitionsIS"
+
+        private val CHANNEL_ID = "channel_01"
+
+        val locations: MutableList<Point> = mutableListOf()
+
+        /**
+         * Convenience method for enqueuing work in to this service.
+         */
+        fun enqueueWork(context: Context, intent: Intent) {
+            enqueueWork(context, GeofenceTransitionsJobIntentService::class.java, JOB_ID, intent)
+        }
+    }
+
     @Inject
     lateinit var tollingTransactionInteractor: TollingTransactionInteractor
 
@@ -70,16 +88,18 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
+
     private val locationCallback = object: LocationCallback(){
         override fun onLocationResult(lr: LocationResult){
-            lr.locations.map {
-                locations.add(Point(it.latitude, it.longitude, it.bearing ,  it.time))
-            }
+            locations.addAll(
+                    lr.locations.map {
+                        Point(it.latitude, it.longitude, it.bearing ,  it.time)
+                    }
+            )
         }
 
     }
 
-    val locations: MutableList<Point> = mutableListOf()
 
     override fun onCreate() {
         super.onCreate()
@@ -182,22 +202,20 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
             tollingSystemDatabase.TollingPassageDao().AddPointsToPassage(*points.toTypedArray())
 
             val workManager : WorkManager = WorkManager.getInstance()
-            val workInfo = workManager.getStatusesByTag(VerifyTollingPassageWork.TAG)
-            val observer = Observer<MutableList<WorkStatus>>{
-                if (it == null || it.isEmpty()) {
-                    val constraints = Constraints.Builder()
-                            .setRequiredNetworkType(NetworkType.CONNECTED)
-                            .build()
-                    val request = OneTimeWorkRequestBuilder<VerifyTollingPassageWork>()
-                            .setConstraints(constraints)
-                            .addTag(VerifyTollingPassageWork.TAG)
-                            .build()
-                    workManager.enqueue(request)
-                }
+            val constraints = Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+            val request = OneTimeWorkRequestBuilder<VerifyTollingPassageWork>()
+                    .setConstraints(constraints)
+                    .addTag(VerifyTollingPassageWork.TAG)
+                    .build()
 
-            }
+            workManager.beginUniqueWork(
+                    VerifyTollingPassageWork.TAG,
+                    ExistingWorkPolicy.KEEP,
+                    request
+            ).enqueue()
 
-            workInfo.observeForever(observer)
         }
 
     }
@@ -207,7 +225,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
      * Posts a notification in the notification bar when a transition is detected.
      * If the user clicks the notification, control goes to the MainActivity.
      */
-    private fun sendNotification(transaction: TemporaryTransaction) {
+    private fun sendNotification(transaction: UnvalidatedTransactionInfo) {
         // Get an instance of the Notification manager
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -279,21 +297,5 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
 //            Geofence.GEOFENCE_TRANSITION_EXIT -> return getString(R.string.geofence_transition_exited)
 //            else -> return getString(R.string.unknown_geofence_transition)
 //        }
-    }
-
-    companion object {
-
-        private val JOB_ID = 573
-
-        private val TAG = "GeofenceTransitionsIS"
-
-        private val CHANNEL_ID = "channel_01"
-
-        /**
-         * Convenience method for enqueuing work in to this service.
-         */
-        fun enqueueWork(context: Context, intent: Intent) {
-            enqueueWork(context, GeofenceTransitionsJobIntentService::class.java, JOB_ID, intent)
-        }
     }
 }
