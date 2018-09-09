@@ -35,10 +35,10 @@ class TollService(
 
     fun verifyToll(id: Long, geoLocations: Array<GeoLocation>): Float{
         val toll = tollRepository.findById(id).orElseThrow { Exception("Invalid toll.") }
-        val total_points = geoLocations.size * 2
+        val total_points = geoLocations.size
         val entry_result = TollCheck(geoLocations, toll, CountPointsWithinPolygon.Area.ENTRY)
         val exit_result = TollCheck(geoLocations, toll, CountPointsWithinPolygon.Area.EXIT)
-        return ((entry_result + exit_result) / total_points.toFloat()) * 100
+        return (entry_result + exit_result) / total_points.toFloat()
     }
 
     fun TollCheck(geoLocations: Array<GeoLocation>, toll: Toll, area: CountPointsWithinPolygon.Area) : Int =
