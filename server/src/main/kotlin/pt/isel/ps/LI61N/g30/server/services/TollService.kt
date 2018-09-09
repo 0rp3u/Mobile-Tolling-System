@@ -33,6 +33,14 @@ class TollService(
             .setParameter("lat", location.latitude)
             .resultList.map { with(it as BigInteger) { longValueExact() } }
 
+    fun verifyToll(id: Long, geoLocations: Array<GeoLocation>): Float{
+        val toll = tollRepository.findById(id).orElseThrow { Exception("Invalid toll.") }
+        val total_points = geoLocations.size * 2
+        val entry_result = TollCheck(geoLocations, toll, CountPointsWithinPolygon.Area.ENTRY)
+        val exit_result = TollCheck(geoLocations, toll, CountPointsWithinPolygon.Area.EXIT)
+        return ((entry_result + exit_result) / total_points.toFloat()) * 100
+    }
+
     fun TollCheck(geoLocations: Array<GeoLocation>, toll: Toll, area: CountPointsWithinPolygon.Area) : Int =
             entityManager.createNativeQuery(CountPointsWithinPolygon.getQuery(geoLocations, area))
                 .setParameter("_toll_id", toll.id)
@@ -45,4 +53,7 @@ class TollService(
             return tollRepository.findAll().toList()
         }
     }
+
+    fun getToll(id: Long): Toll =
+            tollRepository.findById(id).orElseThrow { Exception("Invalid id.") }
 }

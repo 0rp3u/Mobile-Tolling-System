@@ -24,12 +24,6 @@ data class TransactionAmendment(
         val old_end_toll: Long,
 
         @Column
-        val new_begin_toll: Long,
-
-        @Column
-        val new_end_toll: Long,
-
-        @Column
         @CreationTimestamp
         val created: Date? = Date()
 

@@ -1,6 +1,7 @@
 package pt.isel.ps.LI61N.g30.server.services
 
 import org.springframework.stereotype.Service
+import pt.isel.ps.LI61N.g30.server.api.input.InputTransaction
 import pt.isel.ps.LI61N.g30.server.logic.gis.CountPointsWithinPolygon
 import pt.isel.ps.LI61N.g30.server.model.domain.*
 import pt.isel.ps.LI61N.g30.server.model.domain.repositories.*
@@ -30,7 +31,7 @@ class TransactionService(
         val old_end = transaction.event.first { it.tolltransactionId.type == EventType.END }
 
         //Create new Amend
-        TransactionAmendment(transaction = transaction, old_begin_toll = old_begin.toll.id, old_end_toll = old_end.toll.id, new_begin_toll = tolls[0].id, new_end_toll = tolls[1].id).let {
+        TransactionAmendment(transaction = transaction, old_begin_toll = old_begin.toll.id, old_end_toll = old_end.toll.id).let {
             transaction.amendments.add(it)
         }
 
@@ -68,7 +69,7 @@ class TransactionService(
     }
 
     //TODO
-    fun create(): Transaction{
+    fun create(inputTransaction: InputTransaction): Transaction{
 
 
         throw NotImplementedError()

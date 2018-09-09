@@ -14,5 +14,5 @@ interface EventRepository : PagingAndSortingRepository<Event, Long> {
 
     fun findByOrderByTimestampDesc(pageable: Pageable = Pageable.unpaged()): List<Event>
 
-    fun findOneByOrderByTimestampDesc(pageable: Pageable = Pageable.unpaged()): List<Event>
+    //fun findOneByOrderByTimestampDesc(pageable: Pageable = Pageable.unpaged()): List<Event>
 }

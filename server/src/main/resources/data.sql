@@ -69,6 +69,7 @@ values (1000, 'JJ-00-00', 'Classe_3', 400, '2018-09-1 10:00:00');
 /* tolls */
 insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude,created, entry_area, exit_area)
 values (100, 'Portagem Lisboa', false, 'Brisa', -9.3407711, 38.7054309, '2018-09-1 10:00:00',
+ST_SetSRID(
     ST_MakePolygon(
         ST_MakeLine(
             ARRAY[
@@ -79,7 +80,8 @@ values (100, 'Portagem Lisboa', false, 'Brisa', -9.3407711, 38.7054309, '2018-09
                     ST_MakePoint(-9.340969920158386, 38.705288317650215)
             ]
         )
-    ),
+    ), 4326),
+    ST_SetSRID(
     ST_MakePolygon(
         ST_MakeLine(
             ARRAY[
@@ -90,11 +92,12 @@ values (100, 'Portagem Lisboa', false, 'Brisa', -9.3407711, 38.7054309, '2018-09
                     ST_MakePoint(-9.340913593769073, 38.705644147620035)
             ]
         )
-    )
+    ), 4326)
 );
 
 insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude,created, entry_area, exit_area)
 values (200, 'Portagem Porto', false, 'Brisa', -8.454753, 41.183728, '2018-09-1 10:00:00',
+ST_SetSRID(
 ST_MakePolygon(
      ST_MakeLine(
          ARRAY[
@@ -106,7 +109,8 @@ ST_MakePolygon(
         ST_MakePoint(-8.45498263835907, 41.18445168669323)
          ]
      )
-),
+), 4326),
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -118,12 +122,13 @@ ST_MakePolygon(
 		ST_MakePoint(-8.454926311969757, 41.18352311793799)
         ]
     )
-)
+), 4326)
 );
 
 
 insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude,created, entry_area, exit_area)
 values (300, ' Portagem de Mem Martins', false, 'Brisa', -9.331716299057007, 38.818052036825385, '2018-09-2 10:00:00',
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -135,7 +140,8 @@ ST_MakePolygon(
 		ST_MakePoint(-9.331989884376526, 38.81816488689085)
         ]
     )
-),
+), 4326),
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -147,11 +153,12 @@ ST_MakePolygon(
 		ST_MakePoint(-9.331501722335815, 38.81825265904038)
         ]
     )
-)
+), 4326)
 );
 
 insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude,created, entry_area, exit_area)
 values (400, 'Portagem da Abrunheira', false,'Brisa', -9.36434268951416, 38.77861880578469, '2018-09-3 10:00:00',
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -163,7 +170,8 @@ ST_MakePolygon(
 		ST_MakePoint(-9.363977909088135, 38.778635533577564)
         ]
     )
-),
+), 4326),
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -175,11 +183,12 @@ ST_MakePolygon(
 		ST_MakePoint(-9.364718198776245, 38.77843479980418)
         ]
     )
-)
+), 4326)
 );
 
 insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude,created, entry_area, exit_area)
 values (500, 'Portagem de Agualva', false,'Brisa', -9.27497148513794, 38.771249831496874,'2018-09-3 10:00:00',
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -191,7 +200,8 @@ ST_MakePolygon(
 		ST_MakePoint(-9.274488687515259, 38.77160115061781)
         ]
     )
-),
+), 4326),
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -203,11 +213,12 @@ ST_MakePolygon(
 		ST_MakePoint(-9.275486469268799, 38.77087341623293)
         ]
     )
-)
+), 4326)
 );
 
 insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude,created, entry_area, exit_area)
 values (600, 'Portagem Oeiras',false, 'Brisa', -9.301723837852478, 38.71172228726123,'2018-09-3 10:00:00',
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -219,7 +230,8 @@ ST_MakePolygon(
 		ST_MakePoint(-9.301868677139282, 38.71184786321026)
         ]
     )
-),
+), 4326),
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -231,11 +243,12 @@ ST_MakePolygon(
 		ST_MakePoint(-9.302061796188354, 38.711579967585664)
         ]
     )
-)
+), 4326)
 );
 
 insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude,created, entry_area, exit_area)
 values (700, 'Ponte 25 de abril', true, 'Luso Ponte', -9.173930, 38.675975,'2018-09-3 10:00:00',
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -248,7 +261,8 @@ ST_MakePolygon(
 		ST_MakePoint(-9.17434573173523, 38.67568962607195)
         ]
     )
-),
+), 4326),
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -261,11 +275,12 @@ ST_MakePolygon(
 		ST_MakePoint(-9.174426198005676, 38.6760539792034)
         ]
     )
-)
+), 4326)
 );
 
 insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude,created, entry_area, exit_area)
 values (800, 'Palmela', false, 'Brisa', -8.888651, 38.584453,'2018-09-3 10:00:00',
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -278,7 +293,8 @@ ST_MakePolygon(
 		ST_MakePoint(-8.88963997364044, 38.584924757251414)
         ]
     )
-),
+), 4326),
+ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(
         ARRAY[
@@ -291,7 +307,7 @@ ST_MakePolygon(
 		ST_MakePoint(-8.88963997364044, 38.584924757251414)
         ]
     )
-)
+), 4326)
 );
 
 /* transactions */

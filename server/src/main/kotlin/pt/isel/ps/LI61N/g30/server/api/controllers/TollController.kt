@@ -40,4 +40,21 @@ class TollController(
         return ResponseEntity.ok( tollService.getTolls(date))
     }
 
+    @Transactional(readOnly = true)
+    @RequestMapping(method = [RequestMethod.GET], value="/{id}")
+    fun getToll(
+            @PathVariable(value="id") id: Long
+    ): ResponseEntity<Toll>{
+        return ResponseEntity.ok( tollService.getToll(id))
+    }
+
+    @Transactional(readOnly = true)
+    @RequestMapping(method = [RequestMethod.POST], value="/{toll_id}/verify")
+    fun verifyToll(
+            @PathVariable(value="toll_id") id: Long,
+            @RequestBody geoLocations: Array<GeoLocation>
+    ): ResponseEntity<Float>{
+        return ResponseEntity.ok( tollService.verifyToll(id, geoLocations))
+    }
+
 }

@@ -20,6 +20,9 @@ data class Transaction(
         @JoinColumn(name = "vehicle", foreignKey = ForeignKey(name = "VEHICLE_FK"))
         val vehicle: Vehicle,
 
+        @Column
+        var billing: Double? = Double.NaN,
+
         @OneToMany(
                 //mappedBy = "transaction",
                 cascade = [CascadeType.ALL],
@@ -32,9 +35,6 @@ data class Transaction(
                 orphanRemoval = true
         )
         val amendments: MutableList<TransactionAmendment> = mutableListOf(),
-
-        @Column
-        var billing: Double? = Double.NaN,
 
         @Column
         @CreationTimestamp
