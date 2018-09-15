@@ -13,6 +13,7 @@ data class TransactionAmendment(
         @GeneratedValue
         val id: Long = -1,
 
+        @JsonIgnore
         @JoinColumn(name = "transaction_id")
         @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
         val transaction: Transaction,

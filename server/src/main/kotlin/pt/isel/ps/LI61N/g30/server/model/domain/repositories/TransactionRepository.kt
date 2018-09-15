@@ -9,7 +9,7 @@ import java.util.*
 @Repository
 interface TransactionRepository : PagingAndSortingRepository<Transaction, Long> {
 
-    fun findOneByVehicleOrderByCreatedDesc(vehicle: Vehicle): Optional<Transaction>
+    fun findTop1ByVehicleOrderByCreatedDesc(vehicle: Vehicle): Optional<Transaction>
 
     fun findByUpdatedAfter(date: Date): List<Transaction>
 }

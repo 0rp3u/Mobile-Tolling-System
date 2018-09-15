@@ -43,22 +43,22 @@ class EventController(
 ////        return result
 ////    }
 
-    //sync
-    @Transactional
-    @RequestMapping(method = [RequestMethod.POST], value = "/begin")
-    fun BeginEvent(
-            @RequestBody input: InputEvent
-    ): ResponseEntity<Event> {
-        val userId = authService.authenticatedUser().id
-        val user = userService.getUserByid(userId)
-        log.info("Fetched user: ${user.login}")
-
-        return eventService.beginEvent(input.vehicle_id, input.toll, input.timestamp, input.geoLocations, user).let {
-            with(it.event.first()){
-                ResponseEntity.created(URI.create("/events/${uid.uid}/begin")).body(this)
-            }
-        }
-    }
+//    //sync
+//    @Transactional
+//    @RequestMapping(method = [RequestMethod.POST], value = "/begin")
+//    fun BeginEvent(
+//            @RequestBody input: InputEvent
+//    ): ResponseEntity<Event> {
+//        val userId = authService.authenticatedUser().id
+//        val user = userService.getUserByid(userId)
+//        log.info("Fetched user: ${user.login}")
+//
+//        return eventService.beginEvent(input.vehicle_id, input.toll, input.timestamp, input.geoLocations, user).let {
+//            with(it.event.first()){
+//                ResponseEntity.created(URI.create("/events/${uid.uid}/begin")).body(this)
+//            }
+//        }
+//    }
 
 //    @Transactional
 //    @RequestMapping(method = [RequestMethod.POST], value = "/{transaction_id}/end")
@@ -76,23 +76,23 @@ class EventController(
 //                .thenAccept( { result.setResult(ResponseEntity.noContent().build())} )
 //        return result
 //    }
-
-@Transactional
-@RequestMapping(method = [RequestMethod.POST], value = "/{transaction_id}/end")
-fun EndEvent(
-        @RequestBody input: InputEvent,
-        @PathVariable transaction_id: Long
-): ResponseEntity<Event> {
-    val userId = authService.authenticatedUser().id
-    val user = userService.getUserByid(userId)
-    log.info("Fetched user: ${user.login}")
-
-    return eventService.endEvent(input.vehicle_id, input.toll, input.timestamp, transaction_id, input.geoLocations, user).let {
-        with(it.event.last()){
-            ResponseEntity.created(URI.create("/events/${uid.uid}/end")).body(this)
-        }
-    }
-}
+//
+//@Transactional
+//@RequestMapping(method = [RequestMethod.POST], value = "/{transaction_id}/end")
+//fun EndEvent(
+//        @RequestBody input: InputEvent,
+//        @PathVariable transaction_id: Long
+//): ResponseEntity<Event> {
+//    val userId = authService.authenticatedUser().id
+//    val user = userService.getUserByid(userId)
+//    log.info("Fetched user: ${user.login}")
+//
+//    return eventService.endEvent(transaction_id, input.toll, input.timestamp, input.geoLocations, user).let {
+//        with(it.event.last()){
+//            ResponseEntity.created(URI.create("/events/${uid.uid}/end")).body(this)
+//        }
+//    }
+//}
 
 
 //    @Transactional(readOnly = true)

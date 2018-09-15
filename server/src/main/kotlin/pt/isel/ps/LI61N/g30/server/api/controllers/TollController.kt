@@ -11,6 +11,7 @@ import pt.isel.ps.LI61N.g30.server.model.domain.Toll
 import pt.isel.ps.LI61N.g30.server.services.TollService
 import pt.isel.ps.LI61N.g30.server.services.clearing.ClearingTollService
 import pt.isel.ps.LI61N.g30.server.utils.GeoLocation
+import pt.isel.ps.LI61N.g30.server.utils.TollPassageInfo
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
@@ -52,7 +53,7 @@ class TollController(
     @RequestMapping(method = [RequestMethod.POST], value="/{toll_id}/verify")
     fun verifyToll(
             @PathVariable(value="toll_id") id: Long,
-            @RequestBody geoLocations: Array<GeoLocation>
+            @RequestBody geoLocations: Array<TollPassageInfo>
     ): ResponseEntity<Float>{
         return ResponseEntity.ok( tollService.verifyToll(id, geoLocations))
     }

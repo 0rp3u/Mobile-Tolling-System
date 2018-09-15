@@ -1,7 +1,9 @@
 package pt.isel.ps.LI61N.g30.server.api.input
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import pt.isel.ps.LI61N.g30.server.services.TollService
 import pt.isel.ps.LI61N.g30.server.utils.GeoLocation
+import pt.isel.ps.LI61N.g30.server.utils.TollPassageInfo
 import java.util.*
 
 data class InputEvent(
@@ -11,5 +13,5 @@ data class InputEvent(
         (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
         val timestamp: Date,
         val geo_accuracy: Long?,
-        val geoLocations: Array<GeoLocation>?
+        val geoLocations: Array<TollPassageInfo>?
 )
