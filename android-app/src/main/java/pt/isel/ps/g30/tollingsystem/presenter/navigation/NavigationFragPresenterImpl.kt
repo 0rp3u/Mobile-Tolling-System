@@ -10,6 +10,7 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.UnvalidatedTransactionIn
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPassage
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
+import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
@@ -18,11 +19,12 @@ import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.navigation.NavigationFragmentView
 
 class NavigationFragPresenterImpl(
+        authInteractor: AuthInteractor,
         private val tollingInteractor: TollingTransactionInteractor,
         private val plazaInteractor: TollingPlazaInteractor,
         private val vehiclesInteractor: VehicleInteractor,
-        private val geofencingInteractor: GeofencingInteractor
-) : BasePresenterImpl<NavigationFragmentView>(), NavigationFragPresenter{
+        private val geofencingInteractor: GeofencingInteractor) :
+        BasePresenterImpl<NavigationFragmentView>(authInteractor), NavigationFragPresenter{
 
     companion object {
         private val TAG = NavigationFragPresenterImpl::class.java.simpleName
@@ -116,6 +118,7 @@ class NavigationFragPresenterImpl(
                 view?.hideLoadingIndicator()
 
             }catch (e: Throwable){
+                Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
                 view?.showErrorMessage("something went wrong, ${e.message}", { prepareVehiclesDialog() })
             }
@@ -131,6 +134,7 @@ class NavigationFragPresenterImpl(
                 view?.hideLoadingIndicator()
 
             }catch (e: Throwable){
+                Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
                 view?.showErrorMessage("something went wrong, ${e.message}", { prepareCancelActiveTransactionDialog(temporaryTransaction) })
             }
@@ -147,7 +151,7 @@ class NavigationFragPresenterImpl(
                 val activeVehicle = vehiclesInteractor.getActiveVehicle().await()
 
                 activeVehicle ?: throw Exception("No active Vehicle")
-                val Transaction = tollingInteractor.startTollingTransaction(TollingPassage(activeVehicle, tollingPlaza)).await()
+                val Transaction = tollingInteractor.startTollingTransaction(TollingPassage(activeVehicle.userId, activeVehicle, tollingPlaza)).await()
 
                 Log.d(TAG, "started transaction ${Transaction.vehicle} : ${Transaction.origin} -> ${Transaction.destination}")
 
@@ -172,7 +176,7 @@ class NavigationFragPresenterImpl(
                 val activeVehicle = vehiclesInteractor.getActiveVehicle().await()
 
                 activeVehicle ?: throw Exception("No active Vehicle")
-                 tollingInteractor.finishTransaction(TollingPassage(activeVehicle, tollingPlaza))
+                 tollingInteractor.finishTransaction(TollingPassage(activeVehicle.userId,activeVehicle, tollingPlaza))
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage("passed on ${tollingPlaza.name}")
 

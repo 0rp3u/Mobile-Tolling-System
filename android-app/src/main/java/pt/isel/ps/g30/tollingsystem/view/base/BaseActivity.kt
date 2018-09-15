@@ -41,8 +41,8 @@ abstract class BaseActivity<P: BasePresenter<V>, in V> : BaseView, AppCompatActi
                 onBackPressed()
                 true
             }
-            R.id.settings-> {
-                //TODO open settings Activity
+            R.id.logout-> {
+                presenter.logout()
                 true
             }
             else -> super.onOptionsItemSelected(item)

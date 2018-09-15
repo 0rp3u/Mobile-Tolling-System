@@ -8,26 +8,26 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.User
 import pt.isel.ps.g30.tollingsystem.data.api.model.User as ApiUser
 
 class UserInteractorImpl(
-        private val tollingSystemDatabase: TollingSystemDatabase,
-        private val sharedPreferences: SharedPreferences
+        private val tollingSystemDatabase: TollingSystemDatabase
 ) : UserInteractor {
 
 
-    companion object {
-        const val USER_KEY_ID = "USER_KEY_ID"
-    }
-
     override suspend fun getCurrentUser() : Deferred<User?>{
-        return async { tollingSystemDatabase.UserDao().findById(sharedPreferences.getInt(USER_KEY_ID, -1))}
+        return async { tollingSystemDatabase.UserDao().findCurrent()}
     }
 
-    override fun setCurrentUser(apiUser: ApiUser) = async{
+    override suspend fun setCurrentUser(apiUser: ApiUser) = async{
         val user = tollingSystemDatabase.UserDao().findById(apiUser.id) ?: User(apiUser.id, apiUser.name, apiUser.login).also { tollingSystemDatabase.UserDao().insert(it) }
-        sharedPreferences.edit {
-            putInt(USER_KEY_ID, user.id)
-        }
-
+        user.current = true
+        tollingSystemDatabase.UserDao().update(user)
 
         return@async user
+    }
+
+    override suspend fun removeCurrentUser() {
+        getCurrentUser().await()?.let {
+            it.current = false
+            tollingSystemDatabase.UserDao().update(it)
+        }
     }
 }

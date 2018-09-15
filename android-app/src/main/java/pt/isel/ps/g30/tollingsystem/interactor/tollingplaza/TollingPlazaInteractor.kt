@@ -13,6 +13,6 @@ interface TollingPlazaInteractor : BaseInteractor {
 
     suspend fun getTollPlaza(id: Int) : Deferred<TollingPlaza>
 
-    suspend fun verifyPassage( plazaId:Int, points: List<Point>): Deferred<Boolean>
+    suspend fun verifyPassage( plazaId:Int, points: List<Point>): Deferred<Float>
 
 }

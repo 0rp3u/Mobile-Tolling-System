@@ -23,7 +23,7 @@ class TollingPlazaInteractorImpl(private val tollingSystemDatabase: TollingSyste
         return async { tollingSystemDatabase.TollingDao().findById(id) }
     }
 
-    override suspend fun verifyPassage(plazaId: Int, points: List<Point>): Deferred<Boolean>
-            = tollingService.verifyTollPassage(TollPassageInfo(plazaId, points))
+    override suspend fun verifyPassage(plazaId: Int, points: List<Point>): Deferred<Float>
+            = tollingService.verifyTollPassage(plazaId, TollPassageInfo(points))
 
 }

@@ -11,6 +11,6 @@ import pt.isel.ps.g30.tollingsystem.interactor.user.UserInteractorImpl
 class UserModule {
 
     @Provides
-    fun provideUserInteractor(tollingSystemDatabase: TollingSystemDatabase, sharedPreferences: SharedPreferences): UserInteractor
-            =UserInteractorImpl(tollingSystemDatabase, sharedPreferences)
+    fun provideUserInteractor(tollingSystemDatabase: TollingSystemDatabase): UserInteractor
+            =UserInteractorImpl(tollingSystemDatabase)
     }

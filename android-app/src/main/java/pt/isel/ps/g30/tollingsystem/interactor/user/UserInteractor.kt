@@ -9,6 +9,8 @@ interface UserInteractor : BaseInteractor {
 
     suspend fun getCurrentUser() : Deferred<User?>
 
-    fun setCurrentUser(apiUser: ApiUser) : Deferred<User>
+    suspend fun setCurrentUser(apiUser: ApiUser) : Deferred<User>
+
+    suspend fun removeCurrentUser()
 
 }

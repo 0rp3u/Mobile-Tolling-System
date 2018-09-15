@@ -12,8 +12,10 @@ import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteract
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.main.MainView
 
-class MainPresenterImpl(private val interactor: NotificationInteractor) :
-        BasePresenterImpl<MainView>(), MainPresenter{
+class MainPresenterImpl(
+        authInteractor: AuthInteractor,
+        private val interactor: NotificationInteractor
+) : BasePresenterImpl<MainView>(authInteractor), MainPresenter{
 
     private val jobs = Job()
 

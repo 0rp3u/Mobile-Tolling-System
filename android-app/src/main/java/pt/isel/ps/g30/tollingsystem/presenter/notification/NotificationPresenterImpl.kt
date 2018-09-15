@@ -7,11 +7,14 @@ import kotlinx.coroutines.experimental.cancelChildren
 import kotlinx.coroutines.experimental.delay
 import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
 import pt.isel.ps.g30.tollingsystem.data.database.model.Notification
+import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.notifications.NotificationView
 
-class NotificationPresenterImpl(private val interactor: NotificationInteractor) :
-        BasePresenterImpl<NotificationView>(), NotificationPresenter{
+class NotificationPresenterImpl(
+        authInteractor: AuthInteractor,
+        private val interactor: NotificationInteractor
+) : BasePresenterImpl<NotificationView>(authInteractor), NotificationPresenter{
 
     private val jobs = Job()
 

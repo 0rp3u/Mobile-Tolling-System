@@ -51,14 +51,15 @@ class TollingTransactionInteractorImpl(
     }
 
     override suspend fun finishTransaction(dest: TollingPassage) = launch {
-            val activeTransaction =  getCurrentTransactionTransaction().await()
-
-            if(activeTransaction.origin == null || activeTransaction.vehicle== null) throw Exception("Could not finish transaction, no active transaction found")
+        val activeTransaction =  getCurrentTransactionTransaction().await()
 
 
-            activeTransaction.destination = dest
-            dest.TransactionId = activeTransaction.id
-            activeTransaction.closed = true
+        if(activeTransaction.origin == null || activeTransaction.vehicle== null) throw Exception("Could not finish transaction, no active transaction found")
+
+
+        activeTransaction.destination = dest
+        activeTransaction.closed = true
+        dest.TransactionId = activeTransaction.id
 
         if(tollingSystemDatabase.ActiveTransactionDao().update(activeTransaction) ==  0)  throw Exception("Could not start transaction")
 
@@ -66,20 +67,20 @@ class TollingTransactionInteractorImpl(
 
 
         val workManager : WorkManager = WorkManager.getInstance()
-            val constraints = Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build()
-            val request = OneTimeWorkRequestBuilder<CreateTransactionWork>()
-                    .setConstraints(constraints)
-                    .addTag(CreateTransactionWork.TAG)
-                    .setInputData(Data.Builder().putInt(CreateTransactionWork.KEY_ID, activeTransaction.id).build())
-                    .build()
-            workManager.enqueue(request)
+        val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+        val request = OneTimeWorkRequestBuilder<CreateTransactionWork>()
+                .setConstraints(constraints)
+                .addTag(CreateTransactionWork.TAG)
+                .setInputData(Data.Builder().putInt(CreateTransactionWork.KEY_ID, activeTransaction.id).build())
+                .build()
+        workManager.enqueue(request)
 
 
 
 
-            if(tollingSystemDatabase.ActiveTransactionDao().update(activeTransaction) ==  0)  throw Exception("Could not finish transaction")
+        if(tollingSystemDatabase.ActiveTransactionDao().update(activeTransaction) ==  0)  throw Exception("Could not finish transaction")
     }
 
     override suspend fun getCurrentTransactionLiveData(): Deferred<LiveData<UnvalidatedTransactionInfo>> {
@@ -88,7 +89,7 @@ class TollingTransactionInteractorImpl(
 
 
     override suspend fun getCurrentTransactionTransaction(): Deferred<UnvalidatedTransactionInfo> {
-        return async { tollingSystemDatabase.ActiveTransactionDao().findToClose() ?: UnvalidatedTransactionInfo().also {  tollingSystemDatabase.ActiveTransactionDao().insert(it)}
+        return async { tollingSystemDatabase.ActiveTransactionDao().findToClose() ?: UnvalidatedTransactionInfo(tollingSystemDatabase.UserDao().findCurrent()!!.id).also {  tollingSystemDatabase.ActiveTransactionDao().insert(it)}
         }
     }
 

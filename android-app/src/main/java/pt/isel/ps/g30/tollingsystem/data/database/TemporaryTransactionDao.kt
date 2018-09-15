@@ -12,13 +12,13 @@ interface TemporaryTransactionDao {
     @Query("SELECT * FROM UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.id = :id")
     fun find(id: Int): UnvalidatedTransactionInfo?
 
-    @Query("SELECT * FROM UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.closed = 0")
+    @Query("SELECT UnvalidatedTransactionInfo.* FROM UnvalidatedTransactionInfo, User WHERE UnvalidatedTransactionInfo.user_id = User.id and User.current = 1 and UnvalidatedTransactionInfo.closed = 0")
     fun findToClose(): UnvalidatedTransactionInfo?
 
-    @Query("SELECT * FROM UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.closed = 0")
+    @Query("SELECT UnvalidatedTransactionInfo.* FROM UnvalidatedTransactionInfo, User WHERE UnvalidatedTransactionInfo.user_id = User.id and User.current = 1 and UnvalidatedTransactionInfo.closed = 0")
     fun findToCloseData(): LiveData<UnvalidatedTransactionInfo>
 
-    @Query("SELECT Vehicle.* FROM Vehicle, UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.closed = 0 and UnvalidatedTransactionInfo.vehicle_id = Vehicle.id")
+    @Query("SELECT Vehicle.* FROM Vehicle, User, UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.user_id = User.id and User.current = 1 and UnvalidatedTransactionInfo.closed = 0 and UnvalidatedTransactionInfo.vehicle_id = Vehicle.id")
     fun findActiveVehicle(): Vehicle?
 
     @Update

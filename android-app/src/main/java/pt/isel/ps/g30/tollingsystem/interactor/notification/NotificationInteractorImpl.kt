@@ -36,7 +36,7 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
     override suspend fun confirmTransaction(notification: Notification) = launch {
         //TODO Work manager schedule to comunicate with backend that is confirmed
         if(notification.transaction?.id == 6) {
-            tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TransactionPaidNotification, transaction =tollingSystemDatabase.TollingTransactionDao().findById(6).also { it?.paid = 15.7 }))
+            tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TransactionPaidNotification,notification.userId, transaction =tollingSystemDatabase.TollingTransactionDao().findById(6).also { it?.paid = 15.7 }))
         }
 
 

@@ -6,5 +6,6 @@ import java.util.*
 data class Point(
         val position : LatLng,
         val bearing: Float,
+        val accuracy: Float,
         val timeStamp: Long
 )

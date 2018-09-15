@@ -9,26 +9,17 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 interface TollingTransactionDao {
 
 
-    @Query("SELECT * FROM TollingTransaction")
+    @Query("SELECT TollingTransaction.* FROM TollingTransaction, User where TollingTransaction.user_id = User.id and User.current = 1")
     fun findAll(): List<TollingTransaction>
 
     @Query("SELECT * FROM TollingTransaction WHERE id = :id")
     fun findById(id: Int): TollingTransaction?
 
-    @Query("SELECT * FROM TollingTransaction WHERE paid is not null")
+    @Query("SELECT TollingTransaction.* FROM TollingTransaction, User WHERE TollingTransaction.user_id = User.id and User.current = 1 and paid is not null")
     fun findPaid(): List<TollingTransaction>
 
-    @Query("SELECT * FROM TollingTransaction WHERE TollingTransaction.vehicle_id = :vehicleId")
+    @Query("SELECT TollingTransaction.* FROM TollingTransaction WHERE TollingTransaction.vehicle_id = :vehicleId")
     fun findByVehicle(vehicleId: Int): List<TollingTransaction>
-
-    @Query("SELECT * FROM TollingTransaction WHERE TollingTransaction.destination_id is null")
-    fun findByActiveTransactionLiveData(): LiveData<TollingTransaction?>
-
-
-    @Query("SELECT * FROM TollingTransaction WHERE TollingTransaction.destination_id is null")
-    fun findByActiveTransaction(): TollingTransaction?
-
-
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateTransaction(transaction: TollingTransaction)

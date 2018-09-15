@@ -7,12 +7,15 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
 import kotlinx.coroutines.experimental.delay
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
+import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.tollingTransaction.TollingTransactionsFragmentView
 
-class TollingTransactionFragPresenterImpl(private val interactor: TollingTransactionInteractor) :
-        BasePresenterImpl<TollingTransactionsFragmentView>(), TollingTransactionFragPresenter{
+class TollingTransactionFragPresenterImpl(
+        authInteractor: AuthInteractor,
+        private val interactor: TollingTransactionInteractor
+) : BasePresenterImpl<TollingTransactionsFragmentView>(authInteractor), TollingTransactionFragPresenter{
 
     companion object {
         private val TAG = this::class.java.simpleName

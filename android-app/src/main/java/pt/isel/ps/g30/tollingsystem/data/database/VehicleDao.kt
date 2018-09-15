@@ -8,16 +8,16 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
 @Dao
 interface VehicleDao {
 
-    @Query("SELECT * FROM Vehicle")
+    @Query("SELECT Vehicle.* FROM Vehicle, User where Vehicle.user_id = User.id and User.current = 1")
     fun findAll(): List<Vehicle>
 
-    @Query("SELECT * FROM Vehicle")
+    @Query("SELECT Vehicle.* FROM Vehicle, User where Vehicle.user_id = User.id and User.current = 1")
     fun findAllLiveData(): LiveData<List<Vehicle>>
 
     @Query("SELECT * FROM Vehicle WHERE id = :id")
     fun findById(id: Int): Vehicle
 
-    @Query("SELECT Vehicle.* FROM Vehicle, UnvalidatedTransactionInfo WHERE UnvalidatedTransactionInfo.vehicle_id = Vehicle.id")
+    @Query("SELECT Vehicle.* FROM Vehicle, User, UnvalidatedTransactionInfo WHERE Vehicle.user_id = User.id and User.current = 1 and UnvalidatedTransactionInfo.vehicle_id = Vehicle.id")
     fun findActive(): Vehicle?
 
     @Update()

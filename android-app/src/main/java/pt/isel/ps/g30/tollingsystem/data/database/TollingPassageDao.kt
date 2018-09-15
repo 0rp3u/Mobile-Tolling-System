@@ -13,10 +13,10 @@ interface TollingPassageDao {
     @Query("SELECT * FROM TollingPassage WHERE id = :id")
     fun findById(id: Int): TollingPassage
 
-    @Query("SELECT * FROM TollingPassage")
-    fun findAll(): List<TollingPassage>
+    @Query("SELECT TollingPassage.* FROM TollingPassage, User where TollingPassage.user_id = User.id and User.current = 1")
+    fun findAll (): List<TollingPassage>
 
-    @Query("SELECT * FROM TollingPassage where TollingPassage.Transaction_id = -1 ORDER BY TollingPassage.timestamp DESC")
+    @Query("SELECT TollingPassage.* FROM TollingPassage, User where TollingPassage.user_id = User.id and User.current = 1 and TollingPassage.Transaction_id = -1 ORDER BY TollingPassage.timestamp DESC")
     fun findAllPending(): List<TollingPassage>
 
     @Query("SELECT * FROM Point Where Point.passage_id = :Passage_id")

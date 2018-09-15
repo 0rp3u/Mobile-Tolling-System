@@ -93,7 +93,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
         override fun onLocationResult(lr: LocationResult){
             locations.addAll(
                     lr.locations.map {
-                        Point(it.latitude, it.longitude, it.bearing ,  it.time)
+                        Point(it.latitude, it.longitude, it.bearing ,it.accuracy,  it.time)
                     }
             )
         }
@@ -194,7 +194,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
 
             if(currentTransaction.vehicle == null) throw Exception("No active Vehicle") //should not happen
 
-            val passageId = tollingSystemDatabase.TollingPassageDao().insert(TollingPassage(currentTransaction.vehicle!!, plaza))[0]
+            val passageId = tollingSystemDatabase.TollingPassageDao().insert(TollingPassage(currentTransaction.userId,currentTransaction.vehicle!!, plaza))[0]
 
             val points = locations.map { it.PassageId =passageId.toInt(); it }
             locations.removeAll { true }

@@ -18,4 +18,9 @@ interface BasePresenter<in V> {
      * Called when view is not interested on the data anymore, example is onDestroy
      */
     fun cancelRequest()
+
+    /**
+     * To provide Logout in all views, not used for MVP
+     */
+    fun logout()
 }

@@ -17,10 +17,10 @@ interface NotificationDao {
 //    @Query("SELECT * FROM Notification WHERE type = :notificationType")
 //    fun findByType(notificationType: NotificationType): List<Notification>
 
-    @Query("SELECT * FROM Notification")
+    @Query("SELECT Notification.* FROM Notification, User WHERE Notification.user_id = User.id and User.current = 1")
     fun findAll(): List<Notification>
 
-    @Query("SELECT * FROM Notification")
+    @Query("SELECT Notification.* FROM Notification, User WHERE Notification.user_id = User.id and User.current = 1")
     fun findAllLiveData(): LiveData<List<Notification>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

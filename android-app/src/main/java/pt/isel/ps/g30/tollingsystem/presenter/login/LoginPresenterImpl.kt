@@ -11,7 +11,7 @@ import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 
 class LoginPresenterImpl(private val interactor: AuthInteractor) :
-        BasePresenterImpl<LoginView>(), LoginPresenter{
+        BasePresenterImpl<LoginView>(interactor), LoginPresenter{
 
     private val jobs = Job()
 
@@ -34,4 +34,5 @@ class LoginPresenterImpl(private val interactor: AuthInteractor) :
     override fun cancelRequest(){
         jobs.cancelChildren()
     }
+
 }

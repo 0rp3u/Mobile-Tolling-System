@@ -11,5 +11,7 @@ data class User (
 
         val name: String,
 
-        val login: String
+        val login: String,
+
+        var current: Boolean = false
 )

@@ -56,6 +56,7 @@ class CreateTransactionWork : Worker() {
                 val dbTransaction = createdTransaction.let {
                     TollingTransaction(
                             it.id,
+                            transaction.userId,
                             vehicle,
                             openingPlaza,
                             it.openTimestamp,
@@ -72,7 +73,7 @@ class CreateTransactionWork : Worker() {
 
                 tollingSystemDatabase.ActiveTransactionDao().delete(transaction)
 
-                tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TransactionNotification, transaction =dbTransaction))
+                tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TransactionNotification,transaction.userId, transaction =dbTransaction))
 
             }catch (e: Exception){
                 Log.e(TAG, "${e.message} - ${e.localizedMessage}")

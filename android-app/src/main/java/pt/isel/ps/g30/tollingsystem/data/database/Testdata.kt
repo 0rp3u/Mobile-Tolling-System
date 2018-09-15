@@ -28,26 +28,26 @@ fun insertTestdata(database: TollingSystemDatabase){
 //
 //
         database.TollingTransactionDao().insert(
-                TollingTransaction(1,  database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3),Date(),69.23),
-                TollingTransaction(2,database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1),Date(),9.23),
-                TollingTransaction(3, database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2), Date(), 2.56),
-                TollingTransaction(4, database.VehicleDao().findById(4), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
-                TollingTransaction(5, database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
-                TollingTransaction(6,database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1)),
-                TollingTransaction(7, database.VehicleDao().findById(1), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2),  Date(),29.23)
+                TollingTransaction(1, 200, database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3),Date(),69.23),
+                TollingTransaction(2,200,database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1),Date(),9.23),
+                TollingTransaction(3,200, database.VehicleDao().findById(2), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2), Date(), 2.56),
+                TollingTransaction(4,200, database.VehicleDao().findById(4), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
+                TollingTransaction(5,200, database.VehicleDao().findById(1), database.TollingDao().findById(1), Date(), database.TollingDao().findById(3)),
+                TollingTransaction(6,200,database.VehicleDao().findById(2), database.TollingDao().findById(3), Date(), database.TollingDao().findById(1)),
+                TollingTransaction(7,200, database.VehicleDao().findById(1), database.TollingDao().findById(2), Date(), database.TollingDao().findById(2),  Date(),29.23)
         )
 
          //if there is no current transaction create one.
             if(database.ActiveTransactionDao().findToClose() == null)
-                database.ActiveTransactionDao().insert(UnvalidatedTransactionInfo())
+                database.ActiveTransactionDao().insert(UnvalidatedTransactionInfo(200))
 
-        database.NotificationDao().insert(Notification(NotificationType.TransactionNotification, transaction =database.TollingTransactionDao().findById(1)))
+        database.NotificationDao().insert(Notification(NotificationType.TransactionNotification,200, transaction =database.TollingTransactionDao().findById(1)))
 
-        database.NotificationDao().insert(Notification(NotificationType.VehicleAddedNotification, vehicle = database.VehicleDao().findById(4)))
+        database.NotificationDao().insert(Notification(NotificationType.VehicleAddedNotification,200, vehicle = database.VehicleDao().findById(4)))
 
         launch {
             delay(5000)
-            database.NotificationDao().insert(Notification(NotificationType.TransactionNotification, transaction =database.TollingTransactionDao().findById(2)))
+            database.NotificationDao().insert(Notification(NotificationType.TransactionNotification,200, transaction =database.TollingTransactionDao().findById(2)))
         }
     }
 }

@@ -11,11 +11,11 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPassage
 fun Point.mapForApi() = APiPoint(
         LatLng(lat, Lng),
         bearing,
+        accuracy,
         this.timeStamp
 )
 
 fun TollingPassage.mapForApi(points: List<Point>) = TollPassageInfo(
-       plaza.id,
         points.map { it.mapForApi() }
 )
 

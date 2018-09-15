@@ -17,6 +17,8 @@ data class Point(
 
         val bearing: Float,
 
+        val accuracy: Float,
+
         val timeStamp: Long = Date().time,
 
         @ColumnInfo(name = "passage_id")

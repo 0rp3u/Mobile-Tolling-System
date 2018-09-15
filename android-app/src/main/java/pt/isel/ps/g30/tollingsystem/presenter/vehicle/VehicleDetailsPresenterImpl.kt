@@ -4,14 +4,18 @@ import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
+import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehicleDetailsView
 
 class
-VehicleDetailsPresenterImpl(private val vehicleInteractor: VehicleInteractor, private val transactionInteractor: TollingTransactionInteractor) :
-        BasePresenterImpl<VehicleDetailsView>(), VehicleDetailsPresenter{
+VehicleDetailsPresenterImpl(
+        authInteractor: AuthInteractor,
+        private val vehicleInteractor: VehicleInteractor,
+        private val transactionInteractor: TollingTransactionInteractor
+) : BasePresenterImpl<VehicleDetailsView>(authInteractor), VehicleDetailsPresenter{
 
     private val jobs = Job()
 

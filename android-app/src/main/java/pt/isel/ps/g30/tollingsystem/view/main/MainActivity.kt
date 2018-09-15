@@ -3,7 +3,6 @@ package pt.isel.ps.g30.tollingsystem.view.main
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.SparseIntArray
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -12,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.progress_bar.*
+import kotlinx.android.synthetic.main.template_transparent_toolbar.*
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.data.database.model.Notification
 import pt.isel.ps.g30.tollingsystem.extension.app
@@ -57,7 +57,10 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        toolbar.title = ""
+        setSupportActionBar(toolbar)
         initView()
+
 
     }
 

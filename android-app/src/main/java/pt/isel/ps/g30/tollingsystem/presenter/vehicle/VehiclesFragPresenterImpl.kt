@@ -6,12 +6,15 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
 import kotlinx.coroutines.experimental.delay
 import pt.isel.ps.g30.tollingsystem.data.database.model.Vehicle
+import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.vehicle.VehiclesFragmentView
 
-class VehiclesFragPresenterImpl(private val interactor: VehicleInteractor) :
-        BasePresenterImpl<VehiclesFragmentView>(), VehiclesFragPresenter{
+class VehiclesFragPresenterImpl(
+        authInteractor: AuthInteractor,
+        private val interactor: VehicleInteractor
+) : BasePresenterImpl<VehiclesFragmentView>(authInteractor), VehiclesFragPresenter{
 
     private val jobs = Job()
 

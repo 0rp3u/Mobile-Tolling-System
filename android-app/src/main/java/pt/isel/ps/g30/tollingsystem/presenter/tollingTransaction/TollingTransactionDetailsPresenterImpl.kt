@@ -6,12 +6,15 @@ import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.cancelChildren
+import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.tollingTransaction.TollingTransactionDetailsView
 
-class TollingTransactionDetailsPresenterImpl(private val interactor: TollingTransactionInteractor) :
-        BasePresenterImpl<TollingTransactionDetailsView>(), TollingTransactionDetailsPresenter{
+class TollingTransactionDetailsPresenterImpl(
+        authInteractor: AuthInteractor,
+        private val interactor: TollingTransactionInteractor
+) : BasePresenterImpl<TollingTransactionDetailsView>(authInteractor), TollingTransactionDetailsPresenter{
 
     companion object {
         private val TAG = this::class.java.simpleName

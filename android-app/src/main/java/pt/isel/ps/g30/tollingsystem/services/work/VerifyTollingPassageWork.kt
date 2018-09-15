@@ -45,11 +45,11 @@ class VerifyTollingPassageWork : Worker() {
                        .findPassagePoints(it.id)
                        .map {point-> point.mapForApi() }
 
-               val passageInfo = TollPassageInfo(it.plaza.id, passagePoints)
+               val passageInfo = TollPassageInfo(passagePoints)
 
-               val passed = apiService.verifyTollPassage(passageInfo).await()
+               val confidence = apiService.verifyTollPassage(it.plaza.id,passageInfo).await()
 
-               if (passed) {
+               if (confidence > 0.8) {
                    val currentTransaction = tollingTransactionInteractor.getCurrentTransactionTransaction().await()
 
                    if (currentTransaction.origin != null) {

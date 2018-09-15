@@ -8,8 +8,9 @@ import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.splash.SplashView
 
-class SplashPresenterImpl(private val interactor: AuthInteractor) :
-        BasePresenterImpl<SplashView>(), SplashPresenter{
+class SplashPresenterImpl(
+        private val interactor: AuthInteractor
+) : BasePresenterImpl<SplashView>(interactor), SplashPresenter{
 
     private val jobs = Job()
 

@@ -36,35 +36,35 @@ class PresentersModule {
             = SplashPresenterImpl(interactor)
 
     @Provides
-    fun provideTollingTransactionFragPresenter(interactor: TollingTransactionInteractor): TollingTransactionFragPresenter
-            = TollingTransactionFragPresenterImpl(interactor)
+    fun provideTollingTransactionFragPresenter(authInteractor: AuthInteractor, interactor: TollingTransactionInteractor): TollingTransactionFragPresenter
+            = TollingTransactionFragPresenterImpl(authInteractor, interactor)
 
     @Provides
-    fun provideNavigationPresenter(tollingTransactionInteractor: TollingTransactionInteractor, tollingPlazaInteractor: TollingPlazaInteractor, vehicleInteractor: VehicleInteractor, geofencingInteractor: GeofencingInteractor): NavigationFragPresenter
-            = NavigationFragPresenterImpl(tollingTransactionInteractor, tollingPlazaInteractor, vehicleInteractor, geofencingInteractor)
+    fun provideNavigationPresenter(authInteractor: AuthInteractor, tollingTransactionInteractor: TollingTransactionInteractor, tollingPlazaInteractor: TollingPlazaInteractor, vehicleInteractor: VehicleInteractor, geofencingInteractor: GeofencingInteractor): NavigationFragPresenter
+            = NavigationFragPresenterImpl(authInteractor,tollingTransactionInteractor, tollingPlazaInteractor, vehicleInteractor, geofencingInteractor)
 
     @Provides
-    fun provideVehicleFragPresenter(interactor: VehicleInteractor): VehiclesFragPresenter
-            = VehiclesFragPresenterImpl(interactor)
+    fun provideVehicleFragPresenter(authInteractor: AuthInteractor, interactor: VehicleInteractor): VehiclesFragPresenter
+            = VehiclesFragPresenterImpl(authInteractor, interactor)
 
     @Provides
-    fun provideVehiclePresenter(interactor: VehicleInteractor, transactionInteractor: TollingTransactionInteractor): VehicleDetailsPresenter
-            = VehicleDetailsPresenterImpl(interactor, transactionInteractor)
+    fun provideVehiclePresenter(authInteractor: AuthInteractor, interactor: VehicleInteractor, transactionInteractor: TollingTransactionInteractor): VehicleDetailsPresenter
+            = VehicleDetailsPresenterImpl(authInteractor, interactor, transactionInteractor)
 
     @Provides
-    fun provideNotificationPresenter(interactor: NotificationInteractor): NotificationPresenter
-            = NotificationPresenterImpl(interactor)
+    fun provideNotificationPresenter(authInteractor: AuthInteractor, interactor: NotificationInteractor): NotificationPresenter
+            = NotificationPresenterImpl(authInteractor, interactor)
 
     @Provides
-    fun provideMainPresenter(interactor: NotificationInteractor): MainPresenter
-            = MainPresenterImpl(interactor)
+    fun provideMainPresenter(authInteractor: AuthInteractor, interactor: NotificationInteractor): MainPresenter
+            = MainPresenterImpl(authInteractor, interactor)
 
     @Provides
-    fun providetollingTransactionDetailsPresenter(interactor: TollingTransactionInteractor): TollingTransactionDetailsPresenter
-            = TollingTransactionDetailsPresenterImpl(interactor)
+    fun providetollingTransactionDetailsPresenter(authInteractor: AuthInteractor, interactor: TollingTransactionInteractor): TollingTransactionDetailsPresenter
+            = TollingTransactionDetailsPresenterImpl(authInteractor, interactor)
 
     @Provides
-    fun provideVehicleActivityPresenter(): VehicleActivityPresenter
-            = VehicleActivityPresenterImpl()
+    fun provideVehicleActivityPresenter(authInteractor: AuthInteractor): VehicleActivityPresenter
+            = VehicleActivityPresenterImpl(authInteractor)
 
 }

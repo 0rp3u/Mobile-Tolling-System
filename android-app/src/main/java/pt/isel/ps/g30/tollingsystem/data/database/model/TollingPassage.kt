@@ -6,9 +6,11 @@ import java.util.*
 
 
 @TypeConverters(Converters::class)
-@Entity()
-
+@Entity(foreignKeys = [ForeignKey(entity = User::class, parentColumns = ["id"], childColumns = ["user_id"], onDelete = ForeignKey.CASCADE )])
 data class TollingPassage(
+
+        @ColumnInfo(name = "user_id")
+        val userId: Int,
 
         @Embedded(prefix = "vehicle_")
         val vehicle: Vehicle,
