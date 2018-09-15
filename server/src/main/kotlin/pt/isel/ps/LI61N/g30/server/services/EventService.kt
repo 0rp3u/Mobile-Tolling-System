@@ -10,6 +10,7 @@ import java.util.*
 import pt.isel.ps.LI61N.g30.server.model.domain.Event
 import pt.isel.ps.LI61N.g30.server.model.domain.Transaction
 import pt.isel.ps.LI61N.g30.server.model.domain.repositories.*
+import pt.isel.ps.LI61N.g30.server.utils.TollPassageInfo
 
 @Service
 class EventService(
@@ -20,50 +21,40 @@ class EventService(
         private val tollService: TollService
 ) {
 
-    fun beginEvent(vehicle_id: Long, toll_id: Long, timestamp: Date, enforcementPoints: Array<GeoLocation>?, user: User): Transaction{
-        val vehicle = vehicleRepository.findByOwnerAndId(user, vehicle_id).orElseThrow { Exception("Vehicle not found.") }
+    fun beginEvent(transaction: Transaction, toll_id: Long, timestamp: Date, enforcementPoints: Array<TollPassageInfo>?, user: User): Event{
         //check if the same vehicle is not already in an uncompleted event
-        if(isVehicleRestrictedByTransaction(vehicle)) throw Exception("Vehicle is not eligible for this action.")
+        if(isVehicleRestrictedByTransaction(transaction.vehicle)) throw Exception("Vehicle is not eligible for this action.")
         val toll = tollRepository.findById(toll_id).orElseThrow { Exception("Invalid Toll.") }
 
-        val transaction = Transaction(vehicle = vehicle)
+        if( !isVehicleFromOwner(transaction.vehicle, user))
+            throw Exception("Vehicle does not belong to that Owner.")
 
         //Toll Enforcement check
         val enforcement_sample_size = enforcementPoints?.size
         val enforcement_interceptions= enforcementPoints?.let { tollService.TollCheck(enforcementPoints, toll, CountPointsWithinPolygon.Area.ENTRY) }
 
-        //todo Toll type enum and check for one-way tolls here???
-        val tran = transactionRepository.save(transaction)
-        eventRepository.save(createEvent(transaction, toll, timestamp, EventType.BEGIN, enforcement_sample_size, enforcement_interceptions))
-        return tran
+        return eventRepository.save(createEvent(transaction, toll, timestamp, EventType.BEGIN, enforcement_sample_size, enforcement_interceptions))
     }
 
-    fun endEvent(vehicle_id: Long, toll_id: Long, timestamp: Date, transaction_id: Long, enforcementPoints: Array<GeoLocation>?, user: User): Transaction{
-        val vehicle = vehicleRepository.findByOwnerAndId(user, vehicle_id).orElseThrow { Exception("No vehicle found with the provided id.") }
-        val transaction = transactionRepository.findById(transaction_id).orElseThrow { Exception("Transaction does not exist.") }
+    fun endEvent(transaction: Transaction, toll_id: Long, timestamp: Date, enforcementPoints: Array<TollPassageInfo>?, user: User): Event{
 
         /*Validation*/
-        if( !isVehicleFromOwner(vehicle, user))
-            throw Exception("Vehicle does not belong to that Owner.")
-
-        if(!isVehicleFromTransaction(transaction, vehicle))
-            throw Exception("Vehicle does not belong to that transaction.")
-
-        if(transaction.state == TransactionState.CANCELED)
-            throw Exception("The transaction is already cancelled.")
+        if(transaction.state != TransactionState.INCOMPLETE)
+            throw Exception("The operation for this transaction is invalid.")
 
         val toll = tollRepository.findById(toll_id).orElseThrow { Exception("Toll does not exist.") }
 
         val enforcement_sample_size = enforcementPoints?.size
         val enforcement_interceptions= enforcementPoints?.let { tollService.TollCheck(enforcementPoints, toll, CountPointsWithinPolygon.Area.EXIT) }
 
-
-        eventRepository.save(createEvent(transaction, toll, timestamp, EventType.END, enforcement_sample_size, enforcement_interceptions))
-        return transactionRepository.save(transaction.apply { this.state =  TransactionState.AWAITING_CONFIRMATION})
+        return eventRepository.save(createEvent(transaction, toll, timestamp, EventType.END, enforcement_sample_size, enforcement_interceptions)).apply {
+            transactionRepository.save(transaction.apply { this.state =  TransactionState.AWAITING_CONFIRMATION})
+        }
+        //return transactionRepository.save(transaction.apply { this.state =  TransactionState.AWAITING_CONFIRMATION})
     }
 
     fun isVehicleRestrictedByTransaction(vehicle: Vehicle): Boolean{
-        val transaction = transactionRepository.findOneByVehicleOrderByCreatedDesc(vehicle)
+        val transaction = transactionRepository.findTop1ByVehicleOrderByCreatedDesc(vehicle)
         if(!transaction.isPresent) return true
         return with(transaction.get()){ state != TransactionState.INCOMPLETE}
     }

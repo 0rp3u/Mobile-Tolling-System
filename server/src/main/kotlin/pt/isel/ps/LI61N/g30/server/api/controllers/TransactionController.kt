@@ -72,17 +72,15 @@ class TransactionController(
     @RequestMapping(method = [RequestMethod.PUT], value = "/{transaction_id}/confirm")
     fun confirmTransaction(
             @PathVariable transaction_id: Long,
-            @RequestBody input: InputAmendTransaction
-    ): ResponseEntity<Void> {
+            @RequestBody input: InputTransaction
+    ): ResponseEntity<Transaction> {
         val userId = authService.authenticatedUser().id
         val user = userService.getUserByid(userId)
         log.info("Fetched user: ${user.login}")
 
-        transactionService.confirmTransaction(transaction_id, input.new_begin_toll, input.new_end_toll, user)
-        return ResponseEntity.noContent().build()
+        return ResponseEntity.ok(transactionService.confirmTransaction(transaction_id, input, user))
     }
 
-    @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.PUT], value = "/{transaction_id}/cancel")
     fun cancelTransaction(
             @PathVariable transaction_id: Long
@@ -94,8 +92,6 @@ class TransactionController(
         return ResponseEntity.ok(transactionService.cancelTransaction(transaction_id, user))
     }
 
-    //TODO
-    @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.POST], value = "/create")
     fun createTransaction(
         @RequestBody inputTransaction: InputTransaction
@@ -104,18 +100,17 @@ class TransactionController(
         val user = userService.getUserByid(userId)
         log.info("Fetched user: ${user.login}")
 
-        return ResponseEntity.ok(transactionService.create(inputTransaction))
+        return ResponseEntity.ok(transactionService.create(inputTransaction, user))
     }
 
-//    @Transactional(readOnly = true)
 //    @RequestMapping(method = [RequestMethod.POST], value = "/{id}/confirmation")
-//    fun confirmTransaction(): ResponseEntity<List<Transaction>> {
-//        val userId = authService.authenticatedUser().id
-//        val user = userService.getUserByid(userId)
-//        log.info("Fetched user: ${user.login}")
-//
-//        return ResponseEntity.ok(transactionService.getTransactions(user))
-//    }
+////    fun confirmTransaction(): ResponseEntity<List<Transaction>> {
+////        val userId = authService.authenticatedUser().id
+////        val user = userService.getUserByid(userId)
+////        log.info("Fetched user: ${user.login}")
+////
+////        return ResponseEntity.ok(transactionService.getTransactions(user))
+////    }
 
 }
 

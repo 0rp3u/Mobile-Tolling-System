@@ -8,6 +8,7 @@ import pt.isel.ps.LI61N.g30.server.logic.gis.GetNClosestTolls
 import pt.isel.ps.LI61N.g30.server.model.domain.Toll
 import pt.isel.ps.LI61N.g30.server.model.domain.repositories.TollRepository
 import pt.isel.ps.LI61N.g30.server.utils.GeoLocation
+import pt.isel.ps.LI61N.g30.server.utils.TollPassageInfo
 import java.math.BigInteger
 import java.util.*
 import javax.persistence.EntityManager
@@ -33,7 +34,7 @@ class TollService(
             .setParameter("lat", location.latitude)
             .resultList.map { with(it as BigInteger) { longValueExact() } }
 
-    fun verifyToll(id: Long, geoLocations: Array<GeoLocation>): Float{
+    fun verifyToll(id: Long, geoLocations: Array<TollPassageInfo>): Float{
         val toll = tollRepository.findById(id).orElseThrow { Exception("Invalid toll.") }
         val total_points = geoLocations.size
         val entry_result = TollCheck(geoLocations, toll, CountPointsWithinPolygon.Area.ENTRY)
@@ -41,7 +42,7 @@ class TollService(
         return (entry_result + exit_result) / total_points.toFloat()
     }
 
-    fun TollCheck(geoLocations: Array<GeoLocation>, toll: Toll, area: CountPointsWithinPolygon.Area) : Int =
+    fun TollCheck(geoLocations: Array<TollPassageInfo>, toll: Toll, area: CountPointsWithinPolygon.Area) : Int =
             entityManager.createNativeQuery(CountPointsWithinPolygon.getQuery(geoLocations, area))
                 .setParameter("_toll_id", toll.id)
                 .singleResult.let { with(it as BigInteger) { intValueExact() } }

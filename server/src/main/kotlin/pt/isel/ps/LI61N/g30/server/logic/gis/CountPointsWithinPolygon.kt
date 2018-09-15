@@ -1,6 +1,7 @@
 package pt.isel.ps.LI61N.g30.server.logic.gis
 
 import pt.isel.ps.LI61N.g30.server.utils.GeoLocation
+import pt.isel.ps.LI61N.g30.server.utils.TollPassageInfo
 
 object CountPointsWithinPolygon{
     private val query =
@@ -19,13 +20,13 @@ object CountPointsWithinPolygon{
                     "as lookup(_point)" +
                     ") as temp"
 
-    fun getQuery(geoLocations: Array<GeoLocation>, area: Area) =
+    fun getQuery(geoLocations: Array<TollPassageInfo>, area: Area) =
             query
                     .replace("_area", area.value)
                     .replace("_points_collection", generateQueryPoints(geoLocations))
 
-    private fun generateQueryPoints(geoLocations: Array<GeoLocation>): String {
-       val a =  geoLocations.joinToString { "(ST_SetSRID(ST_MakePoint(${it.longitude},${it.latitude}), 4326))"}//," }.dropLast(1)
+    private fun generateQueryPoints(geoLocations: Array<TollPassageInfo>): String {
+       val a =  geoLocations.joinToString { "(ST_SetSRID(ST_MakePoint(${it.geoLocation.longitude},${it.geoLocation.latitude}), 4326))"}//," }.dropLast(1)
         return a
     }
 

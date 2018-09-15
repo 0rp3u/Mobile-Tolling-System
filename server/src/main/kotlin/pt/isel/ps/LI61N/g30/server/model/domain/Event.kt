@@ -25,7 +25,7 @@ data class Event(
         @JsonIgnore
         @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
         @MapsId("toll_id")
-        val toll: Toll,
+        var toll: Toll,
 
         @Column(name = "event_date")
         val timestamp: Date,

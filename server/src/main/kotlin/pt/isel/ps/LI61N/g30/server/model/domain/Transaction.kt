@@ -1,5 +1,6 @@
 package pt.isel.ps.LI61N.g30.server.model.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
@@ -10,7 +11,7 @@ import javax.persistence.*
 data class Transaction(
 
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue
         var id: Long = -1,
 
         @Enumerated(EnumType.STRING)
@@ -21,14 +22,15 @@ data class Transaction(
         val vehicle: Vehicle,
 
         @Column
-        var billing: Double? = Double.NaN,
+        var billing: Double? = null,
 
+        @JsonIgnore
         @OneToMany(
                 //mappedBy = "transaction",
                 cascade = [CascadeType.ALL],
                 orphanRemoval = true
         )
-        val event: MutableList<Event> = mutableListOf(),
+        var event: MutableList<Event> = mutableListOf(),
 
         @OneToMany(
                 cascade = [CascadeType.ALL],
