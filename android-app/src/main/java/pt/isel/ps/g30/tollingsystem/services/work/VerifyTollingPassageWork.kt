@@ -5,7 +5,6 @@ import kotlinx.coroutines.experimental.runBlocking
 import pt.isel.ps.g30.tollingsystem.TollingSystemApp
 import pt.isel.ps.g30.tollingsystem.data.api.TollingService
 import pt.isel.ps.g30.tollingsystem.data.api.model.Point as ApiPoint
-import pt.isel.ps.g30.tollingsystem.data.api.model.TollPassageInfo
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
 import pt.isel.ps.g30.tollingsystem.data.mapForApi
 import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
@@ -45,9 +44,8 @@ class VerifyTollingPassageWork : Worker() {
                        .findPassagePoints(it.id)
                        .map {point-> point.mapForApi() }
 
-               val passageInfo = TollPassageInfo(passagePoints)
 
-               val confidence = apiService.verifyTollPassage(it.plaza.id,passageInfo).await()
+               val confidence = apiService.verifyTollPassage(it.plaza.id,passagePoints).await()
 
                if (confidence > 0.8) {
                    val currentTransaction = tollingTransactionInteractor.getCurrentTransactionTransaction().await()

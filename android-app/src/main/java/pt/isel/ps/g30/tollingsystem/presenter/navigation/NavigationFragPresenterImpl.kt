@@ -46,9 +46,9 @@ class NavigationFragPresenterImpl(
 
 
                 tollingInteractor.getCurrentTransactionLiveData().await().observe(view!!, Observer {
-                    it?.let {
-                        if(it.vehicle != null)
-                            if(it.origin !=null) view?.showActiveTransaction(it) else view?.removeActiveTransaction(it)
+                    it?.apply {
+                        view?.setCurrentTransaction(it)
+                        if (it.origin != null && it.vehicle != null) view?.showActiveTransaction(it)
                     }
                 })
 
@@ -176,9 +176,11 @@ class NavigationFragPresenterImpl(
                 val activeVehicle = vehiclesInteractor.getActiveVehicle().await()
 
                 activeVehicle ?: throw Exception("No active Vehicle")
-                 tollingInteractor.finishTransaction(TollingPassage(activeVehicle.userId,activeVehicle, tollingPlaza))
+                tollingInteractor.finishTransaction(TollingPassage(activeVehicle.userId,activeVehicle, tollingPlaza))
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage("passed on ${tollingPlaza.name}")
+
+
 
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
@@ -196,8 +198,7 @@ class NavigationFragPresenterImpl(
 
                 tollingInteractor.cancelCurrentTransaction(transaction).await()
 
-
-                //view?.removeActiveTransaction(transaction)
+                view?.removeActiveTransaction()
 
                 view?.hideLoadingIndicator()
                 view?.showDoneMessage()

@@ -255,14 +255,17 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     override fun showActiveTransaction(transaction: UnvalidatedTransactionInfo) {
         Log.d(TAG, "show transaction view ${transaction.vehicle} : ${transaction.origin} -> ${transaction.destination}")
-        temporaryTransaction = transaction.also {
-            tollMarkers.find { if (it.tag is TollingPlaza) (it.tag as TollingPlaza).id == transaction.origin?.id else false }?.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
-            fab.setOnClickListener { showCancelActiveTransactionDialog(transaction) }
+        transaction.let {
+            tollMarkers.forEach {
+                if(it.tag is TollingPlaza && (it.tag as TollingPlaza).id == transaction.origin?.id){
+                    it.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
+                }
+            }
         }
+        fab.setOnClickListener { showCancelActiveTransactionDialog(transaction) }
     }
 
-    override fun removeActiveTransaction(transaction: UnvalidatedTransactionInfo) {
-        Log.d(TAG, "remove transaction view ${transaction.vehicle} : ${transaction.origin} -> ${transaction.destination}")
+    override fun removeActiveTransaction() {
         tollMarkers.forEach{
             if (it.tag is TollingPlaza){
                 it.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_blue))
@@ -271,11 +274,12 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
         }
 
         fab.setOnClickListener { view ->
-            transaction.vehicle?.let { presenter.removeActiveVehicle(it)}
+            temporaryTransaction?.vehicle?.let { presenter.removeActiveVehicle(it)} ?: removeActiveVehicle()
             fab.setImageResource(R.drawable.ic_navigation_black_24dp)
         }
-        temporaryTransaction = transaction
     }
+
+
 
     override fun showCancelActiveTransactionDialog(transaction: UnvalidatedTransactionInfo) {
 
@@ -296,33 +300,8 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                 .show()
     }
 
-    private fun test() {
-        //
-//        val bound = LatLngBounds(
-//                LatLng(10.0, -90.0), // top left corner of map
-//                LatLng(60.0, 180.0)            // bottom right corner
-//        )
-//        val tsk = mGeoDataClient.getAutocompletePredictions("portagens",bound, null)
-//
-//        tsk!!.addOnSuccessListener{
-//            it.forEach {
-//                mGeoDataClient.getPlaceById(it.placeId)?.addOnSuccessListener {
-//                    it.map {
-//                        MarkerOptions()
-//                                .title(it.name.toString())
-//                                .icon(bitmapDescriptorFromVector(this.requireContext(), R.drawable.ic_sc17))
-//                                .position(LatLng(it.latLng.latitude,it.latLng.longitude))
-//                    }.forEach {
-//                        mMap.addMarker(it)
-//                    }
-//                }
-//            }
-//        }
-//
-//        tsk.addOnFailureListener {
-//            Log.e(TAG,it.message )
-//
-//        }
+    override fun setCurrentTransaction(transaction: UnvalidatedTransactionInfo) {
+        this.temporaryTransaction = transaction
     }
 
     override fun showDoneMessage(message: String?) {

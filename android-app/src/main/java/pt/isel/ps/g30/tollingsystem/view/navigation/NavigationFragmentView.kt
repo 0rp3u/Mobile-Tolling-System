@@ -14,7 +14,8 @@ interface NavigationFragmentView : BaseView{
     fun showActiveTransaction(transaction: UnvalidatedTransactionInfo)
     fun showActiveVehicle(vehicle: Vehicle?)
     fun removeActiveVehicle()
-    fun removeActiveTransaction(transaction: UnvalidatedTransactionInfo)
+    fun removeActiveTransaction()
+    fun setCurrentTransaction(transaction: UnvalidatedTransactionInfo)
 
     fun showDoneMessage(message:String? = null)
     fun showErrorMessage(error:String? = null, action: ((View) -> Unit)? = null)

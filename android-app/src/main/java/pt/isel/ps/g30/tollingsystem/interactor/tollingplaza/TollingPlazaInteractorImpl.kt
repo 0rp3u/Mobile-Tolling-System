@@ -3,7 +3,6 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import pt.isel.ps.g30.tollingsystem.data.api.TollingService
 import pt.isel.ps.g30.tollingsystem.data.api.model.Point
-import pt.isel.ps.g30.tollingsystem.data.api.model.TollPassageInfo
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
 
@@ -24,6 +23,6 @@ class TollingPlazaInteractorImpl(private val tollingSystemDatabase: TollingSyste
     }
 
     override suspend fun verifyPassage(plazaId: Int, points: List<Point>): Deferred<Float>
-            = tollingService.verifyTollPassage(plazaId, TollPassageInfo(points))
+            = tollingService.verifyTollPassage(plazaId, points)
 
 }

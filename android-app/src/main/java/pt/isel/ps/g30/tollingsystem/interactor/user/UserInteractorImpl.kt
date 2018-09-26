@@ -12,9 +12,7 @@ class UserInteractorImpl(
 ) : UserInteractor {
 
 
-    override suspend fun getCurrentUser() : Deferred<User?>{
-        return async { tollingSystemDatabase.UserDao().findCurrent()}
-    }
+    override suspend fun getCurrentUser() =async { tollingSystemDatabase.UserDao().findCurrent() }
 
     override suspend fun setCurrentUser(apiUser: ApiUser) = async{
         val user = tollingSystemDatabase.UserDao().findById(apiUser.id) ?: User(apiUser.id, apiUser.name, apiUser.login).also { tollingSystemDatabase.UserDao().insert(it) }

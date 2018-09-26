@@ -15,7 +15,7 @@ interface UserDao {
     fun findByLogin(login:String): User?
 
 
-    @Query("SELECT * FROM User WHERE current = 1")
+    @Query("SELECT * FROM User WHERE User.current = 1")
     fun findCurrent(): User?
 
 

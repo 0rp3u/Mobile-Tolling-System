@@ -32,7 +32,7 @@ class CreateTransactionWork : Worker() {
     fun injectDependencies() {
         (applicationContext as TollingSystemApp).applicationComponent
                 .interactors()
-        //.injectTo(this)
+        .injectTo(this)
     }
 
 

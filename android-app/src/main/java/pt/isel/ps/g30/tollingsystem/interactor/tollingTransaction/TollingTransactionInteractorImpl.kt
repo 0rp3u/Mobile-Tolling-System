@@ -37,10 +37,12 @@ class TollingTransactionInteractorImpl(
             tollingTransaction.origin = origin
             origin.TransactionId = tollingTransaction.id
 
+
+            if(origin.id == -1) tollingSystemDatabase.TollingPassageDao().insert(origin)
+            else if(tollingSystemDatabase.TollingPassageDao().update(origin) ==  0)  throw Exception("Could not update transaction")
+
+
             if(tollingSystemDatabase.ActiveTransactionDao().update(tollingTransaction) ==  0)  throw Exception("Could not start transaction")
-
-
-            if(tollingSystemDatabase.TollingPassageDao().update(origin) ==  0)  throw Exception("Could not update transaction")
 
             notificationInteractor.sendStartTransactionNotification(tollingTransaction)
 
@@ -61,10 +63,13 @@ class TollingTransactionInteractorImpl(
         activeTransaction.closed = true
         dest.TransactionId = activeTransaction.id
 
+        if(dest.id == -1) tollingSystemDatabase.TollingPassageDao().insert(dest)
+        else if(tollingSystemDatabase.TollingPassageDao().update(dest) ==  0)  throw Exception("Could not update transaction")
+
+
         if(tollingSystemDatabase.ActiveTransactionDao().update(activeTransaction) ==  0)  throw Exception("Could not start transaction")
 
-        if(tollingSystemDatabase.TollingPassageDao().update(dest) ==  0)  throw Exception("Could not update transaction")
-
+        tollingSystemDatabase.ActiveTransactionDao().insert(UnvalidatedTransactionInfo(activeTransaction.userId, activeTransaction.vehicle))
 
         val workManager : WorkManager = WorkManager.getInstance()
         val constraints = Constraints.Builder()
@@ -77,10 +82,6 @@ class TollingTransactionInteractorImpl(
                 .build()
         workManager.enqueue(request)
 
-
-
-
-        if(tollingSystemDatabase.ActiveTransactionDao().update(activeTransaction) ==  0)  throw Exception("Could not finish transaction")
     }
 
     override suspend fun getCurrentTransactionLiveData(): Deferred<LiveData<UnvalidatedTransactionInfo>> {
@@ -95,6 +96,13 @@ class TollingTransactionInteractorImpl(
 
 
     override suspend fun cancelCurrentTransaction(transaction: UnvalidatedTransactionInfo): Deferred<Int>{
-        return async { tollingSystemDatabase.ActiveTransactionDao().delete(transaction) }
+        return async {
+            if(transaction.vehicle != null){
+                transaction.origin = null
+            }else{
+                transaction.vehicle = null
+            }
+            tollingSystemDatabase.ActiveTransactionDao().update(transaction)
+        }
     }
 }

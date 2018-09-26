@@ -19,8 +19,6 @@ import pt.isel.ps.g30.tollingsystem.injection.module.PresentersModule
 
 class LoginActivity : BaseActivity<LoginPresenter,LoginView>(), LoginView {
 
-    //TODO use @String values for the literals used on the UI
-
 
     @Inject
     override lateinit var presenter: LoginPresenter
@@ -79,7 +77,7 @@ class LoginActivity : BaseActivity<LoginPresenter,LoginView>(), LoginView {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.cancelRequest()
+        super.onDestroy()
     }
 }

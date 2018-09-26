@@ -21,7 +21,7 @@ interface TollingService {
     fun getVehicleList(): Deferred<List<Vehicle>>
 
     @POST("tolls/{id}/verify")
-    fun verifyTollPassage(id: Int, @Body passageInfo: TollPassageInfo): Deferred<Float>
+    fun verifyTollPassage(id: Int, @Body passageInfo: List<Point>): Deferred<Float>
 
     @POST("transaction/create")
     fun createTollingTransaction(@Body transaction: TransactionInfo): Deferred<TollingTransaction>
