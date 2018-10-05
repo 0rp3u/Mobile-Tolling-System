@@ -18,6 +18,7 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.Notification
 import pt.isel.ps.g30.tollingsystem.data.database.model.NotificationType
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
 import pt.isel.ps.g30.tollingsystem.extension.getIconResource
+import pt.isel.ps.g30.tollingsystem.services.work.ConfirmTransactionWork
 import pt.isel.ps.g30.tollingsystem.services.work.VerifyTollingPassageWork
 import pt.isel.ps.g30.tollingsystem.view.main.MainActivity
 
@@ -39,14 +40,14 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
             tollingSystemDatabase.NotificationDao().insert(Notification(NotificationType.TransactionPaidNotification,notification.userId, transaction =tollingSystemDatabase.TollingTransactionDao().findById(6).also { it?.paid = 15.7 }))
         }
 
-
-
         val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-        val request = OneTimeWorkRequestBuilder<VerifyTollingPassageWork>()
+        val request = OneTimeWorkRequestBuilder<ConfirmTransactionWork>()
                 .setConstraints(constraints)
+                .addTag(ConfirmTransactionWork.TAG)
+                .setInputData(Data.Builder().putInt(ConfirmTransactionWork.KEY_ID, notification.transaction?.id ?: -1).build())
                 .build()
 
         WorkManager.getInstance().enqueue(request)

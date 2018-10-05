@@ -3,6 +3,7 @@ import androidx.lifecycle.LiveData
 import androidx.work.*
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 import pt.isel.ps.g30.tollingsystem.data.database.TollingSystemDatabase
 import pt.isel.ps.g30.tollingsystem.data.database.model.*
@@ -38,7 +39,7 @@ class TollingTransactionInteractorImpl(
             origin.TransactionId = tollingTransaction.id
 
 
-            if(origin.id == -1) tollingSystemDatabase.TollingPassageDao().insert(origin)
+            if(origin.id == 0) tollingSystemDatabase.TollingPassageDao().insert(origin)
             else if(tollingSystemDatabase.TollingPassageDao().update(origin) ==  0)  throw Exception("Could not update transaction")
 
 
@@ -46,7 +47,10 @@ class TollingTransactionInteractorImpl(
 
             notificationInteractor.sendStartTransactionNotification(tollingTransaction)
 
-            if(origin.plaza.openToll) finishTransaction(origin)
+            if(origin.plaza.openToll){
+                delay(1000)
+                finishTransaction(origin).join()
+            }
 
             return@async tollingTransaction
         }
@@ -63,7 +67,7 @@ class TollingTransactionInteractorImpl(
         activeTransaction.closed = true
         dest.TransactionId = activeTransaction.id
 
-        if(dest.id == -1) tollingSystemDatabase.TollingPassageDao().insert(dest)
+        if(dest.id == 0) tollingSystemDatabase.TollingPassageDao().insert(dest)
         else if(tollingSystemDatabase.TollingPassageDao().update(dest) ==  0)  throw Exception("Could not update transaction")
 
 
@@ -90,7 +94,11 @@ class TollingTransactionInteractorImpl(
 
 
     override suspend fun getCurrentTransactionTransaction(): Deferred<UnvalidatedTransactionInfo> {
-        return async { tollingSystemDatabase.ActiveTransactionDao().findToClose() ?: UnvalidatedTransactionInfo(tollingSystemDatabase.UserDao().findCurrent()!!.id).also {  tollingSystemDatabase.ActiveTransactionDao().insert(it)}
+        return async {
+            tollingSystemDatabase.ActiveTransactionDao().findToClose() ?:
+            UnvalidatedTransactionInfo(tollingSystemDatabase.UserDao().findCurrent()!!.id)
+                    .let { tollingSystemDatabase.ActiveTransactionDao().insert(it)}
+                    .let { tollingSystemDatabase.ActiveTransactionDao().find(it.toInt())!!}
         }
     }
 
@@ -100,6 +108,7 @@ class TollingTransactionInteractorImpl(
             if(transaction.vehicle != null){
                 transaction.origin = null
             }else{
+                transaction.origin = null
                 transaction.vehicle = null
             }
             tollingSystemDatabase.ActiveTransactionDao().update(transaction)

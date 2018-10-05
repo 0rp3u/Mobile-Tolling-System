@@ -10,7 +10,7 @@ data class TollingPlaza(
 
         val geolocation_longitude: Double,
 
-        val openToll: Boolean = false,
+        val open_toll: Boolean = false,
 
         var id: Int = 0
 )

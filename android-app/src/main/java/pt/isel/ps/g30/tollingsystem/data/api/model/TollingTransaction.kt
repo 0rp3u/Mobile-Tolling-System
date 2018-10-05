@@ -4,11 +4,10 @@ import java.util.*
 
 data class TollingTransaction(
         val id: Int,
-        val vehicleId: Int,
-        val openPlaza: Int,
-        val openTimestamp: Date,
-        val closePlaza: Int? = null,
-        val closeTimestamp: Date,
-        val paid: Boolean = false
-
+        val vehicle_id: Int,
+        val begin_toll: Int,
+        val begin_timestamp: String,
+        val end_toll: Int,
+        val end_timestamp: String,
+        val billing: Float? = null
 )

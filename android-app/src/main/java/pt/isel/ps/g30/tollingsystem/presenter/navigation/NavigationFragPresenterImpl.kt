@@ -37,7 +37,7 @@ class NavigationFragPresenterImpl(
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
-                val plazas = plazaInteractor.getActiveTollPlazaList().await()
+                val plazas = plazaInteractor.getTollPlazaList().await()
                 view?.showPlazaLocations(plazas)
 
                 val activeVehicle = vehiclesInteractor.getActiveVehicle().await()
@@ -47,8 +47,14 @@ class NavigationFragPresenterImpl(
 
                 tollingInteractor.getCurrentTransactionLiveData().await().observe(view!!, Observer {
                     it?.apply {
-                        view?.setCurrentTransaction(it)
-                        if (it.origin != null && it.vehicle != null) view?.showActiveTransaction(it)
+                        val previous = view?.getCurrentTransaction()
+                        if(it.id != 0){
+                            view?.setCurrentTransaction(it)
+
+                            if(previous?.origin!= null && it.origin == null) view?.removeActiveTransaction()
+                            if(previous?.id != it.id && previous?.vehicle == it.vehicle && previous?.origin != null && it.origin == null) view?.removeActiveTransaction()
+                            if(previous?.origin== null && it.origin != null) view?.showActiveTransaction(it)
+                        }
                     }
                 })
 
@@ -120,7 +126,7 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", { prepareVehiclesDialog() })
+                view?.showErrorMessage("something went wrong, ${e.message}") { prepareVehiclesDialog() }
             }
 
         }
@@ -136,7 +142,7 @@ class NavigationFragPresenterImpl(
             }catch (e: Throwable){
                 Log.d(TAG, e.message)
                 view?.hideLoadingIndicator()
-                view?.showErrorMessage("something went wrong, ${e.message}", { prepareCancelActiveTransactionDialog(temporaryTransaction) })
+                view?.showErrorMessage("something went wrong, ${e.message}") { prepareCancelActiveTransactionDialog(temporaryTransaction) }
             }
 
         }
@@ -161,7 +167,7 @@ class NavigationFragPresenterImpl(
                 view?.showDoneMessage("passed on ${tollingPlaza.name}")
 
             }catch (e: Throwable){
-                Log.d(TAG, e.message)
+                Log.d(TAG, e.localizedMessage)
                 view?.hideLoadingIndicator()
                 view?.showErrorMessage("something went wrong, ${e.message}") {startTransaction(tollingPlaza)}
             }
@@ -197,6 +203,8 @@ class NavigationFragPresenterImpl(
             try {
 
                 tollingInteractor.cancelCurrentTransaction(transaction).await()
+
+
 
                 view?.removeActiveTransaction()
 

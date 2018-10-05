@@ -53,6 +53,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     private var tollMarkers: List<Marker> = listOf()
     private var vehicleMarker: Marker? = null
     private var temporaryTransaction: UnvalidatedTransactionInfo? = null
+
     private var trackMode: Boolean = false
 
 
@@ -136,6 +137,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     override fun showActiveVehicle(vehicle: Vehicle?) {
         vehicle?.let {
+            temporaryTransaction?.vehicle = it
             showVehicleLocation(it)
             addActiveVehicleToMapTop(it)
 
@@ -255,10 +257,11 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     override fun showActiveTransaction(transaction: UnvalidatedTransactionInfo) {
         Log.d(TAG, "show transaction view ${transaction.vehicle} : ${transaction.origin} -> ${transaction.destination}")
+        val icon = this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green)
         transaction.let {
             tollMarkers.forEach {
-                if(it.tag is TollingPlaza && (it.tag as TollingPlaza).id == transaction.origin?.id){
-                    it.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green))
+                if(it.tag is TollingPlaza && (it.tag as TollingPlaza).id == transaction.origin?.plaza?.id){
+                    it.setIcon(icon)
                 }
             }
         }
@@ -266,9 +269,10 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     }
 
     override fun removeActiveTransaction() {
+        val icon = requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_blue)
         tollMarkers.forEach{
             if (it.tag is TollingPlaza){
-                it.setIcon(this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_blue))
+                it.setIcon(icon)
                 Log.d(TAG, "Cleaned ${(it.tag as TollingPlaza).name} icon")
             }
         }
@@ -303,6 +307,10 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     override fun setCurrentTransaction(transaction: UnvalidatedTransactionInfo) {
         this.temporaryTransaction = transaction
     }
+
+    override fun getCurrentTransaction() = temporaryTransaction
+
+
 
     override fun showDoneMessage(message: String?) {
         snackbar(view!!, message ?: "done")

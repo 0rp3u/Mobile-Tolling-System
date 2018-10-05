@@ -36,16 +36,20 @@ class SynchronizeUserDataWork : Worker() {
     override fun doWork(): Result {
         injectDependencies()
 
-        runBlocking {
+        return runBlocking {
             val auth = apiService.authenticate().await()
 
             if (auth.isSuccessful && auth.body() != null){
-                synchronizationInteractor.SynchronizeUserData(auth.body()!!)
+                try{
+                    synchronizationInteractor.SynchronizeUserData(auth.body()!!)
+                }catch (e:Exception){
+                    return@runBlocking Result.RETRY
+                }
                 return@runBlocking Result.SUCCESS
             }else
                 return@runBlocking Result.FAILURE
 
         }
-        return Result.RETRY
+
     }
 }

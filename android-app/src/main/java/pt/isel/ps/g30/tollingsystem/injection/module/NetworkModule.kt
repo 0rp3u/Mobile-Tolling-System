@@ -31,7 +31,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(sharedPrederences: SharedPreferences) = HttpAuthInterceptor(sharedPrederences)
+    fun provideAuthInterceptor(app: TollingSystemApp, sharedPrederences: SharedPreferences) = HttpAuthInterceptor(app,sharedPrederences)
 
     @Provides
     @Singleton
@@ -45,7 +45,7 @@ class NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .baseUrl("http://10.10.5.144:8081")
+            .baseUrl("http://10.10.0.102:8081")
             .client(okHttpClient)
             .build()
 

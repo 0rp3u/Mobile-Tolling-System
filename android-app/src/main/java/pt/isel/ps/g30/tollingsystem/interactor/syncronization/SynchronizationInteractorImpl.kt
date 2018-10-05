@@ -67,12 +67,11 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
         val dbPlazas = tollingSystemDatabase.TollingDao().findAll()
         val newTolls = apiPlazas
                 .filterNot { apiPlaza -> dbPlazas.find { apiPlaza.id == it.id} != null}
-                .map { TollingPlaza(it.id,it.name, it.concession, false,it.geolocation_latitude, it.geolocation_longitude) }
+                .map { TollingPlaza(it.id,it.name, it.concession, false,it.geolocation_latitude, it.geolocation_longitude, it.open_toll) }
 
         tollingSystemDatabase.TollingDao().insert(*newTolls.toTypedArray())
         }catch (e: Exception){
             Log.d("synch", e.localizedMessage)
-
         }
 
     }

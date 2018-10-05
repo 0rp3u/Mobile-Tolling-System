@@ -8,7 +8,7 @@ import retrofit2.http.*
 
 interface TollingService {
 
-    @GET("users/authentication")
+    @GET("users/authentication/")
     fun authenticate(): Deferred<Response<User>>
 
     @GET("tolls/{position}")
@@ -23,13 +23,13 @@ interface TollingService {
     @POST("tolls/{id}/verify")
     fun verifyTollPassage(id: Int, @Body passageInfo: List<Point>): Deferred<Float>
 
-    @POST("transaction/create")
+    @POST("transactions/create")
     fun createTollingTransaction(@Body transaction: TransactionInfo): Deferred<TollingTransaction>
 
-    @PUT("transaction/{id}/cancel")
+    @PUT("transactions/{id}/cancel")
     fun cancelTollingTransaction( @Path("id") id: Int): Deferred<TollingTransaction>
 
-    @PUT("transaction/{id}/confirm")
+    @PUT("transactions/{id}/confirm")
     fun confirmTollingTransaction(@Path("id") id: Int, @Body transaction: TollingTransaction): Deferred<TollingTransaction>
 
     @PUT("vehicles")
@@ -41,13 +41,13 @@ interface TollingService {
     @GET("vehicles/{id}/transaction")
     fun getVehicleTransactions(@Path("id") id: Int): Deferred<List<TollingTransaction>>
 
-    @GET("transaction")
+    @GET("transactions")
     fun getTransactionList(): Deferred<List<TollingTransaction>>
 
-    @GET("transaction/closed")
+    @GET("transactions/closed")
     fun getClosedTransactionList(): Deferred<List<TollingTransaction>>
 
-    @GET("transaction/open")
+    @GET("transactions/open")
     fun getOpenTransactionList(): Deferred<List<TollingTransaction>>
 
 

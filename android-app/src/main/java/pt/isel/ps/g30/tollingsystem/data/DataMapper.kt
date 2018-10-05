@@ -18,10 +18,10 @@ fun Point.mapForApi() = APiPoint(
 
 fun UnvalidatedTransactionInfo.mapForApi(openPoints:List<Point>, closePoints: List<Point>) = TransactionInfo(
         vehicle!!.id,
-        origin!!.plaza!!.id,
+        origin!!.plaza.id,
         origin!!.timestamp.dateTimeParsed(),
         openPoints.map { it.mapForApi() },
-        destination!!.plaza!!.id,
+        destination!!.plaza.id,
         destination!!.timestamp.dateTimeParsed(),
        closePoints.map { it.mapForApi() }
 )

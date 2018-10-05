@@ -60,7 +60,8 @@ class GeofencingInteractorImpl(
         val activeTollplazas = tollingSystemDatabase.TollingDao().findActive()
 
         suspendCancellableCoroutine { continuation ->
-            mGeofencingClient.removeGeofences(activeTollplazas.map { "${it.id}" })?.run {
+            if(activeTollplazas.isNotEmpty())
+                mGeofencingClient.removeGeofences(activeTollplazas.map { "${it.id}" })?.run {
                 addOnSuccessListener { ret ->
                     launch{
                                 tollingSystemDatabase.TollingDao().update(*(activeTollplazas.map { it.active = false; it }.toTypedArray()))
@@ -68,7 +69,8 @@ class GeofencingInteractorImpl(
                     }
                 }
                 addOnFailureListener { continuation.resumeWithException(it) }
-            }
+            }else
+                continuation.resume(Unit)
         }
     }
 
