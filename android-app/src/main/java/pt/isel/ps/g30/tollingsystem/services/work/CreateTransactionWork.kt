@@ -55,6 +55,7 @@ class CreateTransactionWork : Worker() {
                 val dbTransaction = createdTransaction.let {
                     TollingTransaction(
                             it.id,
+                            it.state,
                             transaction.userId,
                             vehicle,
                             openingPlaza,

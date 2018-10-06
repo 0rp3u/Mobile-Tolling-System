@@ -55,12 +55,22 @@ class NotificationRecyclerViewAdapter(val listener: (Notification) -> Unit) : Re
         }
 
         fun showTransactionPaidItemView(itemView: View, notification: Notification){
-            itemView.description.text = "transaction from ${notification.transaction?.origin?.name} to ${notification.transaction?.destination?.name} has been paid"
+
+            if(notification.transaction?.origin?.openToll == true){
+                itemView.description.text = "Passage on ${notification.transaction?.origin?.name} has been paid"
+            }else {
+                itemView.description.text = "transaction from ${notification.transaction?.origin?.name} to ${notification.transaction?.destination?.name}"
+            }
+
             itemView.image.imageResource = R.drawable.ic_toll_green
         }
 
         fun showTransactionDetectedItemView(itemView: View, notification: Notification){
-            itemView.description.text = "transaction from ${notification.transaction?.origin?.name} to ${notification.transaction?.destination?.name}"
+            if(notification.transaction?.origin?.openToll == true){
+                itemView.description.text = "Passed on ${notification.transaction?.origin?.name}"
+            }else {
+                itemView.description.text = "transaction from ${notification.transaction?.origin?.name} to ${notification.transaction?.destination?.name}"
+            }
             itemView.image.imageResource = notification.transaction?.vehicle!!.getIconResource()
 
         }

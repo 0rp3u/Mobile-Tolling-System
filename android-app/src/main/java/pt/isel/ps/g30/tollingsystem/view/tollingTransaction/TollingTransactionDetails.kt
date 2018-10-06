@@ -9,10 +9,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_tolling_transaction_details.*
-import kotlinx.android.synthetic.main.activity_transaction_info.*
-import kotlinx.android.synthetic.main.item_vehicle.*
+import kotlinx.android.synthetic.main.template_transaction_info.*
 import kotlinx.android.synthetic.main.template_transaction_details.*
-import org.jetbrains.anko.image
 import org.jetbrains.anko.imageResource
 import pt.isel.ps.g30.tollingsystem.R
 import pt.isel.ps.g30.tollingsystem.data.database.model.TollingTransaction
@@ -65,10 +63,11 @@ class TollingTransactionDetails : BaseActivity<TollingTransactionDetailsPresente
         val originLatLong = tollingTransaction.origin.let { LatLng(it.lat, it.Lng) }
         val destinationLatLong = tollingTransaction.destination.let { LatLng(it.lat, it.Lng) }
         map.Transaction_details.background.alpha = 130
+        map.upper_transaction_info.background.alpha = 130
 
 
         paid_amount.text = "paid: ${tollingTransaction.paid ?: "WAITING"}"
-        vehicle_plate_text_view.text = tollingTransaction.vehicle.licensePlate
+        license_plate.text = tollingTransaction.vehicle.licensePlate
         vehicle_tare.imageResource = tollingTransaction.vehicle.getIconResource()
 
         if(tollingTransaction.origin == tollingTransaction.destination){

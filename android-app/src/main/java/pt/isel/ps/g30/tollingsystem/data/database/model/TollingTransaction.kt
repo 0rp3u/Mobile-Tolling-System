@@ -12,6 +12,9 @@ data class TollingTransaction(
         @PrimaryKey
         var id: Int=-1,
 
+        @ColumnInfo(name = "state")
+        val STATE: TransactionState,
+
         @ColumnInfo(name = "user_id")
         val userId: Int,
 

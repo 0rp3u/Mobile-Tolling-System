@@ -21,7 +21,7 @@ interface VehicleDao {
     fun findActive(): Vehicle?
 
     @Update()
-    fun update(vehicle: Vehicle): Int
+    fun update(vararg vehicle: Vehicle): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg vehicles:Vehicle): List<Long>

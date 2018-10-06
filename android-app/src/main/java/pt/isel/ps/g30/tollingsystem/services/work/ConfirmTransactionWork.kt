@@ -45,7 +45,7 @@ class ConfirmTransactionWork : Worker() {
 
                 apiService.confirmTollingTransaction(
                         transactionId,
-                        transaction.let { ApiTransaction(it.id,it.vehicle.id, it.origin.id, it.originTimestamp.dateTimeParsed(), it.destination.id, it.destTimestamp.dateTimeParsed()) }
+                        transaction.let { ApiTransaction(it.id, it.STATE, it.userId, it.vehicle.id, it.origin.id, it.originTimestamp.dateTimeParsed(), it.destination.id, it.destTimestamp.dateTimeParsed()) }
                 ).await()
 
                 tollingSystemDatabase.TollingTransactionDao().updateTransaction(transaction)

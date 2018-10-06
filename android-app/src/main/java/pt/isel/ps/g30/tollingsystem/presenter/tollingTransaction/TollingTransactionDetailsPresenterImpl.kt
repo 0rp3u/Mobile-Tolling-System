@@ -28,7 +28,6 @@ class TollingTransactionDetailsPresenterImpl(
                 val Transaction = interactor.getTollingTransaction(TransactionId).await()
                 view?.showTransaction(Transaction)
                 view?.hideLoadingIndicator()
-                view?.showDoneMessage()
 
             }catch (e: Throwable){
                 Log.d(TAG, e.message)

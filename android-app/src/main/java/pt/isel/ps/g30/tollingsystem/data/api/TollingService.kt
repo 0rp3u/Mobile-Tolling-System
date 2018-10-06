@@ -15,10 +15,10 @@ interface TollingService {
     fun getNearPlazas(position : LatLong): Deferred<List<TollingPlaza>>
 
     @GET("tolls")
-    fun getAllPlazas(): Deferred<List<TollingPlaza>>
+    fun getAllPlazas(@Query("date") date:String? = null): Deferred<List<TollingPlaza>>
 
     @GET("vehicles")
-    fun getVehicleList(): Deferred<List<Vehicle>>
+    fun getVehicleList(@Query("date") date:String? = null): Deferred<List<Vehicle>>
 
     @POST("tolls/{id}/verify")
     fun verifyTollPassage(id: Int, @Body passageInfo: List<Point>): Deferred<Float>
@@ -39,16 +39,16 @@ interface TollingService {
     fun getVehicleDetails(@Path("id") id: Int): Deferred<Vehicle>
 
     @GET("vehicles/{id}/transaction")
-    fun getVehicleTransactions(@Path("id") id: Int): Deferred<List<TollingTransaction>>
+    fun getVehicleTransactions(@Path("id") id: Int,@Query("date") date:String? = null): Deferred<List<TollingTransaction>>
 
     @GET("transactions")
-    fun getTransactionList(): Deferred<List<TollingTransaction>>
+    fun getTransactionList(@Query("date") date:String? = null): Deferred<List<TollingTransaction>>
 
     @GET("transactions/closed")
-    fun getClosedTransactionList(): Deferred<List<TollingTransaction>>
+    fun getClosedTransactionList(@Query("date") date:String? = null): Deferred<List<TollingTransaction>>
 
     @GET("transactions/open")
-    fun getOpenTransactionList(): Deferred<List<TollingTransaction>>
+    fun getOpenTransactionList(@Query("date") date:String? = null): Deferred<List<TollingTransaction>>
 
 
 }

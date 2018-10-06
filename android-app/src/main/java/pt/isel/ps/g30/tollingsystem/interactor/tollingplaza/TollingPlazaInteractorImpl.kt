@@ -9,7 +9,7 @@ import pt.isel.ps.g30.tollingsystem.data.database.model.TollingPlaza
 class TollingPlazaInteractorImpl(private val tollingSystemDatabase: TollingSystemDatabase, private val tollingService: TollingService) : TollingPlazaInteractor {
 
     override  suspend fun getTollPlazaList() : Deferred<List<TollingPlaza>>{
-        return async { tollingSystemDatabase.TollingDao().findActive() }
+        return async { tollingSystemDatabase.TollingDao().findAll()}
     }
 
     override  suspend fun getActiveTollPlazaList() : Deferred<List<TollingPlaza>>{

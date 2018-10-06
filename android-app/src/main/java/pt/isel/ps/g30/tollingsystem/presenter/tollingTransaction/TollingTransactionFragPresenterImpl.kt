@@ -32,7 +32,6 @@ class TollingTransactionFragPresenterImpl(
                 tollingTransactionList = interactor.getVehicleTransactionList(vehicleId).await()
                 view?.showTransactionList(tollingTransactionList)
                 view?.hideLoadingIndicator()
-                view?.showDoneMessage()
 
             }catch (e: Throwable){
                 Log.d(TAG, e.message)

@@ -22,7 +22,7 @@ interface TollingTransactionDao {
     fun findByVehicle(vehicleId: Int): List<TollingTransaction>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateTransaction(transaction: TollingTransaction)
+    fun updateTransaction(vararg transaction: TollingTransaction)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg transactions: TollingTransaction): List<Long>
