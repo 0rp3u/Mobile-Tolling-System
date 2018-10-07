@@ -8,7 +8,7 @@ spring:
 debug: false
 trace: false
 server:
-  port: 8081
+  port: 8080
 
 ---
 
@@ -28,14 +28,10 @@ spring:
         show_sql: false
         format_sql: true
         temp.use_jdbc_metadata_defaults: false
-
 logging:
   level:
     org.hibernate:
-        type: ERROR
-
-logging:
-  level:
+      type: ERROR
     org.springframework.web:
       filter:
         CommonsRequestLoggingFilter:

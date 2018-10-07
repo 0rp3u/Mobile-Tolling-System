@@ -48,7 +48,6 @@ class TollingTransactionInteractorImpl(
             notificationInteractor.sendStartTransactionNotification(tollingTransaction)
 
             if(origin.plaza.openToll){
-                delay(1000)
                 finishTransaction(origin).join()
             }
 

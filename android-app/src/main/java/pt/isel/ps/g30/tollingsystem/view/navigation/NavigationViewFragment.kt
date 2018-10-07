@@ -104,7 +104,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                 .setView(dialogView)
                 .setPositiveButton("yes") { dialogInterface, i ->
 
-                    if(temporaryTransaction?.origin != null)
+                    if(temporaryTransaction?.origin != null && temporaryTransaction?.origin?.plaza?.openToll == false)
                         presenter.finishTransaction(tollingPlaza)
                     else
                         presenter.startTransaction(tollingPlaza)
@@ -256,6 +256,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
     /** Transactions **/
 
     override fun showActiveTransaction(transaction: UnvalidatedTransactionInfo) {
+        if(transaction.origin?.plaza?.openToll == true) return
         Log.d(TAG, "show transaction view ${transaction.vehicle} : ${transaction.origin} -> ${transaction.destination}")
         val icon = this@NavigationViewFragment.requireContext().BitmapDescriptorFactoryfromVector(R.drawable.ic_toll_green)
         transaction.let {

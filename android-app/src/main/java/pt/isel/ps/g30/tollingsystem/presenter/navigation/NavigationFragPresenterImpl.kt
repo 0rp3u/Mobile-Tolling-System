@@ -180,7 +180,6 @@ class NavigationFragPresenterImpl(
             view?.showLoadingIndicator()
             try {
                 val activeVehicle = vehiclesInteractor.getActiveVehicle().await()
-
                 activeVehicle ?: throw Exception("No active Vehicle")
                 tollingInteractor.finishTransaction(TollingPassage(activeVehicle.userId,activeVehicle, tollingPlaza))
                 view?.hideLoadingIndicator()

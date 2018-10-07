@@ -49,7 +49,7 @@ class TransactionController(
     @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.GET], value = "")
     fun getTransactions(
-            @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss.SSS") date: Date?
+            @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd kk:mm:ss.SSS") date: Date?
     ): ResponseEntity<List<OutputTransaction>> {
         val userId = authService.authenticatedUser().id
         val user = userService.getUserByid(userId)
