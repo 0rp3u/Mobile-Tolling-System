@@ -313,12 +313,77 @@ ST_MakePolygon(
 ), 4326)
 );
 
+
+insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude, created, entry_area, exit_area)
+values (900, 'Sete Rios Fake', false, 'Brisa', -9.166358, 38.740383,'2018-09-3 10:00:00',
+ST_SetSRID(
+
+ST_MakePolygon(
+    ST_MakeLine(
+        ARRAY[
+
+		ST_MakePoint(-9.165816307067871, 38.740946231709216),
+		ST_MakePoint(-9.165515899658203, 38.74010939542417),
+		ST_MakePoint(-9.16285514831543, 38.74041065761647),
+		ST_MakePoint(-9.16332721710205, 38.74114707095849),
+		ST_MakePoint(-9.165816307067871, 38.740946231709216)
+        ]
+    )
+), 4326),
+ST_SetSRID(
+
+ST_MakePolygon(
+    ST_MakeLine(
+        ARRAY[
+
+		ST_MakePoint(-9.166996479034424, 38.74056128823605),
+		ST_MakePoint(-9.168970584869385, 38.73965749975282),
+		ST_MakePoint(-9.168455600738524, 38.73918886418447),
+		ST_MakePoint(-9.16656732559204, 38.739858342626455),
+		ST_MakePoint(-9.166996479034424, 38.74056128823605)
+        ]
+    )
+)
+, 4326)
+);
+
+insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude, created, entry_area, exit_area)
+values (1000, 'Benfica Fake', false, 'Brisa', -9.199633598327637, 38.74437715795277,'2018-09-3 10:00:00',
+ST_SetSRID(
+ST_MakePolygon(
+    ST_MakeLine(
+        ARRAY[
+
+		ST_MakePoint(-9.199204444885252, 38.744577987552525),
+		ST_MakePoint(-9.199247360229492, 38.74400896888619),
+		ST_MakePoint(-9.19731616973877, 38.74394202521559),
+		ST_MakePoint(-9.197230339050291, 38.74451104441538),
+		ST_MakePoint(-9.199204444885252, 38.744577987552525)
+        ]
+    )
+), 4326),
+ST_SetSRID(
+ST_MakePolygon(
+    ST_MakeLine(
+        ARRAY[
+
+		ST_MakePoint(-9.199934005737305, 38.74464493062691),
+		ST_MakePoint(-9.201393127441406, 38.74481228803831),
+		ST_MakePoint(-9.201521873474121, 38.74431021462734),
+		ST_MakePoint(-9.199891090393066, 38.74420979952151),
+		ST_MakePoint(-9.199934005737305, 38.74464493062691)
+        ]
+    )
+)
+, 4326)
+);
+
 /* transactions */
 insert into mts_transaction(id, state, vehicle, updated)
 values (100, 'INCOMPLETE', 200, '2018-09-02 06:00:00');
 
-insert into mts_transaction(id, state, vehicle)
-values (200, 'CONFIRMED', 300);
+insert into mts_transaction(id, state, vehicle, updated)
+values (200, 'CONFIRMED', 300, '2018-10-02 06:00:00');
 
 /* events */
 
@@ -330,3 +395,10 @@ values ('BEGIN', '2018-06-23 06:00:00', 100, 200);
 
 insert into mts_event(type, event_date, toll_id, transaction_id)
 values ('END', '2018-06-25 08:00:00', 100, 200);
+
+insert into mts_transaction_event(transaction_id, event_toll_id, event_transaction_id, event_type)
+values (100, 100, 100, 'BEGIN');
+insert into mts_transaction_event(transaction_id, event_toll_id, event_transaction_id, event_type)
+values (200, 100, 200, 'BEGIN');
+insert into mts_transaction_event(transaction_id, event_toll_id, event_transaction_id, event_type)
+values (200, 100, 200, 'END');
