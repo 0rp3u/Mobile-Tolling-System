@@ -43,18 +43,22 @@ data class Event(
         val enforcement_interceptions: Int?,
 
         @Column
+        val enforcement_azimuth_ratio: Float?,
+
+        @Column
         @CreationTimestamp
         val created: Date = Date()
 )
 
-fun createEvent(transaction: Transaction, toll: Toll, timestamp: Date, type: EventType, enforcement_sample: Int?, enforcement_interceptions: Int?): Event{
+fun createEvent(transaction: Transaction, toll: Toll, timestamp: Date, type: EventType, enforcement_sample: Int?, enforcement_interceptions: Int?, enforcement_azimuth_ratio: Float?): Event{
         return Event(
                 tolltransactionId = pt.isel.ps.LI61N.g30.server.model.domain.TollTransactionId(transaction_id = transaction.id, toll_id = toll.id, type = type),
                 toll = toll,
                 transaction = transaction,
                 timestamp = timestamp,
                 enforcement_sample = enforcement_sample,
-                enforcement_interceptions = enforcement_interceptions
+                enforcement_interceptions = enforcement_interceptions,
+                enforcement_azimuth_ratio = enforcement_azimuth_ratio
         )
 }
 

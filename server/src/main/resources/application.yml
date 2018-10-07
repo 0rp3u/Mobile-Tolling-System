@@ -21,16 +21,25 @@ spring:
     password: postgres
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
-        show_sql: true
+        show_sql: false
         format_sql: true
         temp.use_jdbc_metadata_defaults: false
 
 logging:
   level:
-    org:
-      hibernate:
-        type: trace
+    org.hibernate:
+        type: ERROR
+
+logging:
+  level:
+    org.springframework.web:
+      filter:
+        CommonsRequestLoggingFilter:
+          type: DEBUG
+
+logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+spring.output.ansi.enabled: ALWAYS

@@ -20,6 +20,9 @@ import java.io.PrintWriter
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import org.springframework.web.filter.CommonsRequestLoggingFilter
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -56,5 +59,14 @@ class SecurityConfigurer(
                     //.permitAll()
                     .and()
                 .csrf().disable()
+    }
+
+    @Bean
+    fun requestLoggingFilter(): CommonsRequestLoggingFilter {
+        val loggingFilter = CommonsRequestLoggingFilter()
+        loggingFilter.setIncludeClientInfo(true)
+        loggingFilter.setIncludeQueryString(true)
+        loggingFilter.setIncludePayload(true)
+        return loggingFilter
     }
 }
