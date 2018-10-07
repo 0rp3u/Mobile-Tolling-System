@@ -14,25 +14,25 @@ data class OutputTransaction(
         var billing: Double?,
         val begin_toll: Long,
         @JsonFormat
-        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd kk:mm:ss.SSS")
         val begin_timestamp: Date,
         val end_toll: Long,
         @JsonFormat
-        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd kk:mm:ss.SSS")
         val end_timestamp: Date,
         val amendments: MutableList<TransactionAmendment>,
         @JsonFormat
-        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd kk:mm:ss.SSS")
         val created: Date?,
         @JsonFormat
-        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd kk:mm:ss.SSS")
         var updated: Date?
 )
 
 fun createOutputTransaction(transaction: Transaction): OutputTransaction{
     return with(transaction){
-        val firstEvent = getFirstEvent(event)
-        val lastEvent = getLastEvent(event)
+        val firstEvent = getFirstEvent(event) ?: throw Exception("Transaction with no event")
+        val lastEvent = getLastEvent(event) ?: throw Exception("Transaction with no event")
 
         OutputTransaction(
                 id,

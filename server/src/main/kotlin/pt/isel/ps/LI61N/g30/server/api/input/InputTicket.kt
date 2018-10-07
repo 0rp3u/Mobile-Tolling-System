@@ -8,6 +8,6 @@ data class InputTicket(
         val amount: Double,
         val reason: String?,
         @JsonFormat
-        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd kk:mm:ss.SSS")
         val timestamp: Date
 )

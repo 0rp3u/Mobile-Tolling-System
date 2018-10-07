@@ -9,12 +9,12 @@ data class InputTransaction(
         val vehicle_id: Long,
         val begin_toll: Long,
         @JsonFormat
-        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd kk:mm:ss.SSS")
         val begin_timestamp: Date,
         val begin_geoLocations: Array<TollPassageInfo>?,
         val end_toll: Long,
         @JsonFormat
-        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss.SSS")
+        (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd kk:mm:ss.SSS")
         val end_timestamp: Date,
         val end_geoLocations: Array<TollPassageInfo>?
 )

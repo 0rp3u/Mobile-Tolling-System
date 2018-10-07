@@ -36,7 +36,7 @@ class TollController(
     @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.GET], value="")
     fun getAllTolls(
-           @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss.SSS") date: Date?
+           @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd kk:mm:ss.SSS") date: Date?
     ): ResponseEntity<List<Toll>>{
         return ResponseEntity.ok( tollService.getTolls(date))
     }

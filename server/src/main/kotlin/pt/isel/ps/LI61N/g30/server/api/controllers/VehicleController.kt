@@ -47,7 +47,7 @@ class VehicleController(
     @Transactional(readOnly = true)
     @RequestMapping(method = [RequestMethod.GET])
     fun getUserVehicles(
-            @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss.SSS") date: Date?
+            @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd kk:mm:ss.SSS") date: Date?
     ): ResponseEntity<List<Vehicle>> {
         val userId = authService.authenticatedUser().id
         val user = userService.getUserByid(userId)
