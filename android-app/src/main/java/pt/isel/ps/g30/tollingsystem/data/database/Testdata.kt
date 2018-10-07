@@ -9,7 +9,7 @@ import java.util.*
 fun insertTestdata(database: TollingSystemDatabase){
 
     launch{
-        database.UserDao().findCurrent() ?: database.UserDao().insert(User(200,"david","orpheu", true))
+        //database.UserDao().findCurrent() ?: database.UserDao().insert(User(200,"david","orpheu", true))
 //        database.VehicleDao().insert(
 //                Vehicle(1, "14-AR-43",  Tare.Classe_1, 200),
 //                Vehicle(2,"44-EW-82",  Tare.Classe_2,200),

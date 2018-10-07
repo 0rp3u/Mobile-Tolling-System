@@ -41,17 +41,19 @@ class AuthInteractorImpl(
     }
 
     override suspend fun verifyUserAuthenticationAndSyncronization(): Deferred<User> {
-
-        val user = userInteractor.getCurrentUser().await()
         val deferred = CompletableDeferred<User>()
-        if (user != null) {
-            syncrhonizationInteractor.VerifySynchronization()
-            deferred.complete(user)
-            return deferred
-        }
+        return try {
+            val user = userInteractor.getCurrentUser().await()
+            if (user != null) {
+                syncrhonizationInteractor.VerifySynchronization()
+                deferred.complete(user)
+                deferred
+            }else throw Exception("No user Login")
+        }catch(e: Exception){
+            deferred.completeExceptionally(e)
+            deferred
 
-        deferred.completeExceptionally(Exception("No user Login"))
-        return deferred
+        }
     }
 
     override fun logout() = launch {

@@ -37,17 +37,19 @@ class SynchronizeUserDataWork : Worker() {
         injectDependencies()
 
         return runBlocking {
-            val auth = apiService.authenticate().await()
+            try{
+                val auth = apiService.authenticate().await()
 
-            if (auth.isSuccessful && auth.body() != null){
-                try{
+                if (auth.isSuccessful && auth.body() != null){
                     synchronizationInteractor.SynchronizeUserData(auth.body()!!)
-                }catch (e:Exception){
-                    return@runBlocking Result.RETRY
-                }
-                return@runBlocking Result.SUCCESS
-            }else
-                return@runBlocking Result.FAILURE
+
+                    return@runBlocking Result.SUCCESS
+                }else
+                    return@runBlocking Result.FAILURE
+
+            }catch (e:Exception){
+                return@runBlocking Result.RETRY
+            }
 
         }
 
