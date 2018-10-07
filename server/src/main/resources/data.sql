@@ -49,6 +49,9 @@ insert into mts_vehicle(id, plate, tier, user_id)
 values (400, 'DD-00-00', 'Classe_1', 200);
 
 insert into mts_vehicle(id, plate, tier, user_id)
+values (1100, 'DA-00-00', 'Classe_1', 200);
+
+insert into mts_vehicle(id, plate, tier, user_id)
 values (500, 'EE-00-00', 'Classe_2', 200);
 
 insert into mts_vehicle(id, plate, tier, user_id)
@@ -246,8 +249,8 @@ ST_MakePolygon(
 ), 4326)
 );
 
-insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude,created, entry_area, exit_area)
-values (700, 'Ponte 25 de abril', true, 'Luso Ponte', -9.173930, 38.675975,'2018-09-3 10:00:00',
+insert into mts_toll(id, name, open_toll, concession, geolocation_longitude, geolocation_latitude, azimuth, created, entry_area, exit_area)
+values (700, 'Ponte 25 de abril', true, 'Luso Ponte', -9.173930, 38.675975, 6.05737304327142, '2018-09-3 10:00:00',
 ST_SetSRID(
 ST_MakePolygon(
     ST_MakeLine(

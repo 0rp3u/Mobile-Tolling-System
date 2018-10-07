@@ -15,7 +15,7 @@ data class Transaction(
         var id: Long = -1,
 
         @Enumerated(EnumType.STRING)
-        var state: TransactionState = TransactionState.INCOMPLETE,
+        var state: TransactionState = TransactionState.AWAITING_CONFIRMATION,
 
         @ManyToOne
         @JoinColumn(name = "vehicle", foreignKey = ForeignKey(name = "VEHICLE_FK"))
@@ -51,5 +51,6 @@ enum class TransactionState{
     INCOMPLETE,
     AWAITING_CONFIRMATION,
     CONFIRMED,
+    CLOSED,
     CANCELED
 }

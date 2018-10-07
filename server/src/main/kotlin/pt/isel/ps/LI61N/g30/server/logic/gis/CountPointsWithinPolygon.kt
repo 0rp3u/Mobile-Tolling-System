@@ -20,10 +20,19 @@ object CountPointsWithinPolygon{
                     "as lookup(_point)" +
                     ") as temp"
 
-    fun getQuery(geoLocations: Array<TollPassageInfo>, area: Area) =
-            query
-                    .replace("_area", area.value)
-                    .replace("_points_collection", generateQueryPoints(geoLocations))
+//    fun getQuery(geoLocations: Array<TollPassageInfo>, area: Area) =
+//            query
+//                    .replace("_area", area.value)
+//                    .replace("_points_collection", generateQueryPoints(geoLocations))
+
+    fun getQuery(geoLocations: Array<TollPassageInfo>, area: Area): String{
+        val q =query
+                .replace("_area", area.value)
+                .replace("_points_collection", generateQueryPoints(geoLocations))
+
+        return q
+    }
+
 
     private fun generateQueryPoints(geoLocations: Array<TollPassageInfo>): String {
        val a =  geoLocations.joinToString { "(ST_SetSRID(ST_MakePoint(${it.geoLocation.longitude},${it.geoLocation.latitude}), 4326))"}//," }.dropLast(1)

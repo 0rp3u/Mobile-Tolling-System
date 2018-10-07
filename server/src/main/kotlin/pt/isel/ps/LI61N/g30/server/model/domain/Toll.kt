@@ -49,7 +49,7 @@ data class Toll(
         val geolocation_longitude: Float,
 
         @Column(name="azimuth", unique = true, nullable = true)
-        val azimuth: Float?,
+        val azimuth: Double?,
 
         @Column(name="region", unique = true, nullable = true)
         val region: String?,
