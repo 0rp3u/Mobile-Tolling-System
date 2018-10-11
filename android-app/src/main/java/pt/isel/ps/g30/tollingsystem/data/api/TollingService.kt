@@ -11,8 +11,8 @@ interface TollingService {
     @GET("users/authentication/")
     fun authenticate(): Deferred<Response<User>>
 
-    @GET("tolls/{position}")
-    fun getNearPlazas(position : LatLong): Deferred<List<TollingPlaza>>
+    @GET("tolls/{geoLocation}")
+    fun getNearPlazas(@Path("geoLocation") position : LatLong): Deferred<List<TollingPlaza>>
 
     @GET("tolls")
     fun getAllPlazas(@Query("date") date:String? = null): Deferred<List<TollingPlaza>>
@@ -21,7 +21,7 @@ interface TollingService {
     fun getVehicleList(@Query("date") date:String? = null): Deferred<List<Vehicle>>
 
     @POST("tolls/{id}/verify")
-    fun verifyTollPassage(id: Int, @Body passageInfo: List<Point>): Deferred<Float>
+    fun verifyTollPassage(@Path("id") id: Int, @Body passageInfo: List<Point>): Deferred<Float>
 
     @POST("transactions/create")
     fun createTollingTransaction(@Body transaction: TransactionInfo): Deferred<TollingTransaction>

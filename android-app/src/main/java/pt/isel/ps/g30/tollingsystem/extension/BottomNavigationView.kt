@@ -6,7 +6,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 /**
- * get the current checked item position
+ * get the current checked item geoLocation
  *
  * @return index of item, start from 0.
  */

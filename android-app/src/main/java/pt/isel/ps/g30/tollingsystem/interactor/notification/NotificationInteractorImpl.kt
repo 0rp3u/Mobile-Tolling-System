@@ -73,8 +73,8 @@ class NotificationInteractorImpl(private val tollingSystemDatabase: TollingSyste
         builder.setSmallIcon(carIcon)
                 .setLargeIcon(BitmapFactory.decodeResource(TollingSystemApp.instance.resources, carIcon))
                 .setColor(Color.RED)
-                .setContentTitle("started transaction")
-                .setContentText("started transaction on ${transaction.origin?.plaza?.name}")
+                .setContentTitle("detected Passage")
+                .setContentText("detected Passage on ${transaction.origin?.plaza?.name}")
 
         val extras = Bundle().also { it.putInt(MainActivity.SELECTED_ITEM_KEY, 2) }
 

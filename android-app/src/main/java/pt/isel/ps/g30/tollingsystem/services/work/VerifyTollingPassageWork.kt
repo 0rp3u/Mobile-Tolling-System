@@ -36,32 +36,34 @@ class VerifyTollingPassageWork : Worker() {
      * This will be called whenever work manager run the work.
      */
     override fun doWork(): Result {
-        injectDependencies()
+        return try {
+            injectDependencies()
 
-        runBlocking {
-           tollingSystemDatabase.TollingPassageDao().findAllPending().forEach {
-               val passagePoints = tollingSystemDatabase.TollingPassageDao()
-                       .findPassagePoints(it.id)
-                       .map {point-> point.mapForApi() }
+            runBlocking {
+                tollingSystemDatabase.TollingPassageDao().findAllPending().forEach {
+                    val passagePoints = tollingSystemDatabase.TollingPassageDao()
+                            .findPassagePoints(it.id)
+                            .map { point -> point.mapForApi() }
 
 
-               val confidence = apiService.verifyTollPassage(it.plaza.id,passagePoints).await()
+                    val confidence = apiService.verifyTollPassage(it.plaza.id, passagePoints).await()
 
-               if (confidence > 0.8) {
-                   val currentTransaction = tollingTransactionInteractor.getCurrentTransactionTransaction().await()
+                    if (confidence > 0.8) {
+                        val currentTransaction = tollingTransactionInteractor.getCurrentTransactionTransaction().await()
 
-                   if (currentTransaction.origin != null) {
-                       tollingTransactionInteractor.finishTransaction(it)
+                        if (currentTransaction.origin != null) {
+                            tollingTransactionInteractor.finishTransaction(it)
 
-                   } else {
-                       tollingTransactionInteractor.startTollingTransaction(it).await()
-                   }
-
-               }
-           }
-
+                        } else {
+                            tollingTransactionInteractor.startTollingTransaction(it).await()
+                        }
+                    }
+                }
+                return@runBlocking Result.SUCCESS
+            }
+        }catch (e: Exception){
+            return Result.RETRY
         }
 
-        return Result.SUCCESS
     }
 }

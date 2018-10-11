@@ -4,8 +4,8 @@ import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
 data class Point(
-        val position : LatLng,
+        val geoLocation : LatLng,
         val bearing: Float,
         val accuracy: Float,
-        val timeStamp: Long
+        val timestamp: Long
 )

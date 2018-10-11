@@ -65,7 +65,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
     @SuppressLint("MissingPermission")
     override fun mapReady() {
-        askPermission(Manifest.permission.ACCESS_FINE_LOCATION) {
+        askPermission(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) {
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this@NavigationViewFragment.requireContext())
 
             mMap.isMyLocationEnabled = true
