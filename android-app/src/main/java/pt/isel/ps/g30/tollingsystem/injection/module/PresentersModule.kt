@@ -5,6 +5,7 @@ import dagger.Provides
 import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.geofencing.GeofencingInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.syncronization.SynchronizationInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingplaza.TollingPlazaInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.tollingTransaction.TollingTransactionInteractor
 import pt.isel.ps.g30.tollingsystem.interactor.vehicle.VehicleInteractor
@@ -52,8 +53,8 @@ class PresentersModule {
             = VehicleDetailsPresenterImpl(authInteractor, interactor, transactionInteractor)
 
     @Provides
-    fun provideNotificationPresenter(authInteractor: AuthInteractor, interactor: NotificationInteractor): NotificationPresenter
-            = NotificationPresenterImpl(authInteractor, interactor)
+    fun provideNotificationPresenter(authInteractor: AuthInteractor, interactor: NotificationInteractor, synchronizationInteractor: SynchronizationInteractor): NotificationPresenter
+            = NotificationPresenterImpl(authInteractor, interactor, synchronizationInteractor)
 
     @Provides
     fun provideMainPresenter(authInteractor: AuthInteractor, interactor: NotificationInteractor): MainPresenter

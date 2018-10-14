@@ -1,5 +1,6 @@
 package pt.isel.ps.g30.tollingsystem.presenter.notification
 
+import android.util.Log
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
@@ -8,12 +9,15 @@ import kotlinx.coroutines.experimental.delay
 import pt.isel.ps.g30.tollingsystem.interactor.notification.NotificationInteractor
 import pt.isel.ps.g30.tollingsystem.data.database.model.Notification
 import pt.isel.ps.g30.tollingsystem.interactor.auth.AuthInteractor
+import pt.isel.ps.g30.tollingsystem.interactor.syncronization.SynchronizationInteractor
 import pt.isel.ps.g30.tollingsystem.presenter.base.BasePresenterImpl
 import pt.isel.ps.g30.tollingsystem.view.notifications.NotificationView
+import java.lang.Exception
 
 class NotificationPresenterImpl(
         authInteractor: AuthInteractor,
-        private val interactor: NotificationInteractor
+        private val interactor: NotificationInteractor,
+        private val SyncronizeInteractor: SynchronizationInteractor
 ) : BasePresenterImpl<NotificationView>(authInteractor), NotificationPresenter{
 
     private val jobs = Job()
@@ -22,8 +26,13 @@ class NotificationPresenterImpl(
         launch (UI, parent = jobs) {
             view?.showLoadingIndicator()
             try {
+                launch {
+                    try{
+                        SyncronizeInteractor.synchronizeTransactionData()
+                    }catch (e:Exception){ Log.d("sync", e.localizedMessage)}
+                }.join()
+
                 val notificationList = interactor.getNotificationListLiveData().await()
-                delay(1000)
                 view?.showNotificationList(notificationList)
                 view?.hideLoadingIndicator()
 

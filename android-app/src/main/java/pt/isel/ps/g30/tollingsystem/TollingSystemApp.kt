@@ -24,7 +24,7 @@ open class TollingSystemApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        setupLeakCanary()
+        //setupLeakCanary()
         instance = this
     }
 

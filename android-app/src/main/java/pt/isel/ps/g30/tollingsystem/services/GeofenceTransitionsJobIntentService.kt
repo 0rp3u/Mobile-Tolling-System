@@ -173,12 +173,13 @@ class GeofenceTransitionsJobIntentService : JobIntentService(){
 
     @SuppressLint("MissingPermission")
     private fun handleGeofenceEntering(){
+        locations.removeAll { true }
         val locationRequest = LocationRequest()
                 .setPriority(PRIORITY_HIGH_ACCURACY)
-                .setInterval(200)
-                .setMaxWaitTime(500)
+                .setInterval(100)
+                .setMaxWaitTime(400)
                 .setExpirationTime(1000 * 60 * 10)
-                .setFastestInterval(100)
+                .setFastestInterval(30)
                 .setExpirationDuration(1000*20)
 
 

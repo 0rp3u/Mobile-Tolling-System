@@ -20,6 +20,7 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
 
     companion object {
         val LASTUPDATE_KEY = "LASTUPDATE_KEY"
+        val LASTUPDATETRANSACTION_KEY = "LASTUPDATETRANSACTION_KEY"
     }
 
     override suspend fun VerifySynchronization() {
@@ -79,6 +80,13 @@ class SynchronizationInteractorImpl(private val tollingSystemDatabase: TollingSy
 
     }
 
+    override suspend fun synchronizeTransactionData() {
+        val lastUpdate = sharedPreferences.getString(LASTUPDATETRANSACTION_KEY,null) ?: sharedPreferences.getString(LASTUPDATE_KEY,null)
+        synchronizeTransactions(lastUpdate)
+        sharedPreferences.edit {
+            putString(LASTUPDATETRANSACTION_KEY, Date().dateTimeParsed())
+        }
+    }
 
     suspend fun synchronizePlazas(lastUpdate: String?){
         val apiPlazas = service.getAllPlazas(lastUpdate).await()

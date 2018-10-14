@@ -48,16 +48,17 @@ class VerifyTollingPassageWork : Worker() {
 
                     val confidence = apiService.verifyTollPassage(it.plaza.id, passagePoints).await()
 
-                    if (confidence > 0.8) {
+                    if (confidence > 0.7) {
                         val currentTransaction = tollingTransactionInteractor.getCurrentTransactionTransaction().await()
 
                         if (currentTransaction.origin != null) {
-                            tollingTransactionInteractor.finishTransaction(it)
+                            tollingTransactionInteractor.finishTransaction(it).join()
 
                         } else {
                             tollingTransactionInteractor.startTollingTransaction(it).await()
                         }
                     }
+                    tollingSystemDatabase.TollingPassageDao().delete(it)
                 }
                 return@runBlocking Result.SUCCESS
             }

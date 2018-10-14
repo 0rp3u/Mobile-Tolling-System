@@ -31,9 +31,9 @@ class GeofencingInteractorImpl(
                     .setCircularRegion(
                             it.lat,
                             it.Lng,
-                            150f //TODO
+                            250f
                     )
-                    .setExpirationDuration(24* 60 * 60 * 1000) //TODO
+                    .setExpirationDuration(24* 60 * 60 * 1000)
                     .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
                     .build() }
 

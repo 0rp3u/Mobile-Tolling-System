@@ -10,4 +10,6 @@ interface SynchronizationInteractor : BaseInteractor {
 
     suspend fun VerifySynchronization()
 
+    suspend fun synchronizeTransactionData()
+
 }

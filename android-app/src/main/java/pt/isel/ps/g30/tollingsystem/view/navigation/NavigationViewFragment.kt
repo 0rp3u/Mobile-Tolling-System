@@ -155,6 +155,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
 
         vehicleMarker?.remove()
         vehicleMarker = null
+        trackMode = false
 
         fab.setImageResource(R.drawable.ic_navigation_black_24dp)
         fab.setOnClickListener { view ->
@@ -201,7 +202,7 @@ class NavigationViewFragment : BaseMapViewFragment<NavigationFragPresenter, Navi
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
                                 CameraPosition.Builder()
                                         .target(vehicleMarker?.position)
-                                        .zoom(18f)
+                                        .zoom(17f)
                                         .tilt(90f)
                                         .bearing(it.bearing ?: 10f)
                                         .build()

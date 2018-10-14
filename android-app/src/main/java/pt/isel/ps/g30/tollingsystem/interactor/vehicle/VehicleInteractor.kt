@@ -18,6 +18,6 @@ interface VehicleInteractor : BaseInteractor {
 
     suspend fun setActiveVehicle(vehicle: Vehicle): Job
 
-    suspend fun removeActiveVehicle(vehicle: Vehicle): Deferred<Boolean> //TODO maybe not boolean
+    suspend fun removeActiveVehicle(vehicle: Vehicle): Deferred<Boolean>
 
 }
