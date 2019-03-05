@@ -31,7 +31,7 @@ Principal technologies used for the development of this project.
 
 [ISEL]: <https://www.isel.pt/en>
 [Kotlin]: <https://kotlinlang.org/>
-[Corroutines]: <https://kotlinlang.org/docs/reference/coroutines-overview.html/>
+[Coroutines]: <https://kotlinlang.org/docs/reference/coroutines-overview.html/>
 [Google play services]: <https://developers.google.com/android/guides/overview>
 [Room]: <https://developer.android.com/topic/libraries/architecture/room>
 [Work Manager]: <https://developer.android.com/topic/libraries/architecture/workmanager>
