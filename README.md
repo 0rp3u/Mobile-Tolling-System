@@ -2,6 +2,11 @@
 
 This application was developed as final project for the course of computer science at [ISEL].
 
+<a href="https://github.com/0rp3u/Mobile-Tolling-System/raw/master/Documentation/views_graph.png">
+<img src="https://github.com/0rp3u/Mobile-Tolling-System/raw/master/Documentation/views_graph.png">
+</a>
+
+
 The application explores the possibility of providing an alternative for OBU units used for tolling in Portugal, it lets the user:
 
 * Start tolling detection;
