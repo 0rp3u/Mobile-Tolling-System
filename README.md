@@ -10,7 +10,7 @@ The application explores the possibility of providing an alternative for OBU uni
 * Visualize history of tolls used;
 * Use multiple vehicles for tolling;
 * Receive notifications of interest;
-* Use funcionalities in offline mode.
+* Use functionalities in offline mode.
 
 ### 
 The source of data is provided from an API developed by my project colleague, its main responsibility is to do the geo-spatial calculations used for detection and for data persistence.
