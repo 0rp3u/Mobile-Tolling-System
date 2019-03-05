@@ -1,25 +1,41 @@
-# Mobile Tolling System
-Description
+### Mobile Tolling System
 
-## Getting Started
+This application was developed as final project for the course of computer science at [ISEL].
 
-### Version Control - Git
-As this project is being mirrored into two git repositories, the following configuration is advised.
+The application explores the possibility of providing an alternative for OBU units used for tolling in Portugal, it lets the user:
 
-```
-git clone <repo_hyperlink>
-git remote add all <repo_hyperlink>
-git remote set-url --add --push all <other_repo_hyperlink>
-git remote set-url --add --push all <repo_hyperlink>
-```
-Now you can push for the 2 repositories at once, using:
-```
-git push all master
-```
+* Start tolling detection;
+* Visualize current position and tolls detected;
+* Correct possible errors in detection;
+* Visualize history of tolls used;
+* Use multiple vehicles for tolling;
+* Receive notifications of interest;
+* Use funcionalities in offline mode.
 
-For checking if all is correctly configured use:
-```
-git remove -v
-//or for more advanced info
-git config -l | grep '^remote\.all'
-```
+### 
+The source of data is provided from an API developed by my project colleague, its main responsibility is to do the geo-spatial calculations used for detection and for data persistence.
+
+### Technologies
+Principal technologies used for the development of this project.
+
+| Technology | WHERE | README |
+| ------ | ------ | ------ |
+| [Kotlin] |App & Backend | Concise programming language that fully supports Android development |
+| [Corroutines] |App | Powerful library for asynchronous programing |
+| [Google play services] |App | Services that provide maps and geo-localization information  |
+| [Room] |App |  Library provides an abstraction layer over SQLite for data persistance on mobile device |
+| [Work Manager] |App | Android API for background scheduling that respects Android O background restrictions |
+| [Dagger] |App | Dependency injector |
+| [Leak Canary] |App | Memory leak detection library |
+| [MVP] |App | Architectural pattern used for responsibility separation |
+
+[ISEL]: <https://www.isel.pt/en>
+[Kotlin]: <https://kotlinlang.org/>
+[Corroutines]: <https://kotlinlang.org/docs/reference/coroutines-overview.html/>
+[Google play services]: <https://developers.google.com/android/guides/overview>
+[Room]: <https://developer.android.com/topic/libraries/architecture/room>
+[Work Manager]: <https://developer.android.com/topic/libraries/architecture/workmanager>
+[Dagger]: <https://google.github.io/dagger/>
+[Leak Canary]: <https://github.com/square/leakcanary>
+[MVP]: <https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter>
+
