@@ -21,9 +21,9 @@ Principal technologies used for the development of this project.
 | Technology | WHERE | README |
 | ------ | ------ | ------ |
 | [Kotlin] |App & Backend | Concise programming language that fully supports Android development |
-| [Corroutines] |App | Powerful library for asynchronous programing |
+| [Coroutines] |App | Powerful library for asynchronous programming |
 | [Google play services] |App | Services that provide maps and geo-localization information  |
-| [Room] |App |  Library provides an abstraction layer over SQLite for data persistance on mobile device |
+| [Room] |App |  Library provides an abstraction layer over SQLite for data persistence on mobile device |
 | [Work Manager] |App | Android API for background scheduling that respects Android O background restrictions |
 | [Dagger] |App | Dependency injector |
 | [Leak Canary] |App | Memory leak detection library |
