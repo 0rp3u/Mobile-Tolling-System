@@ -28,6 +28,7 @@ Principal technologies used for the development of this project.
 | [Kotlin] |App & Backend | Concise programming language that fully supports Android development |
 | [Coroutines] |App | Powerful library for asynchronous programming |
 | [Google play services] |App | Services ued to provide maps and geo-localization information  |
+| [Retrofit] |App | type safe HTTP client library|
 | [Room] |App |  Library provides an abstraction layer over SQLite for data persistence on mobile device |
 | [Work Manager] |App | Android API for background scheduling that respects Android O background restrictions |
 | [Dagger] |App | Dependency injector |
@@ -37,6 +38,7 @@ Principal technologies used for the development of this project.
 [ISEL]: <https://www.isel.pt/en>
 [Kotlin]: <https://kotlinlang.org/>
 [Coroutines]: <https://kotlinlang.org/docs/reference/coroutines-overview.html/>
+[Retrofit]: <https://square.github.io/retrofit/>
 [Google play services]: <https://developers.google.com/android/guides/overview>
 [Room]: <https://developer.android.com/topic/libraries/architecture/room>
 [Work Manager]: <https://developer.android.com/topic/libraries/architecture/workmanager>
